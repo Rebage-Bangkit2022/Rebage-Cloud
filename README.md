@@ -19,14 +19,32 @@ The cloud technology that used in this project:
 - Cloud Monitoring
 
 ### Features
-
 - Providing a server
 - Deploying app to cloud
 - Using the firebase for data storage
 - Cloud SQL for database
 - and Monitoring project
 
+### Detailed Steps
+#### Step One - Setting the roles
+1. Open IAM & Admin
+2. Invite member from MD and ML
+3. Assign the role to 'Editor'
+4. Save changes.
+#### Step Two - The Firestore
+1. Choosing the mode
+2. Setting the location
+3. Then, create database
+#### Step Three - Setting-up VM GCE
+1. Create VM Instaces in GCE
+2. SSH to VM
+3. Update and upgrade the system
+4. Install mysql ```sudo apt install mysql```
+5. Configure the mysql database
+#### Step Four - Working with App Engine
+1. Configure the app.yaml
+2. Deploying the App to App Engine
+3. Connecting the app and database.
 
-### The architecture
-
-The architecture is currently ```under development```.
+### Note:
+The cloud project is currently ```under development```.
