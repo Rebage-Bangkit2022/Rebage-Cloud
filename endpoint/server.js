@@ -14,36 +14,35 @@ var connection = mysql.createConnection({
 
 connection.connect();
 
-// Check if db connect
 connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
     if (error) throw error;
-    console.log('The solution is: ', results[0].solution, ' no error!');
+    console.log('The solution is: ', results[0].solution, ' means no error!');
 });
 
 app.set('port', process.env.PORT || 3000);
 
-// Root page
 app.get('/', function (res) {
     res.send('Root page');
 });
 
-// Post test
-app.post('/', (req, res) => {
-    res.send('POST request to homepage');
-});
-
 // Post a new user to the table user value (name, email, password)
-app.post('/authentication/signup', (req, body, res, next) => {
+app.post('/authentication/signup', function (req, res, next) {
     var name = req.body.name;
     var email = req.body.email;
     var password = req.body.password;
-    var query = 'INSERT INTO user (name, email, password) VALUES (?, ?, ?)';
+
+    console.log(
+        'name: ' + name + ' email: ' + email + ' password: ' + password
+    );
+
+    var query = 'INSERT INTO user (name, email, password) VALUES (?)';
     connection.query(query, [name, email, password], (err, result) => {
         if (err) throw err;
         res.send('User added');
     });
 });
 
+// Other routes
 // Get all users
 app.get('/users', function (_req, res) {
     connection.query('SELECT * FROM user', function (err, rows) {
@@ -86,7 +85,7 @@ app.post('/add', function (req, res) {
 });
 
 // delete user by id
-app.delete('/users/:id', function (req, res) {
+app.delete('/delete/:id', function (req, res) {
     connection.query(
         'DELETE FROM user WHERE id = ?',
         [req.params.id],
