@@ -1,14 +1,18 @@
 var express = require('express'),
     async = require('async'),
     http = require('http'),
-    mysql = require('mysql');
+    mysql = require('mysql'),
+    bcrypt = require('bcrypt');
 
 var app = express();
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 var connection = mysql.createConnection({
     host: '146.148.82.14',
     user: 'root',
-    password: '***',
+    password: 'rebage2022',
     database: 'rebage_db',
 });
 
@@ -16,94 +20,50 @@ connection.connect();
 
 connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
     if (error) throw error;
-    console.log('The solution is: ', results[0].solution, ' means no error!');
+    console.log(
+        'The solution is: ',
+        results[0].solution,
+        ' database connetcted successfully!'
+    );
 });
 
 app.set('port', process.env.PORT || 3000);
 
 app.get('/', function (res) {
-    res.send('Root page');
+    res.send('MD Endpoint.');
 });
 
-// Post a new user to the table user value (name, email, password)
+// Signup API endpoint for user registration
 app.post('/authentication/signup', function (req, res, next) {
     var name = req.body.name;
     var email = req.body.email;
     var password = req.body.password;
 
-    console.log(
-        'name: ' + name + ' email: ' + email + ' password: ' + password
-    );
-
-    var query = 'INSERT INTO user (name, email, password) VALUES (?)';
+    var query = 'INSERT INTO user (name, email, password) VALUES (?, ?, ?)';
     connection.query(query, [name, email, password], (err, result) => {
         if (err) throw err;
-        res.send('User added');
+        res.send('User added.');
     });
 });
 
-// Other routes
+// Login API endpoint for user login
+
+// Other routes to check if the server is working properly
 // Get all users
-app.get('/users', function (_req, res) {
+app.get('/alluser', function (_req, res) {
     connection.query('SELECT * FROM user', function (err, rows) {
         if (err) throw err;
         res.send(rows);
     });
 });
 
-// Get user by id
-app.get('/users/:id', function (req, res) {
-    connection.query(
-        'SELECT * FROM user WHERE id = ?',
-        [req.params.id],
-        function (err, rows) {
-            if (err) throw err;
-            res.send(rows);
-        }
-    );
-});
-
-// Add user to database hard coded
-app.post('/add', function (req, res) {
-    // generate random email
-    var email = Math.random().toString(36).substring(7);
-
-    // generate random name
-    var name = Math.random().toString(36).substring(7);
-
-    var query = 'INSERT INTO user (name, email, password) VALUES (?, ?, ?)';
-    var values = [name, email, 'pass'];
-
-    connection.query(query, values, function (err, result) {
-        if (err) {
-            console.log(err);
-            res.send('Error');
-        } else {
-            res.send('Success');
-        }
-    });
-});
-
-// delete user by id
-app.delete('/delete/:id', function (req, res) {
-    connection.query(
-        'DELETE FROM user WHERE id = ?',
-        [req.params.id],
-        function (err, rows) {
-            if (err) throw err;
-            res.send(rows);
-        }
-    );
-});
-
 // delete all user
 app.delete('/deleteall', function (req, res) {
     connection.query('DELETE FROM user', function (err, result) {
         if (err) {
-            console.log(err);
-            res.send('Error');
+            res.send('Error.');
         } else {
-            res.send('Success');
+            res.send('Success.');
         }
     });
 });
