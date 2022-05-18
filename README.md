@@ -12,39 +12,38 @@ Gmail, Google Drive, and YouTube.
 The cloud technology that used in this project:
 
 - Google Cloud Platform
-- VM Instances
-- Cloud App Engine
-- Firebase Cloud Storage
-- Cloud SQL
-- Cloud Monitoring
+- Cloud SQL (for database)
+- App Engine (for deploying the app)
+- VM Instances (auto creating from App Engine)
+- Vertex AI (for machine learning)
 
-### Features
-- Providing a server
-- Deploying app to cloud
-- Using the firebase for data storage
-- Cloud SQL for database
-- and Monitoring project
+### Important Notes
+This project is currently in the *```internal implementation stage```*,
+the service and the account used is a personal account. The changes made
+are an application testing that is expected to be perfect when the application
+enters the final stage.
 
-### Detailed Steps
-#### Step One - Setting the roles
-1. Open IAM & Admin
-2. Invite member from MD and ML
-3. Assign the role to 'Editor'
-4. Save changes.
-#### Step Two - The Firestore
-1. Choosing the mode
-2. Setting the location
-3. Then, create database
-#### Step Three - Setting-up VM GCE
-1. Create VM Instaces in GCE
-2. SSH to VM
-3. Update and upgrade the system
-4. Install mysql ```sudo apt install mysql```
-5. Configure the mysql database
-#### Step Four - Working with App Engine
-1. Configure the app.yaml
-2. Deploying the App to App Engine
-3. Connecting the app and database.
+### Cloud SQL ![#f03c15](https://via.placeholder.com/15/c5f015/000000?text=+)
+Connection:
+- [x] **Bash** (GNU/Linux e.g. use MySQL package)
+```bash
+mysql -h 146.148.82.14 \
+    -u root -p
+```
+- [x] **phpMyAdmin** (Windows e.g. use XAMPP)
+Add the following setup to ```phpMyAdmin/config.inc.php``` at the end of the line:
+```php
+...
+$i++;
+$cfg['Servers'][$i]['host'] = '146.148.82.14';  //provide hostname and port if other than default
+$cfg['Servers'][$i]['user'] = 'root';            //user name for your remote server
+$cfg['Servers'][$i]['password'] = 'xxx';        //password
+$cfg['Servers'][$i]['auth_type'] = 'config;     // keep it as config
+```
 
-### Note:
-The cloud project is currently ```under development```.
+### App Engine ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+)
+This service is currently **```waiting for completion```**.
+
+### Vertex AI ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) 
+This service is **```ready to deploy```**.
+
