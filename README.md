@@ -16,7 +16,7 @@ The cloud technology that used in this project:
 -   **Cloud SQL** (for database)
 -   **App Engine** (for deploying the app)
 -   **VM Instances** (auto creating from App Engine)
--   **AI Platform** (for machine learning)
+-   **Vertex AI** (for machine learning)
 
 ### Important Notes
 
@@ -63,16 +63,17 @@ This service is currently **`waiting for completion`**.<br> Docs:
 This service is currently **`waiting for App Engine`**.<br> Docs:
 [compute-docs](https://cloud.google.com/compute/docs).
 
-### AI Platform
+### Vertex AI
 
 This model **`has been deployed`**.
 
 Detail info:
 
 ```
-Model name      : RebageModelAIP
+Model name      : model-ml-model
 Region          : us-central1
-Version name    : RebageModelV2
+Version         : 1
+Endpoint name   : rebage-ml-endpoint
 ProjectID       : bydzen
 ```
 
