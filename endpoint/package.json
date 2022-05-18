@@ -1,21 +1,17 @@
 {
-  "dependencies": {
-    "async": "^3.2.3",
-    "bcrypt": "^5.0.1",
-    "bcryptjs": "^2.4.3",
-    "body-parser": "^1.20.0",
-    "express": "^4.18.1",
-    "http": "^0.0.1-security",
-    "mongoose": "^6.3.3",
-    "mysql": "^2.18.1"
-  },
   "scripts": {
     "start": "nodemon server.js"
   },
+  
   "name": "endpoint",
   "version": "1.0.0",
   "description": "rebage-endpoint",
   "main": "server.js",
   "author": "sultan",
-  "license": "ISC"
+  "license": "ISC",
+
+  "dependencies": {
+    "express": "^4.18.1",
+    "mysql": "^2.18.1"
+  }
 }
