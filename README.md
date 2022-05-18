@@ -16,7 +16,7 @@ The cloud technology that used in this project:
 -   **Cloud SQL** (for database)
 -   **App Engine** (for deploying the app)
 -   **VM Instances** (auto creating from App Engine)
--   **Vertex AI** (for machine learning)
+-   **AI Platform** (for machine learning)
 
 ### Important Notes
 
@@ -26,6 +26,8 @@ application testing that is expected to be perfect when the application enters
 the final stage.
 
 ### Cloud SQL
+
+Database MySQL **`has been deployed`**.
 
 Connection:
 
@@ -61,7 +63,17 @@ This service is currently **`waiting for completion`**.<br> Docs:
 This service is currently **`waiting for App Engine`**.<br> Docs:
 [compute-docs](https://cloud.google.com/compute/docs).
 
-### Vertex AI
+### AI Platform
 
-This service is **`ready to deploy`**.<br> Docs:
-[deploy-model-api](https://cloud.google.com/vertex-ai/docs/predictions/deploy-model-api).
+This model **`has been deployed`**.
+
+Detail info:
+
+```
+Model name      : RebageModelAIP
+Region          : us-central1
+Version name    : RebageModelV2
+ProjectID       : bydzen
+```
+
+Docs: [ai-platform-docs](https://cloud.google.com/ai-platform/docs).
