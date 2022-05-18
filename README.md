@@ -11,19 +11,19 @@ Gmail, Google Drive, and YouTube.
 
 The cloud technology that used in this project:
 
-- Google Cloud Platform
-- Cloud SQL (for database)
-- App Engine (for deploying the app)
-- VM Instances (auto creating from App Engine)
-- Vertex AI (for machine learning)
+- **Google Cloud Platform**
+- **Cloud SQL** (for database)
+- **App Engine** (for deploying the app)
+- **VM Instances** (auto creating from App Engine)
+- **Vertex AI** (for machine learning)
 
 ### Important Notes
-This project is currently in the *```internal implementation stage```*,
+This project is currently in the ***```internal implementation stage```***,
 the service and the account used is a personal account. The changes made
 are an application testing that is expected to be perfect when the application
 enters the final stage.
 
-### Cloud SQL ![#f03c15](https://via.placeholder.com/15/c5f015/000000?text=+)
+### Cloud SQL
 Connection:
 - [x] **Bash** (GNU/Linux e.g. use MySQL package)
 ```bash
@@ -36,14 +36,20 @@ Add the following setup to ```phpMyAdmin/config.inc.php``` at the end of the lin
 ...
 $i++;
 $cfg['Servers'][$i]['host'] = '146.148.82.14';  //provide hostname and port if other than default
-$cfg['Servers'][$i]['user'] = 'root';            //user name for your remote server
+$cfg['Servers'][$i]['user'] = 'root';           //user name for your remote server
 $cfg['Servers'][$i]['password'] = 'xxx';        //password
 $cfg['Servers'][$i]['auth_type'] = 'config;     // keep it as config
 ```
+Docs: [connect-overview](https://cloud.google.com/sql/docs/mysql/connect-overview)
 
-### App Engine ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+)
+### App Engine
 This service is currently **```waiting for completion```**.
+Docs: [deploy-appengine](https://cloud.google.com/build/docs/deploying-builds/deploy-appengine)
 
-### Vertex AI ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) 
+### VM Instances
+This service is currently **```waiting for App Engine```**.
+Docs: [compute-docs](https://cloud.google.com/compute/docs)
+
+### Vertex AI
 This service is **```ready to deploy```**.
-
+Docs: [deploy-model-api](https://cloud.google.com/vertex-ai/docs/predictions/deploy-model-api)
