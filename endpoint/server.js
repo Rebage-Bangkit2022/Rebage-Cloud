@@ -1,8 +1,6 @@
 var express = require('express'),
-    async = require('async'),
     http = require('http'),
-    mysql = require('mysql'),
-    bcrypt = require('bcrypt');
+    mysql = require('mysql');
 
 var app = express();
 
@@ -29,20 +27,23 @@ connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
 
 app.set('port', process.env.PORT || 3000);
 
-app.get('/', function (res) {
+app.get('/', function (req, res) {
     res.send('MD Endpoint.');
 });
 
 // Signup API endpoint for user registration
-app.post('/authentication/signup', function (req, res, next) {
+app.post('/authentication/signup', async (req, res, next) => {
     var name = req.body.name;
     var email = req.body.email;
     var password = req.body.password;
 
     var query = 'INSERT INTO user (name, email, password) VALUES (?, ?, ?)';
     connection.query(query, [name, email, password], (err, result) => {
-        if (err) throw err;
-        res.send('User added.');
+        if (err) {
+            res.status(500).send('Internal Server Error');
+        } else {
+            res.status(200).send('User registered successfully');
+        }
     });
 });
 
@@ -50,10 +51,13 @@ app.post('/authentication/signup', function (req, res, next) {
 
 // Other routes to check if the server is working properly
 // Get all users
-app.get('/alluser', function (_req, res) {
+app.get('/alluser', function (req, res) {
     connection.query('SELECT * FROM user', function (err, rows) {
-        if (err) throw err;
-        res.send(rows);
+        if (err) {
+            res.status(500).send('Internal Server Error');
+        } else {
+            res.status(200).send(rows);
+        }
     });
 });
 
@@ -61,9 +65,9 @@ app.get('/alluser', function (_req, res) {
 app.delete('/deleteall', function (req, res) {
     connection.query('DELETE FROM user', function (err, result) {
         if (err) {
-            res.send('Error.');
+            res.status(500).send('Internal Server Error');
         } else {
-            res.send('Success.');
+            res.status(200).send('All user deleted successfully');
         }
     });
 });
