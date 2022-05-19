@@ -1,7 +1,11 @@
 var express = require('express'),
     http = require('http'),
     mysql = require('mysql'),
-    bcrypt = require('bcrypt');
+    bcrypt = require('bcrypt'),
+    session = require('express-session'),
+    passport = require('passport');
+
+require('./auth');
 
 var app = express();
 
@@ -29,7 +33,48 @@ connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
 app.set('port', process.env.PORT || 3000);
 
 app.get('/', function (req, res) {
-    res.send('MD Endpoint.');
+    res.send(
+        '<h2>Base Endpoint</h2><p>🤖 <a href="/authentication/google">Authenticate with Google</a> 🤖<br><br><mark>/</mark> for this page<br><mark>/authentication/signup</mark> for signup with params<br><mark>/logout</mark> for logging out google auth<br><mark>/deleteall</mark> for delete all users<br><mark>/alluser</mark> for retrieving all users listed</p>'
+    );
+});
+
+// Google Auth
+function isLoggedIn(req, res, next) {
+    req.user ? next() : res.sendStatus(401);
+}
+app.use(session({ secret: 'cats', resave: false, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.get('/authentication/google', function (req, res) {
+    res.send('<a href="/auth/google">Login with Google</a>');
+});
+
+app.get(
+    '/auth/google',
+    passport.authenticate('google', { scope: ['email', 'profile'] })
+);
+
+app.get(
+    '/auth/google/callback',
+    passport.authenticate('google', {
+        successRedirect: '/protected',
+        failureRedirect: '/auth/google/failure',
+    })
+);
+
+app.get('/protected', isLoggedIn, (req, res) => {
+    res.send(`Hello ${req.user.displayName}<br><a href="/logout">Logout</a>`);
+});
+
+app.get('/logout', (req, res) => {
+    req.logout();
+    req.session.destroy();
+    res.send('Good Bye! 👋 <br><a href="/">Go to Homepage</a>');
+});
+
+app.get('/auth/google/failure', (req, res) => {
+    res.send('Failed to authenticate..');
 });
 
 // Signup API endpoint for user registration
