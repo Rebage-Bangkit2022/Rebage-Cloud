@@ -60,8 +60,8 @@ This service **`has been deployed`**. Deployment details:
 URL         : https://bydzen.uc.r.appspot.com/
 Runtime     : nodejs
 Environtment: flex
-Port        : 80
-Version     : 3
+Port        : 3000 --> 80
+Version     : 5
 ```
 
 Docs:
