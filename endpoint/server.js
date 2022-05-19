@@ -1,6 +1,7 @@
 var express = require('express'),
     http = require('http'),
-    mysql = require('mysql');
+    mysql = require('mysql'),
+    bcrypt = require('bcrypt');
 
 var app = express();
 
@@ -10,7 +11,7 @@ app.use(express.json());
 var connection = mysql.createConnection({
     host: '146.148.82.14',
     user: 'root',
-    password: 'rebage2022',
+    password: '???',
     database: 'rebage_db',
 });
 
@@ -37,8 +38,11 @@ app.post('/authentication/signup', async (req, res, next) => {
     var email = req.body.email;
     var password = req.body.password;
 
+    const salt = await bcrypt.genSalt(10);
+    const encryptedPassword = await bcrypt.hash(password, salt);
+
     var query = 'INSERT INTO user (name, email, password) VALUES (?, ?, ?)';
-    connection.query(query, [name, email, password], (err, result) => {
+    connection.query(query, [name, email, encryptedPassword], (err, result) => {
         if (err) {
             res.status(500).send('Internal Server Error');
         } else {
@@ -47,7 +51,32 @@ app.post('/authentication/signup', async (req, res, next) => {
     });
 });
 
-// Login API endpoint for user login
+// Login API endpoint for user login and compare password
+app.post('/authentication/login', async (req, res, next) => {
+    var email = req.body.email;
+    var password = req.body.password;
+
+    var query = 'SELECT * FROM user WHERE email = ?';
+    connection.query(query, [email], (err, result) => {
+        if (err) {
+            res.status(500).send('Internal Server Error');
+        } else {
+            if (result.length > 0) {
+                const isPasswordValid = require('bcrypt').compareSync(
+                    password,
+                    result[0].password
+                );
+                if (isPasswordValid) {
+                    res.status(200).send('Login Successful');
+                } else {
+                    res.status(401).send('Invalid Password');
+                }
+            } else {
+                res.status(401).send('Invalid Email');
+            }
+        }
+    });
+});
 
 // Other routes to check if the server is working properly
 // Get all users
