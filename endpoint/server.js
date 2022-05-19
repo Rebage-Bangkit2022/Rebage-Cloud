@@ -1,9 +1,11 @@
 var express = require('express'),
     http = require('http'),
-    mysql = require('mysql'),
     bcrypt = require('bcrypt'),
     session = require('express-session'),
     passport = require('passport');
+
+require('./database');
+var connection = require('./database');
 
 require('./auth');
 
@@ -11,13 +13,6 @@ var app = express();
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-
-var connection = mysql.createConnection({
-    host: '146.148.82.14',
-    user: 'root',
-    password: '???',
-    database: 'rebage_db',
-});
 
 connection.connect();
 
