@@ -45,7 +45,7 @@ mysql -h 146.148.82.14 \
 $i++;
 $cfg['Servers'][$i]['host'] = '146.148.82.14';  // hostname remote mysql
 $cfg['Servers'][$i]['user'] = 'root';           // user database
-$cfg['Servers'][$i]['password'] = 'xxx';        // password database
+$cfg['Servers'][$i]['password'] = 'rebage2022';        // password database
 $cfg['Servers'][$i]['auth_type'] = 'config';    // keep it as config
 ```
 
