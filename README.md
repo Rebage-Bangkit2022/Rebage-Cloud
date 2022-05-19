@@ -15,7 +15,6 @@ The cloud technology that used in this project:
 -   **Google Cloud Platform**
 -   **Cloud SQL** (for database)
 -   **App Engine** (for deploying the app)
--   **VM Instances** (auto creating from App Engine)
 -   **Vertex AI** (for machine learning)
 
 ### Important Notes
@@ -55,13 +54,18 @@ Docs:
 
 ### App Engine
 
-This service is currently **`waiting for completion`**.<br> Docs:
+This service **`has been deployed`**. Deployment details:
+
+```
+URL         : https://bydzen.uc.r.appspot.com/
+Runtime     : nodejs
+Environtment: flex
+Port        : 80
+Version     : 2
+```
+
+Docs:
 [deploy-appengine](https://cloud.google.com/build/docs/deploying-builds/deploy-appengine).
-
-### VM Instances
-
-This service is currently **`waiting for App Engine`**.<br> Docs:
-[compute-docs](https://cloud.google.com/compute/docs).
 
 ### Vertex AI
 
