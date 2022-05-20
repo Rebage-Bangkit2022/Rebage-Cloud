@@ -33,8 +33,8 @@ Connection:
 -   [x] **Bash** (GNU/Linux e.g. use MySQL package)
 
 ```bash
-mysql -h 146.148.82.14 \
-    -u root -p
+mysql -h IP_ADDRESS \
+    -u DB_USERNAME -p
 ```
 
 -   [x] **phpMyAdmin** (Windows e.g. use XAMPP) Add the following setup to
@@ -43,10 +43,10 @@ mysql -h 146.148.82.14 \
 ```php
 ...
 $i++;
-$cfg['Servers'][$i]['host'] = '146.148.82.14';  // hostname remote mysql
-$cfg['Servers'][$i]['user'] = 'root';           // user database
-$cfg['Servers'][$i]['password'] = 'rebage2022';        // password database
-$cfg['Servers'][$i]['auth_type'] = 'config';    // keep it as config
+$cfg['Servers'][$i]['host'] = '***';          // hostname remote mysql
+$cfg['Servers'][$i]['user'] = '***';          // user database
+$cfg['Servers'][$i]['password'] = '***';      // password database
+$cfg['Servers'][$i]['auth_type'] = 'config';  // keep it as config
 ```
 
 Docs:
@@ -57,11 +57,16 @@ Docs:
 This service **`has been deployed`**. Deployment details:
 
 ```
-URL         : https://bydzen.uc.r.appspot.com/
+-- App info
+URL         : https://***.com/
 Runtime     : nodejs
 Environtment: flex
 Port        : 3000 --> 80
 Version     : 5
+-- Resources
+cpu         : 1
+memory_gb   : 4
+disk_size_gb: 10
 ```
 
 Docs:
