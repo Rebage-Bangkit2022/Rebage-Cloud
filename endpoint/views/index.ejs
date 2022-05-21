@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Rebage Backend</title>
+    </head>
+    <body style="font-family: monospace">
+        <h1>Welcome to Rebage Backend</h1>
+        <p>
+            Main:
+            <br />
+            Google Auth:
+        </p>
+        <ul>
+            <li><a href="/">Homepage (this page)</a></li>
+            <br />
+            <li>
+                <a href="/auth/google"
+                    >/auth/google &mdash; Google Authentication</a
+                >
+            </li>
+            <li>
+                <a href="/protected"
+                    >/protected &mdash; Google Protected Page</a
+                >
+            </li>
+        </ul>
+        <p>User:</p>
+        <ul>
+            <li>
+                <a href="/dashboard"
+                    >/dashboard &mdash; Protected Dashboard Page</a
+                >
+            </li>
+            <li><a href="/register">/register &mdash; User register</a></li>
+            <li><a href="/login">/login &mdash; User login</a></li>
+            <br />
+        </ul>
+        <p>
+            Both: <br />
+            Signout:
+        </p>
+        <ul>
+            <li>
+                <a href="/signout"
+                    >/signout &mdash; Signout all session (Google and
+                    Regular)</a
+                >
+            </li>
+        </ul>
+        <br />===<br />
+        <p>
+            Other:
+            <br />
+            Query directly:
+        </p>
+        <ul>
+            <li>
+                <a href="/alluser"
+                    >/alluser &mdash; Display all user in database</a
+                >
+            </li>
+            <li>
+                <a href="/deletealluser"
+                    >/deletealluser &mdash; Delete all user in database</a
+                >
+                <mark>(WARNING!)</mark>
+            </li>
+        </ul>
+    </body>
+</html>
