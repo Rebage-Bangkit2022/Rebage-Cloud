@@ -254,6 +254,108 @@ app.get('/deletealluser/yes', function (req, res) {
     });
 });
 
+// Get barang information
+app.get('/barang', function (req, res) {
+    connection.query(
+        'SELECT id, barang, harga FROM barang',
+        function (err, rows) {
+            if (err) {
+                res.status(500).send(
+                    '<p style="font-family: monospace">Internal Server Error</p>'
+                );
+            } else {
+                res.status(200).send(rows);
+            }
+        }
+    );
+});
+
+// Get image barang
+app.get('/barang/image', function (req, res) {
+    connection.query('SELECT gambar FROM barang', function (err, rows) {
+        if (err) {
+            res.status(500).send(
+                '<p style="font-family: monospace">Internal Server Error</p>'
+            );
+        } else {
+            res.status(200).send(
+                `<p style="font-family: monospace">
+                ${rows[0].gambar} <br />
+                ${rows[1].gambar} <br />
+                ${rows[2].gambar} <br />
+                ${rows[3].gambar} <br />
+                ${rows[4].gambar} <br />
+                ${rows[5].gambar} <br />
+                ${rows[6].gambar} <br />
+                ${rows[7].gambar} <br />
+                </p>`
+            );
+        }
+    });
+});
+
+// Get artikel reduce information
+app.get('/artikel/reduce', function (req, res) {
+    connection.query('SELECT * FROM artikel_reduce', function (err, rows) {
+        if (err) {
+            res.status(500).send(
+                '<p style="font-family: monospace">Internal Server Error</p>'
+            );
+        } else {
+            res.status(200).send(rows);
+        }
+    });
+});
+
+// Get image artikel reduce
+app.get('/artikel/reduce/image', function (req, res) {
+    connection.query('SELECT gambar FROM artikel_reduce', function (err, rows) {
+        if (err) {
+            res.status(500).send(
+                '<p style="font-family: monospace">Internal Server Error</p>'
+            );
+        } else {
+            res.status(200).send(
+                `<p style="font-family: monospace">
+                ${rows[0].gambar}
+                </p>`
+            );
+        }
+    });
+});
+
+// Get artikel reuse information
+app.get('/artikel/reuse', function (req, res) {
+    connection.query('SELECT * FROM artikel_reuse', function (err, rows) {
+        if (err) {
+            res.status(500).send(
+                '<p style="font-family: monospace">Internal Server Error</p>'
+            );
+        } else {
+            res.status(200).send(rows);
+        }
+    });
+});
+
+// Get image artikel reuse
+app.get('/artikel/reuse/image', function (req, res) {
+    connection.query('SELECT gambar FROM artikel_reuse', function (err, rows) {
+        if (err) {
+            res.status(500).send(
+                '<p style="font-family: monospace">Internal Server Error</p>'
+            );
+        } else {
+            res.status(200).send(
+                `<p style="font-family: monospace">
+                ${rows[0].gambar}
+                </p>`
+            );
+        }
+    });
+});
+
+// Add artikel to user logged in favourited list (to-do next)
+
 // Creating the server
 http.createServer(app).listen(app.get('port'), function () {
     console.log('Listening to ' + app.get('port'));
