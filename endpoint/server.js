@@ -7,10 +7,10 @@ var express = require('express'),
     bodyParser = require('body-parser');
 
 // Google Auth required
-require('./auth');
+require('./config/auth');
 
 // MySQL required
-var connection = require('./database');
+var connection = require('./config/database');
 
 // The app express
 var app = express();
@@ -81,20 +81,18 @@ app.get(
 // Google protected
 app.get('/protected', isAuthWithGoogle, (req, res) => {
     res.send(
-        `<p style="font-family: monospace">Welcome to the protected page, ${req.user.name}!<br />
+        `Welcome to the protected page, ${req.user.name}!<br />
         your email is: ${req.user.email}<br />
         your id is: ${req.user.id}<br />
         your avatar is: <br />
         <img src="${req.user.avatar}" /><br />
-        <a href="/signout">Signout</a></p>`
+        <a href="/signout">Signout</a>`
     );
 });
 
 // Google failure
 app.get('/auth/google/failure', (req, res) => {
-    res.send(
-        '<p style="font-family: monospace">Failed to authenticate <br><a href="/">Go to Homepage</a></p>'
-    );
+    res.send('Failed to authenticate <br><a href="/">Go to Homepage</a>');
 });
 
 // Regular Authentication
@@ -124,9 +122,7 @@ app.post('/register', function (req, res) {
         function (error, results, fields) {
             if (error) throw error;
             if (results.length > 0) {
-                res.send(
-                    '<p style="font-family: monospace">User already exists</p>'
-                );
+                res.send('User already exists');
             } else {
                 // Hash the password
                 bcrypt.hash(password, 10, function (err, hash) {
@@ -137,7 +133,7 @@ app.post('/register', function (req, res) {
                         function (error, results, fields) {
                             if (error) throw error;
                             res.send(
-                                `<p style="font-family: monospace">User created successfully</p><br />
+                                `User created successfully<br />
                                 <a href="/">Go to Homepage</a><br />
                                 <a href="/login">Login</a>`
                             );
@@ -178,16 +174,12 @@ app.post('/login', function (req, res) {
                             req.session.user = results[0];
                             res.redirect('/dashboard');
                         } else {
-                            res.send(
-                                '<p style="font-family: monospace">Wrong password</p>'
-                            );
+                            res.send('Wrong password');
                         }
                     }
                 );
             } else {
-                res.send(
-                    '<p style="font-family: monospace">User does not exist</p>'
-                );
+                res.send('User does not exist');
             }
         }
     );
@@ -198,14 +190,15 @@ app.get('/dashboard', isLoggedIn, (req, res) => {
     // check if the user is logged in
     if (req.session.user) {
         res.send(
-            `<p style="font-family: monospace">Welcome to the dashboard, ${req.session.user.name}!<br />
+            `Welcome to the dashboard, ${req.session.user.name}!<br />
             <a href="/signout">Signout</a><br />
-            <a href="/">Go to Homepage as Loggedin</a></p>`
+            <a href="/fav">Artikel Favorit</a><br />
+            <a href="/">Go to Homepage as Loggedin</a>`
         );
     } else {
         res.send(
-            `<p style="font-family: monospace">You are not logged in,<br />
-            <a href="/login">Login</a></p>`
+            `You are not logged in,<br />
+            <a href="/login">Login</a>`
         );
     }
 });
@@ -213,9 +206,7 @@ app.get('/dashboard', isLoggedIn, (req, res) => {
 // Regular signout
 app.get('/signout', function (req, res) {
     req.session.destroy();
-    res.send(
-        `<p style="font-family: monospace">Good Bye! <br><a href="/">Go to Homepage</a></p>`
-    );
+    res.send(`Good Bye! <br><a href="/">Go to Homepage</a>`);
 });
 
 // Other routes to check if the server is working properly
@@ -223,9 +214,7 @@ app.get('/signout', function (req, res) {
 app.get('/alluser', function (req, res) {
     connection.query('SELECT * FROM user', function (err, rows) {
         if (err) {
-            res.status(500).send(
-                '<p style="font-family: monospace">Internal Server Error</p>'
-            );
+            res.status(500).send('Internal Server Error');
         } else {
             res.status(200).send(rows);
         }
@@ -235,21 +224,17 @@ app.get('/alluser', function (req, res) {
 // delete all user get
 app.get('/deletealluser', function (req, res) {
     res.send(
-        '<p style="font-family: monospace">Are you sure you want to delete all users?<br />' +
-            '<a href="/deletealluser/yes">Yes</a> | <a href="/">No</a></p>'
+        'Are you sure you want to delete all users?<br />' +
+            '<a href="/deletealluser/yes">Yes</a> | <a href="/">No</a>'
     );
 });
 
 app.get('/deletealluser/yes', function (req, res) {
     connection.query('DELETE FROM user', function (err, rows) {
         if (err) {
-            res.status(500).send(
-                '<p style="font-family: monospace">Internal Server Error</p>'
-            );
+            res.status(500).send('Internal Server Error');
         } else {
-            res.status(200).send(
-                '<p style="font-family: monospace">All user deleted</p>'
-            );
+            res.status(200).send('All user deleted');
         }
     });
 });
@@ -260,9 +245,7 @@ app.get('/barang', function (req, res) {
         'SELECT id, barang, harga FROM barang',
         function (err, rows) {
             if (err) {
-                res.status(500).send(
-                    '<p style="font-family: monospace">Internal Server Error</p>'
-                );
+                res.status(500).send('Internal Server Error');
             } else {
                 res.status(200).send(rows);
             }
@@ -274,12 +257,10 @@ app.get('/barang', function (req, res) {
 app.get('/barang/image', function (req, res) {
     connection.query('SELECT gambar FROM barang', function (err, rows) {
         if (err) {
-            res.status(500).send(
-                '<p style="font-family: monospace">Internal Server Error</p>'
-            );
+            res.status(500).send('Internal Server Error');
         } else {
             res.status(200).send(
-                `<p style="font-family: monospace">
+                `
                 ${rows[0].gambar} <br />
                 ${rows[1].gambar} <br />
                 ${rows[2].gambar} <br />
@@ -288,7 +269,7 @@ app.get('/barang/image', function (req, res) {
                 ${rows[5].gambar} <br />
                 ${rows[6].gambar} <br />
                 ${rows[7].gambar} <br />
-                </p>`
+                `
             );
         }
     });
@@ -298,9 +279,7 @@ app.get('/barang/image', function (req, res) {
 app.get('/artikel/reduce', function (req, res) {
     connection.query('SELECT * FROM artikel_reduce', function (err, rows) {
         if (err) {
-            res.status(500).send(
-                '<p style="font-family: monospace">Internal Server Error</p>'
-            );
+            res.status(500).send('Internal Server Error');
         } else {
             res.status(200).send(rows);
         }
@@ -311,14 +290,12 @@ app.get('/artikel/reduce', function (req, res) {
 app.get('/artikel/reduce/image', function (req, res) {
     connection.query('SELECT gambar FROM artikel_reduce', function (err, rows) {
         if (err) {
-            res.status(500).send(
-                '<p style="font-family: monospace">Internal Server Error</p>'
-            );
+            res.status(500).send('Internal Server Error');
         } else {
             res.status(200).send(
-                `<p style="font-family: monospace">
+                `
                 ${rows[0].gambar}
-                </p>`
+                `
             );
         }
     });
@@ -328,9 +305,7 @@ app.get('/artikel/reduce/image', function (req, res) {
 app.get('/artikel/reuse', function (req, res) {
     connection.query('SELECT * FROM artikel_reuse', function (err, rows) {
         if (err) {
-            res.status(500).send(
-                '<p style="font-family: monospace">Internal Server Error</p>'
-            );
+            res.status(500).send('Internal Server Error');
         } else {
             res.status(200).send(rows);
         }
@@ -341,20 +316,115 @@ app.get('/artikel/reuse', function (req, res) {
 app.get('/artikel/reuse/image', function (req, res) {
     connection.query('SELECT gambar FROM artikel_reuse', function (err, rows) {
         if (err) {
-            res.status(500).send(
-                '<p style="font-family: monospace">Internal Server Error</p>'
-            );
+            res.status(500).send('Internal Server Error');
         } else {
             res.status(200).send(
-                `<p style="font-family: monospace">
+                `
                 ${rows[0].gambar}
-                </p>`
+                `
             );
         }
     });
 });
 
-// Add artikel to user logged in favourited list (to-do next)
+// Add artikel to user logged in favourited list w/ GET
+app.get('/addfav/:id', function (req, res) {
+    // Check if the user is logged in
+    if (req.session.user) {
+        //  If user already favourited the artikel, return error
+        connection.query(
+            'SELECT * FROM artikel_favorit WHERE id_user = ? AND id_artikel = ?',
+            [req.session.user.id, req.params.id],
+            function (err, rows) {
+                if (err) {
+                    res.status(500).send('Internal Server Error');
+                } else {
+                    if (rows.length > 0) {
+                        res.send('You already favourited this artikel');
+                    } else {
+                        //  If user not favourited the artikel, add it to the list
+                        connection.query(
+                            'INSERT INTO artikel_favorit (id_user, id_artikel) VALUES (?, ?)',
+                            [req.session.user.id, req.params.id],
+                            function (err, rows) {
+                                if (err) {
+                                    res.status(500).send(
+                                        'Internal Server Error'
+                                    );
+                                } else {
+                                    res.send(
+                                        'Artikel added to your favourited list'
+                                    );
+                                }
+                            }
+                        );
+                    }
+                }
+            }
+        );
+    } else {
+        res.send('You are not logged in');
+    }
+});
+
+// Add artikel to user logged in favourited list w/ POST
+app.post('/addfav', function (req, res) {
+    // Check if the user is logged in
+    if (req.session.user) {
+        //  If user already favourited the artikel, return error
+        connection.query(
+            'SELECT * FROM artikel_favorit WHERE id_user = ? AND id_artikel = ?',
+            [req.session.user.id, req.body.id],
+            function (err, rows) {
+                if (err) {
+                    res.status(500).send('Internal Server Error');
+                } else {
+                    if (rows.length > 0) {
+                        res.send('You already favourited this artikel');
+                    } else {
+                        //  If user not favourited the artikel, add it to the list
+                        connection.query(
+                            'INSERT INTO artikel_favorit (id_user, id_artikel) VALUES (?, ?)',
+                            [req.session.user.id, req.body.id],
+                            function (err, rows) {
+                                if (err) {
+                                    res.status(500).send(
+                                        'Internal Server Error'
+                                    );
+                                } else {
+                                    res.send(
+                                        'Artikel added to your favourited list'
+                                    );
+                                }
+                            }
+                        );
+                    }
+                }
+            }
+        );
+    } else {
+        res.send('You are not logged in');
+    }
+});
+
+// Print loggedin user with favourite artikel Natural Join
+app.get('/fav', function (req, res) {
+    // Check if the user is logged in
+    if (req.session.user) {
+        connection.query(
+            'SELECT user.id, artikel_favorit.id_artikel FROM user INNER JOIN artikel_favorit ON user.id=artikel_favorit.id_user;',
+            function (err, rows) {
+                if (err) {
+                    res.status(500).send('Internal Server Error');
+                } else {
+                    res.status(200).send(rows);
+                }
+            }
+        );
+    } else {
+        res.send('You are not logged in');
+    }
+});
 
 // Creating the server
 http.createServer(app).listen(app.get('port'), function () {
