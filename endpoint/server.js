@@ -88,7 +88,6 @@ app.get('/protected', isAuthWithGoogle, (req, res) => {
         function (error, results, fields) {
             if (error) {
                 if (error.code === 'ER_DUP_ENTRY') {
-                    console.log('User already in the database');
                 } else {
                     throw error;
                 }
@@ -225,6 +224,7 @@ app.get('/edit', isLoggedIn, function (req, res) {
 // Edit user request
 app.post('/edit', isLoggedIn, function (req, res) {
     // Body request
+    var name = req.body.name;
     var email = req.body.email;
     var password = req.body.password;
 
@@ -235,8 +235,8 @@ app.post('/edit', isLoggedIn, function (req, res) {
     bcrypt.hash(password, 10, function (err, hash) {
         // Update the user
         connection.query(
-            'UPDATE user SET email = ?, password = ? WHERE id = ?',
-            [email, hash, req.session.user.id],
+            'UPDATE user SET name = ?, email = ?, password = ? WHERE id = ?',
+            [name, email, hash, req.session.user.id],
             function (error, results, fields) {
                 if (error) throw error;
                 res.send(
@@ -476,7 +476,8 @@ app.get('/fav', function (req, res) {
     // Check if the user is logged in
     if (req.session.user) {
         connection.query(
-            'SELECT user.id, artikel_favorit.id_artikel FROM user INNER JOIN artikel_favorit ON user.id=artikel_favorit.id_user;',
+            'SELECT user.id, artikel_favorit.id_artikel FROM user INNER JOIN artikel_favorit ON user.id=artikel_favorit.id_user WHERE user.id = ?;',
+            [req.session.user.id],
             function (err, rows) {
                 if (err) {
                     res.status(500).send('Internal Server Error');
