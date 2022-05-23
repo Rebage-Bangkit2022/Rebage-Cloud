@@ -1,6 +1,7 @@
 {
   "scripts": {
     "dev": "nodemon server.js",
+    "prod": "node ./app/app.js",
     "start": "node server.js"
   },
   "name": "endpoint",
