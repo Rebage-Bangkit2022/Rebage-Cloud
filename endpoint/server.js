@@ -213,12 +213,48 @@ app.post('/login', function (req, res) {
     );
 });
 
+// Edit user
+app.get('/edit', isLoggedIn, function (req, res) {
+    // Check if the user is logged in
+    if (!req.session.user) return res.redirect('/login');
+    res.render('edit', {
+        user: req.session.user,
+    });
+});
+
+// Edit user request
+app.post('/edit', isLoggedIn, function (req, res) {
+    // Body request
+    var email = req.body.email;
+    var password = req.body.password;
+
+    // Check if the user is logged in
+    if (!req.session.user) return res.redirect('/login');
+
+    // Hash the password
+    bcrypt.hash(password, 10, function (err, hash) {
+        // Update the user
+        connection.query(
+            'UPDATE user SET email = ?, password = ? WHERE id = ?',
+            [email, hash, req.session.user.id],
+            function (error, results, fields) {
+                if (error) throw error;
+                res.send(
+                    `User updated successfully<br />
+                    <a href="/dashboard">Go to Dashboard</a>`
+                );
+            }
+        );
+    });
+});
+
 // Protected dashboard
 app.get('/dashboard', isLoggedIn, (req, res) => {
     // check if the user is logged in
     if (req.session.user) {
         res.send(
             `Welcome to the dashboard, ${req.session.user.name}!<br />
+            <a href="/edit">Edit</a><br />
             <a href="/signout">Signout</a><br />
             <a href="/fav">Artikel Favorit</a><br />
             <a href="/">Go to Homepage as Loggedin</a>`
