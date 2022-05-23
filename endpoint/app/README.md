@@ -9,9 +9,9 @@ information.
 
 -   [Register](#register)
 
-Request:
-
     POST /register
+
+Request:
 
 ```
     {
@@ -98,6 +98,8 @@ Response:
 ```
 
 ## Barang
+
+-   [Show Barang](#show-barang)
 
     GET /barang
 
