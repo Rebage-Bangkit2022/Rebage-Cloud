@@ -80,6 +80,22 @@ app.get(
 
 // Google protected
 app.get('/protected', isAuthWithGoogle, (req, res) => {
+    // Save user to database
+    connection.query(
+        'INSERT INTO user (name, email, id_google) VALUES (?, ?, ?)',
+        [req.user.name, req.user.email, req.user.id],
+        // Check if the user is already in the database
+        function (error, results, fields) {
+            if (error) {
+                if (error.code === 'ER_DUP_ENTRY') {
+                    console.log('User already in the database');
+                } else {
+                    throw error;
+                }
+            }
+        }
+    );
+
     res.send(
         `Welcome to the protected page, ${req.user.name}!<br />
         your email is: ${req.user.email}<br />
@@ -157,27 +173,39 @@ app.post('/login', function (req, res) {
     var email = req.body.email;
     var password = req.body.password;
 
-    // Check if the user exists
+    // Check user with id_google
     connection.query(
         'SELECT * FROM user WHERE email = ?',
         [email],
         function (error, results, fields) {
             if (error) throw error;
             if (results.length > 0) {
-                // Check if the password is correct
-                bcrypt.compare(
-                    password,
-                    results[0].password,
-                    function (err, isMatch) {
-                        if (isMatch) {
-                            // Create the session
-                            req.session.user = results[0];
-                            res.redirect('/dashboard');
-                        } else {
-                            res.send('Wrong password');
+                // Check the id_google
+                if (results[0].id_google) {
+                    res.send(
+                        `User already exists with Google Auth, please login with Google instead<br />
+                        <a href="/auth/google">Login with Google</a>`
+                    );
+                } else {
+                    // Check the password
+                    bcrypt.compare(
+                        password,
+                        results[0].password,
+                        function (err, result) {
+                            if (result) {
+                                // Save user to session
+                                req.session.user = {
+                                    id: results[0].id,
+                                    name: results[0].name,
+                                    email: results[0].email,
+                                };
+                                res.redirect('/dashboard');
+                            } else {
+                                res.send('Wrong password');
+                            }
                         }
-                    }
-                );
+                    );
+                }
             } else {
                 res.send('User does not exist');
             }
