@@ -1,5 +1,9 @@
 # Base App Endpoint
 
+## Base URL
+
+API Base URL: https://bydzen.uc.r.appspot.com/
+
 ## User Authentication
 
 In this section, is how to authenticate a user and how to retrieve the user's
