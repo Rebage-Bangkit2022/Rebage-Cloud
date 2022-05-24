@@ -17,7 +17,7 @@ information.
 
 Request:
 
-```
+```JSON
     {
         "name": "John Doe",
         "email": "johndoe@mail.com",
@@ -31,7 +31,7 @@ Request:
 
 Request:
 
-```
+```JSON
     {
         "email": "johndoe@gmail.com",
         "password": "123456"
@@ -44,7 +44,7 @@ Request:
 
 Request:
 
-```
+```JSON
     {
         "name": "New John Doe",
         "email": "newjohndoe@mail.com",
@@ -63,7 +63,7 @@ back to the application with saving the user details in the session to database.
 
 Response:
 
-```
+```JSON
     {
         "name": req.user.name,
         "email": request.user.email,
@@ -80,7 +80,7 @@ Authentication.
 
 Response:
 
-```
+```JSON
     {
         "message": "User logged out successfully"
     }
@@ -95,7 +95,7 @@ first.
 
 Response:
 
-```
+```JSON
     {
         "message": "Welcome to your dashboard"
     }
@@ -112,7 +112,7 @@ categories.
 
 Response:
 
-```
+```JSON
     {
         "id": 1,
         "barang": "Plastic",
@@ -136,7 +136,7 @@ Artikel reduce id range from 1 to 10.
 
 Response:
 
-```
+```JSON
     {
         "id": 1,
         "judul": "Artikel Reduce 1",
@@ -158,7 +158,7 @@ Artikel reuse id range from 11 to 20.
 
 Response:
 
-```
+```JSON
     {
         "id": 11,
         "judul": "Artikel Reuse 1",
@@ -181,7 +181,7 @@ be condition to query the database.
 
 Request:
 
-```
+```JSON
     {
         "id": 1
     }
@@ -193,7 +193,7 @@ Request:
 
 Response:
 
-```
+```JSON
     {
         "id": 1,
         "judul": "Artikel Reduce or Reuse 1",
