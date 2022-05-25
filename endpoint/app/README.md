@@ -2,7 +2,7 @@
 
 ## Base URL
 
-API Base URL: https://bydzen.uc.r.appspot.com/
+API Base URL: https://rebage.uc.r.appspot.com/
 
 ## User Authentication
 
