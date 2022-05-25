@@ -2,7 +2,7 @@
   "scripts": {
     "dev": "nodemon server.js",
     "prod": "node ./app/app.js",
-    "start": "node server.js"
+    "start": "node ./app/app.js"
   },
   "name": "endpoint",
   "version": "1.0.0",
