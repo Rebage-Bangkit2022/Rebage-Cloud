@@ -58,13 +58,13 @@ This service **`has been deployed`**. Deployment details:
 
 ```
 -- App info
-URL         : https://***.com/
+URL         : https://rebage.uc.r.appspot.com/
 Runtime     : nodejs
 Environtment: flex
 Port        : 3000 --> 80
-Version     : 5
+Version     : 1
 -- Resources
-cpu         : 1
+cpu         : 2
 memory_gb   : 4
 disk_size_gb: 10
 ```
@@ -79,11 +79,11 @@ This model **`has been deployed`**.
 Detail info:
 
 ```
-Model name      : model-ml-model
+Model name      : rebage-models
 Region          : us-central1
 Version         : 1
-Endpoint name   : rebage-ml-endpoint
-ProjectID       : bydzen
+Endpoint name   : rebage-models-endpoint
+ProjectID       : rebage
 ```
 
 Docs: [ai-platform-docs](https://cloud.google.com/ai-platform/docs).
