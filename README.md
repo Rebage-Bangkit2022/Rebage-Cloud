@@ -14,15 +14,32 @@ The cloud technology that used in this project:
 
 -   **Google Cloud Platform**
 -   **Cloud SQL** (for database)
--   **App Engine** (for deploying the app)
+-   **Compute Engine (VM)** (for deploying the app)
 -   **Vertex AI** (for machine learning)
 
 ### Important Notes
 
-This project is currently in the **_`internal implementation stage`_**, the
-service and the account used is a personal account. The changes made are an
-application testing that is expected to be perfect when the application enters
-the final stage.
+-   The folder called **_`"endpoint"`_** contains the code for the backend of
+    the web-app. This backend code is used to handle the requests and send the
+    response to the client. The backend code is written in Express.js. Now, the
+    backend code is not used in this project because not suitable.
+
+-   The folder called **_`"endpoint"`_** is project in the
+    `internal implementation stage`, the service and the account used is a
+    personal account. The changes made are an application testing that is
+    expected to be perfect when the application enters the final stage.
+
+-   The folder called **_`"final-endpoint"`_** contains the code for the backend
+    of the mobile-app. This backend code is used to handle the requests and send
+    the response to the client. The backend code is written in Node.js with
+    Express.js framework. Currently, the backend code is used in this project
+    because of the suitable.
+
+-   The folder called **_`"final-endpoint"`_** is project in the
+    `actual implementation stage`, the service and the account used is a
+    educational account purpose from Bangkit 2022. The changes made are an
+    application testing that is expected to be perfect when the application
+    enters the final stage.
 
 ### Cloud SQL
 
@@ -43,34 +60,37 @@ mysql -h IP_ADDRESS \
 ```php
 ...
 $i++;
-$cfg['Servers'][$i]['host'] = '***';          // hostname remote mysql
-$cfg['Servers'][$i]['user'] = '***';          // user database
-$cfg['Servers'][$i]['password'] = '***';      // password database
+$cfg['Servers'][$i]['host'] = '***';          // Hostname remote mysql
+$cfg['Servers'][$i]['user'] = '***';          // User database
+$cfg['Servers'][$i]['password'] = '***';      // Password database
 $cfg['Servers'][$i]['auth_type'] = 'config';  // keep it as config
 ```
 
 Docs:
 [connect-overview](https://cloud.google.com/sql/docs/mysql/connect-overview).
 
-### App Engine
+### Compute Engine (VM)
 
 This service **`has been deployed`**. Deployment details:
 
 ```
+-- Runtime Host
+Proccess    : PM2 for JavaScript Runtime Node.js
+Docs        : https://pm2.keymetrics.io/docs/usage/process-management/
 -- App info
-URL         : https://rebage.uc.r.appspot.com/
+URL         : http://rebage.rayatiga.com/
 Runtime     : nodejs
-Environtment: flex
-Port        : 3000 --> 80
+Port        : 80
 Version     : 1
 -- Resources
-cpu         : 2
-memory_gb   : 4
-disk_size_gb: 10
+OS          : Ubuntu 22.04 LTS
+Virtual CPU : 0.5
+Memory      : 1.70 GB
+Disk Size   : 20 GB
 ```
 
 Docs:
-[deploy-appengine](https://cloud.google.com/build/docs/deploying-builds/deploy-appengine).
+[compute-engine-overview](https://cloud.google.com/compute/docs/instances/).
 
 ### Vertex AI
 
@@ -86,4 +106,4 @@ Endpoint name   : rebage-models-endpoint
 ProjectID       : rebage
 ```
 
-Docs: [ai-platform-docs](https://cloud.google.com/ai-platform/docs).
+Docs: [ai-platform-overview](https://cloud.google.com/ai-platform/docs/).
