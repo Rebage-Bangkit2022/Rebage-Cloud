@@ -1,0 +1,11 @@
+{
+  "name": "final-endpoint",
+  "version": "1.0.0",
+  "description": "Rebage Final Endpoint",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
