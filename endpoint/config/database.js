@@ -6,7 +6,7 @@ var connection = mysql.createConnection({
     host: '***',
     user: '***',
     password: '***',
-    database: 'rebage_db',
+    database: '***',
 });
 
 // Export the connection
