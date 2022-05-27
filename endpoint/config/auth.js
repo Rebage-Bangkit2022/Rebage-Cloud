@@ -8,7 +8,7 @@ const { google } = require('googleapis');
 // Credentials
 const GOOGLE_CLIENT_ID = '***';
 const GOOGLE_CLIENT_SECRET = '***';
-const GOOGLE_CALLBACK_URL = '***/auth/google/callback';
+const GOOGLE_CALLBACK_URL = '***';
 
 // Use the GoogleStrategy within Passport
 passport.use(
