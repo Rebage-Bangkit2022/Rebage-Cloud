@@ -28,12 +28,12 @@ export interface CreateArticleResponse {
     photo: string[];
 }
 
-export interface LikeArticleRequest {
-    articleId: number;
-
-    userId: number;
-}
-
 export type GetArticleResponse = CreateArticleResponse;
 
 export type GetArticlesResponse = Array<CreateArticleResponse>;
+
+export interface GetArticlesRequest {
+    category?: string;
+    page?: string;
+    size?: string;
+}
