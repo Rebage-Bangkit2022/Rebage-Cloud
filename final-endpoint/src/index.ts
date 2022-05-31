@@ -11,18 +11,20 @@ import DetectionController from './controller/detection-controller';
 import morgan from 'morgan';
 import LikedArticle from './entity/liked-article';
 import Garbage from './entity/garbage';
+import GarbageService from './service/garbage-service';
+import GarbageController from './controller/garbage-controller';
 
 const app = express();
 const MODE = process.env.MODE === 'production' ? process.env.MODE : 'debug';
-const PORT = process.env.PORT ?? 8080;
+const PORT = isNaN(parseInt(process.env.PORT!!)) ? 8080 : parseInt(process.env.PORT!!);
 
 const appDataSource = new DataSource({
     type: 'postgres',
-    host: 'localhost',
+    host: process.env.DB_HOST,
     port: 5432,
-    username: 'postgres',
-    password: '12345',
-    database: 'bangkit',
+    username: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
     synchronize: true,
     logging: MODE === 'debug',
     entities: [User, Article, LikedArticle, Garbage],
@@ -39,9 +41,13 @@ const main = async () => {
     const userController = new UserController(userService);
 
     const articleRepository = dataSource.manager.getRepository(Article);
-    const likedArticleRepository = dataSource.manager.getRepository(LikedArticle)
+    const likedArticleRepository = dataSource.manager.getRepository(LikedArticle);
     const articleService = new ArticleService(articleRepository, likedArticleRepository, userRepository);
     const articleController = new ArticleController(articleService);
+
+    const garbageRepository = dataSource.manager.getRepository(Garbage);
+    const garbageService = new GarbageService(garbageRepository);
+    const garbageController = new GarbageController(garbageService);
 
     const detectionController = new DetectionController();
 
@@ -50,6 +56,9 @@ const main = async () => {
     app.use(userController.router);
     app.use(articleController.router);
     app.use(detectionController.router);
+    app.use(garbageController.router);
+
+    console.log(PORT);
 
     app.listen(PORT, () => {
         console.log(`Server is running on port ${PORT}`);
