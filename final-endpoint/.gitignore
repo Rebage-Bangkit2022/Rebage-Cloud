@@ -1,2 +1,8 @@
+dist
 node_modules
-config.conf
+.env
+
+# Token
+rebage-72b7a2cd2f99.json
+rebage-fc8b497d0af5.json
+bydzen-aeeab8489516.json
