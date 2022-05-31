@@ -68,6 +68,30 @@ Response:
 }
 ```
 
+-   [Google Auth](#google-auth)
+
+    POST /api/user/auth-google
+
+Request:
+
+```JSON
+{
+    "idToken": string
+}
+```
+
+Response:
+
+```JSON
+{
+    "id": number,
+    "name": string,
+    "email": string,
+    "photo": string | null,
+    "token": string
+}
+```
+
 -   [Get User Info](#user)
 
     GET /api/user
@@ -220,4 +244,19 @@ Response:
 }
 ```
 
-Thats All!
+## Contributor
+
+Thanks goes to wonderful people who have contributed to this API:
+
+<table>
+  <tr>
+  <!-- Person 1 -->
+    <td align="center"><a href="https://github.com/bagus2x"><img src="https://avatars.githubusercontent.com/u/54665358?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Tubagus Saifulloh</b></sub></a><br /><a href="https://github.com/bagus2x" title="Cloud">☁️</a><a href="https://github.com/bagus2x" title="Mobile">📱</a></td>
+<!-- Person 2 -->
+    <td align="center"><a href="https://github.com/bydzen"><img src="https://avatars.githubusercontent.com/u/42274355?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Sultan Kautsar</b></sub></a><br /><a href="https://github.com/bydzen" title="Cloud">☁️</a><a href="https://github.com/bydzen" title="GCP">🌐</a></td>
+<!-- Person 3 -->
+    <td align="center"><a href="https://github.com/Hanifahmarta"><img src="https://avatars.githubusercontent.com/u/105196353?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Hanifah Marta</b></sub></a><br /><a href="https://github.com/Hanifahmarta" title="Cloud">☁️</a><a href="https://github.com/Hanifahmarta" title="GCP">🌐</a></td>
+  </tr>
+</table>
+
+**Thats All. Thank you!**
