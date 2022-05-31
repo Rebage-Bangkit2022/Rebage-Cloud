@@ -1,7 +1,7 @@
 import express, { NextFunction, Router } from 'express';
 import UserService from '../service/user-service';
 import { Request, Response } from 'express';
-import { SignInRequest, SignInResponse, SignUpRequest, SignUpResponse } from '../model/user';
+import { AuthGoogleRequest, SignInRequest, SignInResponse, SignUpRequest, SignUpResponse } from '../model/user';
 import Web from 'src/model/web';
 import GeneralError, { Forbidden, Unathorized } from '../model/error';
 
@@ -17,6 +17,7 @@ class UserController {
         r.post('/api/user/signup', this.signUp);
         r.post('/api/user/signin', this.signIn);
         r.get('/api/user', this.auth, this.getUser);
+        r.post('/api/user/auth-google', this.authGoogle);
     }
 
     signUp = async (req: Request<{}, {}, SignUpRequest>, res: Response<Web<SignUpResponse>>) => {
@@ -24,7 +25,7 @@ class UserController {
             const user = await this.userService.signUp(req.body);
             res.status(201).json({
                 success: true,
-                data: user,
+                data: user
             });
         } catch (error) {
             GeneralError.handle(error, res);
@@ -36,7 +37,7 @@ class UserController {
             const user = await this.userService.signIn(req.body);
             res.status(201).json({
                 success: true,
-                data: user,
+                data: user
             });
         } catch (error) {
             GeneralError.handle(error, res);
@@ -49,7 +50,19 @@ class UserController {
             const user = await this.userService.getUser(req.userId);
             res.json({
                 success: true,
-                data: user,
+                data: user
+            });
+        } catch (error) {
+            GeneralError.handle(error, res);
+        }
+    };
+
+    authGoogle = async (req: Request<{}, {}, AuthGoogleRequest>, res: Response<Web<SignInResponse>>) => {
+        try {
+            const user = await this.userService.authGoogle(req.body);
+            res.json({
+                success: true,
+                data: user
             });
         } catch (error) {
             GeneralError.handle(error, res);
@@ -61,13 +74,13 @@ class UserController {
             const authorization = req.headers['authorization'];
             console.log('hasil ' + authorization);
             if (typeof authorization !== 'string') throw new Forbidden("You don't have authorization");
-            
+
             // The format of this header is:
             // Bearer requested_token
             const token = authorization.split(' ')[1];
             if (!token) throw new Unathorized('Token format is invalid');
 
-            const userId = this.userService.verify(token);
+            const userId = this.userService.verivy(token);
             req.userId = userId;
         } catch (error) {
             return GeneralError.handle(error, res);
