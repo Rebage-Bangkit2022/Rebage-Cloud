@@ -13,8 +13,7 @@ end-user products, such as Google Search, Gmail, Google Drive, and YouTube.
 The cloud technology that used in this project:
 
 -   **Google Cloud Platform**
--   **Cloud SQL** (for database)
--   **Compute Engine (VM)** (for deploying the app)
+-   **Compute Engine (VM)** (for deploying the app & database)
 -   **Vertex AI** (for machine learning)
 
 ### Important Notes
@@ -41,34 +40,6 @@ The cloud technology that used in this project:
     application testing that is expected to be perfect when the application
     enters the final stage.
 
-### Cloud SQL
-
-Database MySQL **`has been deployed`**.
-
-Connection:
-
--   [x] **Bash** (GNU/Linux e.g. use MySQL package)
-
-```bash
-mysql -h IP_ADDRESS \
-    -u DB_USERNAME -p
-```
-
--   [x] **phpMyAdmin** (Windows e.g. use XAMPP) Add the following setup to
-        `phpMyAdmin/config.inc.php` at the end of the line:
-
-```php
-...
-$i++;
-$cfg['Servers'][$i]['host'] = '***';          // Hostname remote mysql
-$cfg['Servers'][$i]['user'] = '***';          // User database
-$cfg['Servers'][$i]['password'] = '***';      // Password database
-$cfg['Servers'][$i]['auth_type'] = 'config';  // keep it as config
-```
-
-Docs:
-[connect-overview](https://cloud.google.com/sql/docs/mysql/connect-overview).
-
 ### Compute Engine (VM)
 
 This service **`has been deployed`**. Deployment details:
@@ -78,15 +49,20 @@ This service **`has been deployed`**. Deployment details:
 Proccess    : PM2 for JavaScript Runtime Node.js
 Docs        : https://pm2.keymetrics.io/docs/usage/process-management/
 -- App info
-URL         : http://rebage.rayatiga.com/
+URL         : https://rebage.rayatiga.com/
+Web server  : nginx
+SSL         : ZeroSSL
 Runtime     : nodejs
-Port        : 80
+Port        : 8080 -> 80 proxyed by nginx
 Version     : 1
 -- Resources
 OS          : Ubuntu 22.04 LTS
 Virtual CPU : 0.5
 Memory      : 1.70 GB
 Disk Size   : 20 GB
+-- Database
+Database    : postgreSQL
+Version     : 14.3
 ```
 
 Docs:
@@ -99,11 +75,10 @@ This model **`has been deployed`**.
 Detail info:
 
 ```
-Model name      : rebage-models
+Model name      : ssd_100k
 Region          : us-central1
 Version         : 1
 Endpoint name   : rebage-models-endpoint
-ProjectID       : rebage
 ```
 
 Docs: [ai-platform-overview](https://cloud.google.com/ai-platform/docs/).
