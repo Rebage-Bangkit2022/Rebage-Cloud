@@ -2,21 +2,14 @@
 const passport = require('passport');
 // Require GoogleStrategy
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
-// Require googleapis
-const { google } = require('googleapis');
-
-// Credentials
-const GOOGLE_CLIENT_ID = '***';
-const GOOGLE_CLIENT_SECRET = '***';
-const GOOGLE_CALLBACK_URL = '***';
 
 // Use the GoogleStrategy within Passport
 passport.use(
     new GoogleStrategy(
         {
-            clientID: GOOGLE_CLIENT_ID,
-            clientSecret: GOOGLE_CLIENT_SECRET,
-            callbackURL: GOOGLE_CALLBACK_URL,
+            clientID: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+            callbackURL: process.env.GOOGLE_CALLBACK_URL,
             passReqToCallback: true,
         },
         function (request, accessToken, refreshToken, profile, done) {
