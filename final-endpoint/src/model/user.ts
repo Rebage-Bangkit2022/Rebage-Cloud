@@ -5,13 +5,11 @@ export interface SignUpRequest {
 }
 
 export interface SignUpResponse {
+    id: number;
+    name: string;
+    email: string;
+    photo: string | null;
     token: string;
-    user: {
-        id: number;
-        name: string;
-        email: string;
-        photo: string | null;
-    };
 }
 
 export interface SignInRequest {
@@ -20,17 +18,28 @@ export interface SignInRequest {
 }
 
 export interface SignInResponse {
+    id: number;
+    name: string;
+    email: string;
+    photo: string | null;
     token: string;
-    user: {
-        id: number;
-        name: string;
-        email: string;
-        photo: string | null;
-    };
 }
 
 export interface TokenPayload {
     iat: number;
     exp: number;
     userId: number;
+}
+
+export interface AuthGoogleRequest {
+    idToken: string
+}
+
+
+export interface AuthGoogleResponse {
+    id: number;
+    name: string;
+    email: string;
+    photo: string | null;
+    token: string;
 }
