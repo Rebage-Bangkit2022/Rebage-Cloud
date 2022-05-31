@@ -3,7 +3,13 @@ import Article from '../entity/article';
 import LikedArticle from '../entity/liked-article';
 import User from '../entity/user';
 import { Repository } from 'typeorm';
-import { CreateArticleRequest, CreateArticleResponse, GetArticleResponse, GetArticlesResponse, LikeArticleRequest } from '../model/article';
+import {
+    CreateArticleRequest,
+    CreateArticleResponse,
+    GetArticleResponse,
+    GetArticlesRequest,
+    GetArticlesResponse,
+} from '../model/article';
 import { NotFound } from '../model/error';
 
 const createArticleValidator = Joi.object<CreateArticleRequest>({
@@ -15,15 +21,13 @@ const createArticleValidator = Joi.object<CreateArticleRequest>({
     photo: Joi.array().required(),
 });
 
-const likeArticleValidator = Joi.object<LikeArticleRequest>({
-    articleId: Joi.number().required(),
-    userId: Joi.number().required(),
+const getArticleValidator = Joi.object<GetArticlesRequest>({
+    category: Joi.string().valid('reduce', 'reuse', 'recycle'),
+    page: Joi.number(),
+    size: Joi.number(),
 });
 
 class ArticleService {
-    fetchOne(id: any) {
-        throw new Error('Method not implemented.');
-    }
     articleRepository: Repository<Article>;
     likedArticleRepository: Repository<LikedArticle>;
     userRepository: Repository<User>;
@@ -60,8 +64,27 @@ class ArticleService {
         return article;
     };
 
-    fetch = async (): Promise<GetArticlesResponse> => {
-        return this.articleRepository.find();
+    fetch = async (req: GetArticlesRequest): Promise<GetArticlesResponse> => {
+        const error = getArticleValidator.validate(req).error;
+        if (error) throw error;
+
+        const category = req.category;
+        const page = !isNaN(parseInt(req.page!!)) ? parseInt(req.page!!) : 1;
+        const size = !isNaN(parseInt(req.size!!)) ? parseInt(req.size!!) : 10;
+        let selectQueryBuilder = this.articleRepository.createQueryBuilder('article');
+
+        console.log(`PAGE ${page} SIZE ${size}`);
+
+        if (category) {
+            selectQueryBuilder = selectQueryBuilder.where('article.category = :category', { category: category });
+        }
+
+        selectQueryBuilder = selectQueryBuilder
+            .skip((page - 1) * size)
+            .take(size)
+            .orderBy('article.created_at', 'DESC');
+
+        return await selectQueryBuilder.getMany();
     };
 }
 
