@@ -21,7 +21,7 @@ class GeneralError extends Error {
             return 404;
         }
         if (this instanceof Conflict) {
-            return 404;
+            return 409;
         }
         return 500;
     }
