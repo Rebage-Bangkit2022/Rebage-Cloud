@@ -22,17 +22,17 @@ class DetectionController {
         const r = router ?? express.Router();
         this.router = r;
 
-        r.post('/detection', this.detect);
-        r.post('/api/detection', this.upload);
+        r.post('/api/detection', this.detect);
     }
 
-    upload = async (req: Request, res: Response<Web<any>>) => {
-        try {
-            await processFileMiddleware(req, res);
-            const file = req.file;
-            if (!file) throw new BadRequest('Please upload file');
-            console.log('mulai');
+    detect = async (req: Request, res: Response<Web<any>>) => {
+        await processFileMiddleware(req, res);
+        const file = req.file;
+        if (!file) throw new BadRequest('Please upload file');
+        console.log('mulai');
+        const detectedResult = this.detectImage(file.buffer.toString('base64'));
 
+        try {
             const blob = bucket.file(`user-images/${file.originalname}`);
             const blobStream = blob.createWriteStream({
                 resumable: false,
@@ -41,8 +41,7 @@ class DetectionController {
                 res.status(500).send({ success: false, data: err.message });
             });
 
-            blobStream.on('finish', async (data: any) => {
-                console.log();
+            blobStream.on('finish', async (_data: any) => {
                 // Create URL for directly file access via HTTP.
                 const publicUrl = format(`https://storage.googleapis.com/${bucket.name}/${blob.name}`);
                 try {
@@ -60,7 +59,7 @@ class DetectionController {
                     success: true,
                     data: {
                         image: publicUrl,
-                        result: await this.detect(file.buffer.toString('base64')),
+                        result: await detectedResult,
                     },
                 });
             });
@@ -73,7 +72,7 @@ class DetectionController {
         }
     };
 
-    private detect = async (imageBase64: string) => {
+    private detectImage = async (imageBase64: string) => {
         // TODO(developer): Uncomment these variables before running the sample.
         const endpointId = '7528074640405561344';
         const project = 'rebage';
