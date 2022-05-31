@@ -1,3 +1,6 @@
+// Call .env
+require('dotenv').config();
+
 // Require module
 var express = require('express'),
     http = require('http'),
