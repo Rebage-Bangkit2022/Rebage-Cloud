@@ -2,7 +2,7 @@
 
 ## Base URL
 
-API Base URL: https://rebage.uc.r.appspot.com/
+API Base URL: NO LONGER USED
 
 ## User Authentication
 
