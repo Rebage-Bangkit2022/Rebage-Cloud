@@ -1,10 +1,18 @@
 import User from '../entity/user';
-import { SignInRequest, SignInResponse, SignUpRequest, SignUpResponse, TokenPayload } from '../model/user';
+import {
+    AuthGoogleRequest,
+    SignInRequest,
+    SignInResponse,
+    SignUpRequest,
+    SignUpResponse,
+    TokenPayload,
+} from '../model/user';
 import { Repository } from 'typeorm';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import GeneralError, { BadRequest, Conflict, NotFound, Unathorized } from '../model/error';
 import Joi from 'joi';
+import { OAuth2Client } from 'google-auth-library';
 
 const signUpValidator = Joi.object<SignUpRequest>({
     name: Joi.string().required().min(6).max(128),
@@ -15,6 +23,10 @@ const signUpValidator = Joi.object<SignUpRequest>({
 const signInValidator = Joi.object<SignUpRequest>({
     email: Joi.string().required().email(),
     password: Joi.string().required().min(6).max(64),
+});
+
+const authGoogleValidator = Joi.object<AuthGoogleRequest>({
+    idToken: Joi.string().required(),
 });
 
 class UserService {
@@ -49,13 +61,11 @@ class UserService {
         }
 
         return {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            photo: user.photo,
             token: token,
-            user: {
-                id: user.id,
-                name: user.name,
-                email: user.email,
-                photo: user.photo,
-            },
         };
     }
 
@@ -76,17 +86,15 @@ class UserService {
         }
 
         return {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            photo: user.photo,
             token: token,
-            user: {
-                id: user.id,
-                name: user.name,
-                email: user.email,
-                photo: user.photo,
-            },
         };
     }
 
-    verify(token: string): number {
+    verivy(token: string): number {
         const decoded = verifyToken(token);
         if (!decoded) throw new Unathorized('Token is not valid');
 
@@ -96,8 +104,50 @@ class UserService {
     async getUser(userId: number): Promise<User> {
         const user = await this.userRepository.findOne({ where: { id: userId } });
         if (!user) throw new NotFound('User not found');
-
         return user;
+    }
+
+    async authGoogle(req: AuthGoogleRequest): Promise<SignInResponse> {
+        const error = authGoogleValidator.validate(req).error;
+        if (error) throw error;
+
+        const clientId = process.env.CientId;
+        const client = new OAuth2Client(clientId);
+        const idToken = req.idToken;
+        const ticket = await client.verifyIdToken({
+            idToken: idToken,
+            audience: clientId,
+        });
+        const payload = ticket.getPayload();
+        if (!payload) throw new NotFound('Authentication failed');
+        let user = await this.userRepository.findOne({ where: { email: payload.email } });
+
+        if (!user) {
+            // Sign up
+            const newUser = this.userRepository.create({
+                email: payload.email,
+                name: payload.name,
+                photo: payload.picture,
+            });
+
+            user = await this.userRepository.save(newUser);
+        }
+
+        if (!user) throw new GeneralError('Internal server error');
+
+        const token = generateToken(user.id);
+        if (!token) {
+            console.error('Failed to generate token');
+            throw new GeneralError('Server error');
+        }
+
+        return {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            photo: user.photo,
+            token: token,
+        };
     }
 }
 
