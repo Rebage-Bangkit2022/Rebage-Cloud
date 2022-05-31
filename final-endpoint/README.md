@@ -97,11 +97,51 @@ Response:
     GET /api/user
     Authorization (Bearer Token):
 
-    ```JSON
-    {
-        "token": "eyJhbGciOiJIUzI1NaIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NTQ1ODczNDIsImlhdCI6MTY1Mzk4MjU0MiwidXNlcklkIjo4fQ.A8y7D-Idid6mvDsyU9EYtdh30qDTTF2sZDcMeCmMlGg"
+```JSON
+{
+    "token": "eyJhbGciOiJIUzI1NaIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NTQ1ODczNDIsImlhdCI6MTY1Mzk4MjU0MiwidXNlcklkIjo4fQ.A8y7D-Idid6mvDsyU9EYtdh30qDTTF2sZDcMeCmMlGg"
+}
+```
+
+-   [Post Article](#article)
+
+    POST /api/article
+
+Request:
+
+```JSON
+{
+    "title": "Tempat Pensil dari Botol Kaca",
+    "author": "Tyas Nur Annisa Hidayah",
+    "source": "https://www.rumahmesin.com/cara-membuat-kerajinan-dari-plastik/",
+    "body": "Tempat pensil adalah tempat untuk menyimpan pensil. \nDan juga bisa diisi dengan alat tulis lain seperti tipe-x, penggaris, \nbolpoint, penghapus, pensil warna, stabilo, dan masih banyak lagi.\nJadi biasanya terbuat dari berbagai jenis bahan seperti plastik, kain, \nanyaman rotan, dan masih banyak lagi. Sekarang, kita akan membuat\n tempat pensil dari botol shampo yang dihias dengan lucu. Bahan dan\n Alat yang Diperlukan : \n1. Botol shampo bekas (yang sudah kosong) \n2. Kertas atau sticker berwarna (sesuai selera) \n3. Gunting \n4. Cutter \n5. Lem \n6. Double tip \n\nCara Membuat: \n1. Buat pola atau bentuk pada botol shampo sesuai selera. \n2. Potong sesuai pola yang sudah dibuat menggunakan cutter atau gunting. \n3. Buat gambar tangan pada bagian yang sudah dipotong atau tidak digunakan. \n4. Bentuk gambar wajah dan hiasan lainnya, lalu rekatkan semua bagian denga lem \n5. Rekatkan dengan double tip pada bagian belakang tempat pensil ke tembok. \nNah itu dia cara membuat tempat pensil dari botol plastik, semoga membantu!",
+    "category": "reduce",
+    "photo": [
+        "https://storage.googleapis.com/rebage-cloud-storage/artikel/reuse/botolplastik-tempatpensil.jpg"
+    ]
+}
+```
+
+Response:
+
+```JSON
+{
+    "success": true,
+    "data": {
+        "title": "Tempat Pensil dari Botol Kaca",
+        "author": "Tyas Nur Annisa Hidayah",
+        "source": "https://www.rumahmesin.com/cara-membuat-kerajinan-dari-plastik/",
+        "body": "Tempat pensil adalah tempat untuk menyimpan pensil. \nDan juga bisa diisi dengan alat tulis lain seperti tipe-x, penggaris, \nbolpoint, penghapus, pensil warna, stabilo, dan masih banyak lagi.\nJadi biasanya terbuat dari berbagai jenis bahan seperti plastik, kain, \nanyaman rotan, dan masih banyak lagi. Sekarang, kita akan membuat\n tempat pensil dari botol shampo yang dihias dengan lucu. Bahan dan\n Alat yang Diperlukan : \n1. Botol shampo bekas (yang sudah kosong) \n2. Kertas atau sticker berwarna (sesuai selera) \n3. Gunting \n4. Cutter \n5. Lem \n6. Double tip \n\nCara Membuat: \n1. Buat pola atau bentuk pada botol shampo sesuai selera. \n2. Potong sesuai pola yang sudah dibuat menggunakan cutter atau gunting. \n3. Buat gambar tangan pada bagian yang sudah dipotong atau tidak digunakan. \n4. Bentuk gambar wajah dan hiasan lainnya, lalu rekatkan semua bagian denga lem \n5. Rekatkan dengan double tip pada bagian belakang tempat pensil ke tembok. \nNah itu dia cara membuat tempat pensil dari botol plastik, semoga membantu!",
+        "category": "reduce",
+        "photo": [
+            "https://storage.googleapis.com/rebage-cloud-storage/artikel/reuse/botolplastik-tempatpensil.jpg"
+        ],
+        "createdAt": "2022-05-31T16:11:23.364Z",
+        "updatedAt": "2022-05-31T16:11:23.364Z",
+        "id": 5
     }
-    ```
+}
+```
 
 -   [Get Articles](#articles)
 
@@ -126,6 +166,40 @@ Response:
                 "https://storage.googleapis.com/rebage-cloud-storage/artikel/reuse/botolplastik-tempatpensil.jpg"
             ]
         }
+}
+```
+
+-   [Post Garbage](#garbage)
+
+    POST /api/garbage
+
+Request:
+
+```JSON
+{
+    "createdAt": "2022-05-29T09:09:34.101Z",
+    "updatedAt": "2022-05-29T09:09:34.101Z",
+    "id": 1,
+    "name": "botolkaca",
+    "price": "700",
+    "image": "https://storage.googleapis.com/rebage-cloud-storage/barang/botolkaca.jpg"
+}
+```
+
+Response:
+
+```JSON
+{
+    "success": true,
+    "data": {
+        "createdAt": "2022-05-29T09:09:34.101Z",
+        "updatedAt": "2022-05-29T09:09:34.101Z",
+        "id": 1,
+        "name": "botolkaca",
+        "price": "700",
+        "image": "https://storage.googleapis.com/rebage-cloud-storage/barang/botolkaca.jpg"
+    }
+}
 ```
 
 -   [Get Garbages](#garbages)
