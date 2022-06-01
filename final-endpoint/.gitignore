@@ -5,6 +5,7 @@ node_modules
 # File
 .env
 .env.*
+sample-*.json
 
 # Token
 rebage-72b7a2cd2f99.json
