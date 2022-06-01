@@ -2,7 +2,7 @@
 
 ## Base URL
 
-API Base URL: https://rebage.rayatiga.com/
+API Base URL: https://rebage.uc.r.appspot.com/
 
 ## User Authentication
 
