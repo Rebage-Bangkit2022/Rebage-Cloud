@@ -1,5 +1,8 @@
+# Folder
 dist
 node_modules
+
+# Files
 .env
 
 # Token
