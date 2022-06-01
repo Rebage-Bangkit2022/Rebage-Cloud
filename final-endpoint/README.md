@@ -1,4 +1,8 @@
-# Base App Endpoint
+# Usage for Rebage API
+
+The Rebage API Usage wiki records documentation on using the APIs built into the Rebage app.
+Sample data is provided for the request as an example of usage along with detailed information
+from each endpoint, as well as the response from each endpoint.
 
 ## Base URL
 
@@ -19,9 +23,9 @@ Request:
 
 ```JSON
 {
-    "name": "John Doe",
-    "email": "johndoe@mail.com",
-    "password": "123456"
+    "name": string,
+    "email": string,
+    "password": string
 }
 ```
 
@@ -31,11 +35,11 @@ Response:
 {
     "success": true,
     "data": {
-        "id": 1,
-        "name": "John Doe",
-        "email": "johndoe@mail.com",
-        "photo": null,
-        "token": "eyJhbGciOiJIUzI1NaIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NTQ1ODcyNTMsImlhdCI6MTY1Mzk4MjQ1MywidXNlcklkIjo4fQ.nOeJ59XYSAutz2-0Q8P30EOA1aE9pMUT43Dy54LfjvU"
+        "id": integer,
+        "name": string,
+        "email": string,
+        "photo": string | null,
+        "token": string
     }
 }
 ```
@@ -48,8 +52,8 @@ Request:
 
 ```JSON
 {
-    "email": "johndoe@mail.com",
-    "password": "123456"
+    "email": string,
+    "password": string
 }
 ```
 
@@ -59,14 +63,16 @@ Response:
 {
     "success": true,
     "data": {
-        "id": 1,
-        "name": "John Doe",
-        "email": "johndoe@mail.com",
-        "photo": null,
-        "token": "eyJhbGciOiJIUzI1NaIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NTQ1ODczNDIsImlhdCI6MTY1Mzk4MjU0MiwidXNlcklkIjo4fQ.A8y7D-Idid6mvDsyU9EYtdh30qDTTF2sZDcMeCmMlGg"
+        "id": integer,
+        "name": string,
+        "email": string,
+        "photo": string | null,
+        "token": string
     }
 }
 ```
+
+### Google Authentication
 
 -   [Google Auth](#google-auth)
 
@@ -84,13 +90,18 @@ Response:
 
 ```JSON
 {
-    "id": number,
-    "name": string,
-    "email": string,
-    "photo": string | null,
-    "token": string
+    "success": true,
+    "data": {
+        "id": integer,
+        "name": string,
+        "email": string,
+        "photo": string | null,
+        "token": string
+    }
 }
 ```
+
+### Get User Information
 
 -   [Get User Info](#user)
 
@@ -99,9 +110,15 @@ Response:
 
 ```JSON
 {
-    "token": "eyJhbGciOiJIUzI1NaIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NTQ1ODczNDIsImlhdCI6MTY1Mzk4MjU0MiwidXNlcklkIjo4fQ.A8y7D-Idid6mvDsyU9EYtdh30qDTTF2sZDcMeCmMlGg"
+    "token": string
 }
 ```
+
+## Articles
+
+The application contains static articles which will be provided by the application user.
+
+### Adding Articles
 
 -   [Post Article](#article)
 
@@ -111,14 +128,13 @@ Request:
 
 ```JSON
 {
-    "title": "Tempat Pensil dari Botol Kaca",
-    "author": "Tyas Nur Annisa Hidayah",
-    "source": "https://www.rumahmesin.com/cara-membuat-kerajinan-dari-plastik/",
-    "body": "Tempat pensil adalah tempat untuk menyimpan pensil. \nDan juga bisa diisi dengan alat tulis lain seperti tipe-x, penggaris, \nbolpoint, penghapus, pensil warna, stabilo, dan masih banyak lagi.\nJadi biasanya terbuat dari berbagai jenis bahan seperti plastik, kain, \nanyaman rotan, dan masih banyak lagi. Sekarang, kita akan membuat\n tempat pensil dari botol shampo yang dihias dengan lucu. Bahan dan\n Alat yang Diperlukan : \n1. Botol shampo bekas (yang sudah kosong) \n2. Kertas atau sticker berwarna (sesuai selera) \n3. Gunting \n4. Cutter \n5. Lem \n6. Double tip \n\nCara Membuat: \n1. Buat pola atau bentuk pada botol shampo sesuai selera. \n2. Potong sesuai pola yang sudah dibuat menggunakan cutter atau gunting. \n3. Buat gambar tangan pada bagian yang sudah dipotong atau tidak digunakan. \n4. Bentuk gambar wajah dan hiasan lainnya, lalu rekatkan semua bagian denga lem \n5. Rekatkan dengan double tip pada bagian belakang tempat pensil ke tembok. \nNah itu dia cara membuat tempat pensil dari botol plastik, semoga membantu!",
-    "category": "reduce",
-    "photo": [
-        "https://storage.googleapis.com/rebage-cloud-storage/artikel/reuse/botolplastik-tempatpensil.jpg"
-    ]
+    "title": string,
+    "author": string,
+    "source": string,
+    "body": string,
+    "category": string [reduce | reuse],
+    "garbageCategory": string [botolkaca | botolplastik | kaleng | kardus | karet | kertas | plastik | sedotan],
+    "photo": string[]
 }
 ```
 
@@ -128,20 +144,21 @@ Response:
 {
     "success": true,
     "data": {
-        "title": "Tempat Pensil dari Botol Kaca",
-        "author": "Tyas Nur Annisa Hidayah",
-        "source": "https://www.rumahmesin.com/cara-membuat-kerajinan-dari-plastik/",
-        "body": "Tempat pensil adalah tempat untuk menyimpan pensil. \nDan juga bisa diisi dengan alat tulis lain seperti tipe-x, penggaris, \nbolpoint, penghapus, pensil warna, stabilo, dan masih banyak lagi.\nJadi biasanya terbuat dari berbagai jenis bahan seperti plastik, kain, \nanyaman rotan, dan masih banyak lagi. Sekarang, kita akan membuat\n tempat pensil dari botol shampo yang dihias dengan lucu. Bahan dan\n Alat yang Diperlukan : \n1. Botol shampo bekas (yang sudah kosong) \n2. Kertas atau sticker berwarna (sesuai selera) \n3. Gunting \n4. Cutter \n5. Lem \n6. Double tip \n\nCara Membuat: \n1. Buat pola atau bentuk pada botol shampo sesuai selera. \n2. Potong sesuai pola yang sudah dibuat menggunakan cutter atau gunting. \n3. Buat gambar tangan pada bagian yang sudah dipotong atau tidak digunakan. \n4. Bentuk gambar wajah dan hiasan lainnya, lalu rekatkan semua bagian denga lem \n5. Rekatkan dengan double tip pada bagian belakang tempat pensil ke tembok. \nNah itu dia cara membuat tempat pensil dari botol plastik, semoga membantu!",
-        "category": "reduce",
-        "photo": [
-            "https://storage.googleapis.com/rebage-cloud-storage/artikel/reuse/botolplastik-tempatpensil.jpg"
-        ],
-        "createdAt": "2022-05-31T16:11:23.364Z",
-        "updatedAt": "2022-05-31T16:11:23.364Z",
-        "id": 5
+        "title": string,
+        "author": string,
+        "source": string,
+        "body": string,
+        "category": string [reduce | reuse],
+        "garbageCategory": string [botolkaca | botolplastik | kaleng | kardus | karet | kertas | plastik | sedotan],
+        "photo": string[],
+        "createdAt": timestamp,
+        "updatedAt": timestamp,
+        "id": integer
     }
 }
 ```
+
+### Retrieving all Articles
 
 -   [Get Articles](#articles)
 
@@ -154,20 +171,181 @@ Response:
     "success": true,
     "data": [
         {
-            "createdAt": "2022-05-31T06:03:29.161Z",
-            "updatedAt": "2022-05-31T06:03:29.161Z",
-            "id": 4,
-            "title": "Tempat Pensil dari Botol Kaca",
-            "author": "Tyas Nur Annisa Hidayah",
-            "source": "https://www.rumahmesin.com/cara-membuat-kerajinan-dari-plastik/",
-            "body": "Tempat pensil adalah tempat untuk menyimpan pensil. \nDan juga bisa diisi dengan alat tulis lain seperti tipe-x, penggaris, \nbolpoint, penghapus, pensil warna, stabilo, dan masih banyak lagi.\nJadi biasanya terbuat dari berbagai jenis bahan seperti plastik, kain, \nanyaman rotan, dan masih banyak lagi. Sekarang, kita akan membuat\n tempat pensil dari botol shampo yang dihias dengan lucu. Bahan dan\n Alat yang Diperlukan : \n1. Botol shampo bekas (yang sudah kosong) \n2. Kertas atau sticker berwarna (sesuai selera) \n3. Gunting \n4. Cutter \n5. Lem \n6. Double tip \n\nCara Membuat: \n1. Buat pola atau bentuk pada botol shampo sesuai selera. \n2. Potong sesuai pola yang sudah dibuat menggunakan cutter atau gunting. \n3. Buat gambar tangan pada bagian yang sudah dipotong atau tidak digunakan. \n4. Bentuk gambar wajah dan hiasan lainnya, lalu rekatkan semua bagian denga lem \n5. Rekatkan dengan double tip pada bagian belakang tempat pensil ke tembok. \nNah itu dia cara membuat tempat pensil dari botol plastik, semoga membantu!",
-            "category": "reduce",
-            "photo": [
-                "https://storage.googleapis.com/rebage-cloud-storage/artikel/reuse/botolplastik-tempatpensil.jpg"
-            ]
+            "createdAt": timestamp,
+            "updatedAt": timestamp,
+            "id": integer,
+            "title": string,
+            "author": string,
+            "source": string,
+            "body": string,
+            "category": string [reduce | reuse],
+            "garbageCategory": string [botolkaca | botolplastik | kaleng | kardus | karet | kertas | plastik | sedotan],
+            "photo": string[]
         }
+    ]
 }
 ```
+
+### Retrieving Article by Id
+
+-   [Get Article by Id](#article-byId)
+
+    GET /api/article/:articleId
+
+```JSON
+{
+    "success": true,
+    "data": [
+        {
+            "createdAt": timestamp,
+            "updatedAt": timestamp,
+            "id": articleId,
+            "title": string,
+            "author": string,
+            "source": string,
+            "body": string,
+            "category": string [reduce | reuse],
+            "garbageCategory": string [botolkaca | botolplastik | kaleng | kardus | karet | kertas | plastik | sedotan],
+            "photo": string[]
+        }
+    ]
+}
+```
+
+### Retrieving filtered Article data
+
+-   [Get Filtered Article](#filter-articles)
+
+    GET /api/articles?`params`=`value`
+
+The `params` and `value` list:
+
+#### Fitering by Category
+
+-   ?category=`reduce` | `reuse`
+
+    GET /api/articles?category=reduce
+
+Response:
+
+```JSON
+{
+    "success": true,
+    "data": [
+        {
+            "createdAt": timestamp,
+            "updatedAt": timestamp,
+            "id": integer,
+            "title": string,
+            "author": string,
+            "source": string,
+            "body": string,
+            "category": "reduce",
+            "garbageCategory": string [botolkaca | botolplastik | kaleng | kardus | karet | kertas | plastik | sedotan],
+            "photo": string[]
+        }
+    ]
+}
+```
+
+#### Fitering by Category Garbage
+
+-   ?categoryGarbage=`botolkaca` | `botolplastik` | `kaleng` | `kardus` | `karet` | `kertas` | `plastik` | `sedotan`
+
+    GET /api/articles?categoryGarbage=botolkaca
+
+Response:
+
+```JSON
+{
+    "success": true,
+    "data": [
+        {
+            "createdAt": timestamp,
+            "updatedAt": timestamp,
+            "id": integer,
+            "title": string,
+            "author": string,
+            "source": string,
+            "body": string,
+            "category": string,
+            "garbageCategory": "botolkaca",
+            "photo": string[]
+        }
+    ]
+}
+```
+
+#### Fitering by Size
+
+-   ?size=`1` | `2` | `...` | `integer`
+
+    GET /api/articles?size=1
+
+Response:
+
+```JSON
+{
+    "success": true,
+    "data": [
+        {
+            "createdAt": timestamp,
+            "updatedAt": timestamp,
+            "id": integer,
+            "title": string,
+            "author": string,
+            "source": string,
+            "body": string,
+            "category": string [reduce | reuse],
+            "garbageCategory": string [botolkaca | botolplastik | kaleng | kardus | karet | kertas | plastik | sedotan],
+            "photo": string[]
+        }
+    ]
+}
+```
+
+#### Fitering by Page
+
+-   ?page=`1` | `2` | `...` | `integer`
+
+    GET /api/articles?page=1 (only article in page 1 response)
+
+Response:
+
+```JSON
+{
+    "success": true,
+    "data": [
+        {
+            "createdAt": timestamp,
+            "updatedAt": timestamp,
+            "id": integer,
+            "title": string,
+            "author": string,
+            "source": string,
+            "body": string,
+            "category": string [reduce | reuse],
+            "garbageCategory": string [botolkaca | botolplastik | kaleng | kardus | karet | kertas | plastik | sedotan],
+            "photo": string[]
+        }
+    ]
+}
+```
+
+## Garbage
+
+Contains data on 8 items in the form of a list including:
+
+-   botolkaca
+-   botolplastik
+-   kaleng
+-   kardus
+-   karet
+-   kertas
+-   plastik
+-   sedotan
+
+### Adding Garbage
 
 -   [Post Garbage](#garbage)
 
@@ -177,12 +355,12 @@ Request:
 
 ```JSON
 {
-    "createdAt": "2022-05-29T09:09:34.101Z",
-    "updatedAt": "2022-05-29T09:09:34.101Z",
-    "id": 1,
-    "name": "botolkaca",
-    "price": "700",
-    "image": "https://storage.googleapis.com/rebage-cloud-storage/barang/botolkaca.jpg"
+    "createdAt": timestamp,
+    "updatedAt": timestamp,
+    "id": integer,
+    "name": string,
+    "price": integer,
+    "image": string
 }
 ```
 
@@ -192,15 +370,17 @@ Response:
 {
     "success": true,
     "data": {
-        "createdAt": "2022-05-29T09:09:34.101Z",
-        "updatedAt": "2022-05-29T09:09:34.101Z",
-        "id": 1,
-        "name": "botolkaca",
-        "price": "700",
-        "image": "https://storage.googleapis.com/rebage-cloud-storage/barang/botolkaca.jpg"
+        "createdAt": timestamp,
+        "updatedAt": timestamp,
+        "id": integer,
+        "name": string,
+        "price": integer,
+        "image": string
     }
 }
 ```
+
+### Retrieving all Garbages
 
 -   [Get Garbages](#garbages)
 
@@ -213,72 +393,24 @@ Response:
     "success": true,
     "data": [
         {
-            "createdAt": "2022-05-29T09:09:34.101Z",
-            "updatedAt": "2022-05-29T09:09:34.101Z",
-            "id": 1,
-            "name": "botolkaca",
-            "price": "700",
-            "image": "https://storage.googleapis.com/rebage-cloud-storage/barang/botolkaca.jpg"
+            "createdAt": timestamp,
+            "updatedAt": timestamp,
+            "id": string,
+            "name": string,
+            "price": integer,
+            "image": string
         },
-        {
-            "createdAt": "2022-05-29T09:09:34.103Z",
-            "updatedAt": "2022-05-29T09:09:34.103Z",
-            "id": 2,
-            "name": "botolplastik",
-            "price": "500",
-            "image": "https://storage.googleapis.com/rebage-cloud-storage/barang/botolplastik.jpg"
-        },
-        {
-            "createdAt": "2022-05-29T09:09:34.105Z",
-            "updatedAt": "2022-05-29T09:09:34.105Z",
-            "id": 3,
-            "name": "kaleng",
-            "price": "550",
-            "image": "https://storage.googleapis.com/rebage-cloud-storage/barang/kaleng.jpg"
-        },
-        {
-            "createdAt": "2022-05-29T09:09:34.106Z",
-            "updatedAt": "2022-05-29T09:09:34.106Z",
-            "id": 4,
-            "name": "kardus",
-            "price": "250",
-            "image": "https://storage.googleapis.com/rebage-cloud-storage/barang/kardus.jpg"
-        },
-        {
-            "createdAt": "2022-05-29T09:09:34.107Z",
-            "updatedAt": "2022-05-29T09:09:34.107Z",
-            "id": 5,
-            "name": "karet",
-            "price": "100",
-            "image": "https://storage.googleapis.com/rebage-cloud-storage/barang/karet.jpg"
-        },
-        {
-            "createdAt": "2022-05-29T09:09:34.108Z",
-            "updatedAt": "2022-05-29T09:09:34.108Z",
-            "id": 6,
-            "name": "kertas",
-            "price": "50",
-            "image": "https://storage.googleapis.com/rebage-cloud-storage/barang/kertas.jpg"
-        },
-        {
-            "createdAt": "2022-05-29T09:09:34.109Z",
-            "updatedAt": "2022-05-29T09:09:34.109Z",
-            "id": 7,
-            "name": "plastik",
-            "price": "50",
-            "image": "https://storage.googleapis.com/rebage-cloud-storage/barang/plastik.jpg"
-        },
-        {
-            "createdAt": "2022-05-29T09:09:34.110Z",
-            "updatedAt": "2022-05-29T09:09:34.110Z",
-            "id": 8,
-            "name": "sedotan",
-            "price": "25",
-            "image": "https://storage.googleapis.com/rebage-cloud-storage/barang/sedotan.jpg"
-        }
+        ...
     ]
 }
 ```
+
+## Detection
+
+To perform visual detection in the form of an image that will be predicted
+at the Vertex AI endpoint, then return the results.
+
+### Request Image for Object Detection
 
 -   [Detection](#detection)
 
@@ -288,7 +420,7 @@ Request:
 
 ```
 Key     : image
-Value   : your-images.jpg
+Value   : your-images.jpg (format can be: .jpeg/jpg | .png | .gif | .bmp | .ico)
 ```
 
 Response:
@@ -297,21 +429,21 @@ Response:
 {
     "success": true,
     "data": {
-        "image": "https://storage.googleapis.com/rebage-cloud-storage/user-images/0_6665dfee_2e82_49cd_b8eb_01061ff51b9f_864_1152.jpg",
+        "image": string,
         "result": {
             "bounding_boxes": [
                 [
-                    0.0680751503,
-                    0.163940698,
-                    0.899692655,
-                    0.706927896
+                    number,
+                    number,
+                    number,
+                    number
                 ]
             ],
             "label_detections": [
-                "kaleng"
+                string
             ],
             "scores": [
-                0.9903301
+                number
             ]
         }
     }
