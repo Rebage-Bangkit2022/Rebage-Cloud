@@ -3,3 +3,10 @@ declare namespace Express {
       userId?: number
    }
 }
+
+declare namespace Multer {
+   export interface File {
+      originalname: string
+      buffer: Buffer
+   }
+}
