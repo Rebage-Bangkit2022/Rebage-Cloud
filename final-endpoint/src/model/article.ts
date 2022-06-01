@@ -32,8 +32,12 @@ export type GetArticleResponse = CreateArticleResponse;
 
 export type GetArticlesResponse = Array<CreateArticleResponse>;
 
-export interface GetArticlesRequest {
+export interface FetchArticlesRequest {
     category?: string;
     page?: string;
     size?: string;
+}
+
+export interface GetArticleRequest {
+    articleId: string
 }
