@@ -4,6 +4,8 @@ The Rebage API Usage wiki records documentation on using the APIs built into the
 Sample data is provided for the request as an example of usage along with detailed information
 from each endpoint, as well as the response from each endpoint.
 
+Wiki of API Usage: [API Usage - Wiki](https://github.com/Rebage-Bangkit2022/Rebage-Cloud/wiki/API-Usage)
+
 ## Base URL
 
 API Base URL: https://rebage.uc.r.appspot.com/
