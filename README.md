@@ -12,8 +12,9 @@ end-user products, such as Google Search, Gmail, Google Drive, and YouTube.
 
 The cloud technology that used in this project:
 
--   **Google Cloud Platform**
--   **Compute Engine (VM)** (for deploying the app & database)
+-   **Google Cloud Platform** (suite of cloud computing services)
+-   **Cloud SQL** (for app database - dev environment)
+-   **App Engine** (for deploying the app)
 -   **Vertex AI** (for machine learning)
 
 ### Important Notes
@@ -40,45 +41,56 @@ The cloud technology that used in this project:
     application testing that is expected to be perfect when the application
     enters the final stage.
 
-### Compute Engine (VM)
+### Cloud SQL
 
-This service **`has been deployed`**. Deployment details:
+This sql service **`has been deployed`** (dev environment).
 
+Service details:
+
+```YAML
+Database Type   : PostgreSQL
+Version         : 14
+vCPUs           : 1
+Memory          : 614.4 MB
+Storage         : 10 GB
 ```
--- Runtime Host
-Proccess    : PM2 for JavaScript Runtime Node.js
-Docs        : https://pm2.keymetrics.io/docs/usage/process-management/
--- App info
-URL         : https://rebage.rayatiga.com/
-Web server  : nginx
-SSL         : ZeroSSL
-Runtime     : nodejs
-Port        : 8080 -> 80 proxyed by nginx
-Version     : 1
--- Resources
-OS          : Ubuntu 22.04 LTS
-Virtual CPU : 0.5
-Memory      : 1.70 GB
-Disk Size   : 20 GB
--- Database
-Database    : postgreSQL
-Version     : 14.3
+
+Docs: [cloud-sql-postgres-docs](https://cloud.google.com/sql/docs/postgres/)
+
+### App Engine
+
+This app service **`has been deployed`**.
+
+Service details:
+
+```YAML
+runtime: nodejs
+env: flex
+manual_scaling:
+    instances: 1
+resources:
+    cpu: 2
+    memory_gb: 4
+    disk_size_gb: 10
 ```
 
 Docs:
-[compute-engine-overview](https://cloud.google.com/compute/docs/instances/).
+[app-engine-docs](https://cloud.google.com/appengine/docs/standard/nodejs/runtime)
 
 ### Vertex AI
 
-This model **`has been deployed`**.
+This service model **`has been deployed`**.
 
 Detail info:
 
-```
+```YAML
 Model name      : ssd_100k
 Region          : us-central1
 Version         : 1
 Endpoint name   : rebage-models-endpoint
 ```
 
-Docs: [ai-platform-overview](https://cloud.google.com/ai-platform/docs/).
+Docs: [ai-platform-docs](https://cloud.google.com/ai-platform/docs/).
+
+This application still `under development` changes are expected to be perfect
+when the application enters the final stage.
