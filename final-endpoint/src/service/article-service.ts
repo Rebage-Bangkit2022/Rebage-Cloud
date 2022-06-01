@@ -7,7 +7,7 @@ import {
     CreateArticleRequest,
     CreateArticleResponse,
     GetArticleResponse,
-    GetArticlesRequest,
+    FetchArticlesRequest,
     GetArticlesResponse,
 } from '../model/article';
 import { NotFound } from '../model/error';
@@ -21,11 +21,13 @@ const createArticleValidator = Joi.object<CreateArticleRequest>({
     photo: Joi.array().required(),
 });
 
-const getArticleValidator = Joi.object<GetArticlesRequest>({
+const getArticlesValidator = Joi.object<FetchArticlesRequest>({
     category: Joi.string().valid('reduce', 'reuse', 'recycle'),
     page: Joi.number(),
     size: Joi.number(),
 });
+
+const getArticleValidator = Joi.number().greater(0).positive();
 
 class ArticleService {
     articleRepository: Repository<Article>;
@@ -64,8 +66,8 @@ class ArticleService {
         return article;
     };
 
-    fetch = async (req: GetArticlesRequest): Promise<GetArticlesResponse> => {
-        const error = getArticleValidator.validate(req).error;
+    fetch = async (req: FetchArticlesRequest): Promise<GetArticlesResponse> => {
+        const error = getArticlesValidator.validate(req).error;
         if (error) throw error;
 
         const category = req.category;
@@ -85,6 +87,16 @@ class ArticleService {
             .orderBy('article.created_at', 'DESC');
 
         return await selectQueryBuilder.getMany();
+    };
+
+    getArticle = async (articleId: number): Promise<GetArticleResponse> => {
+        const error = getArticleValidator.validate(articleId).error;
+        if (error) throw error;
+
+        const article = await this.articleRepository.findOne({ where: { id: articleId } });
+        if (!article) throw new NotFound('Article not found');
+
+        return article;
     };
 }
 
