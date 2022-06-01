@@ -1,8 +1,8 @@
-## Rebage - Cloud Computing
+# Rebage - Cloud Computing
 
 _The cloud technology used in Rebage_
 
-##### Powered by:
+**Powered by:**
 
 <img src="https://www.gstatic.com/devrel-devsite/prod/v6cd15f45ec209c8961e07ea7e57ed9a0e9da4333bc915e67d1fcd2b2a9ec62d1/cloud/images/cloud-logo.svg" width="125"/>
 
@@ -17,7 +17,7 @@ The cloud technology that used in this project:
 -   **App Engine** (for deploying the app)
 -   **Vertex AI** (for machine learning)
 
-### Important Notes
+## Important Notes
 
 -   The folder called **_`"endpoint"`_** contains the code for the backend of
     the web-app. This backend code is used to handle the requests and send the
@@ -40,6 +40,12 @@ The cloud technology that used in this project:
     educational account purpose from Bangkit 2022. The changes made are an
     application testing that is expected to be perfect when the application
     enters the final stage.
+
+## Technology Used
+
+There are three uses of technology in Google Cloud. Among them are Cloud SQL,
+App Engine, and Vertex AI. These three services are used as application service
+needs on the cloud side to process all requests and data services.
 
 ### Cloud SQL
 
