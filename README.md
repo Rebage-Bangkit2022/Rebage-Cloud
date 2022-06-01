@@ -10,6 +10,9 @@ Google Cloud Platform, offered by Google, is a suite of cloud computing services
 that runs on the same infrastructure that Google uses internally for its
 end-user products, such as Google Search, Gmail, Google Drive, and YouTube.
 
+Wiki of Home:
+[Home - Wiki](https://github.com/Rebage-Bangkit2022/Rebage-Cloud/wiki)
+
 The cloud technology that used in this project:
 
 -   **Google Cloud Platform** (suite of cloud computing services)
