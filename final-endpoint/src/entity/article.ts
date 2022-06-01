@@ -8,6 +8,17 @@ export enum ArticleCategory {
     RECYCLE = 'recycle',
 }
 
+export enum GarbageCategory {
+    BOTOLKACA = 'botolkaca',
+    BOTOLPLASTIK = 'botolplastik',
+    KALENG = 'kaleng',
+    KARDUS = 'kardus',
+    KARET = 'karet',
+    KERTAS = 'kertas',
+    PLASTIK = 'plastik',
+    SEDOTAN = 'sedotan'
+}
+
 @Entity('article')
 class Article extends TimestampEntity {
     @PrimaryGeneratedColumn()
@@ -27,6 +38,9 @@ class Article extends TimestampEntity {
 
     @Column({ type: 'enum', enum: ArticleCategory })
     category: string;
+
+    @Column({ type: 'enum', enum: GarbageCategory })
+    garbageCategory: string[];
 
     @Column({ type: 'simple-array', default: [] })
     photo: string[];
