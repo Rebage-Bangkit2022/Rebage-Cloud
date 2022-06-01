@@ -4,6 +4,7 @@ node_modules
 
 # File
 .env
+.env.*
 
 # Token
 rebage-72b7a2cd2f99.json
