@@ -52,7 +52,7 @@ needs on the cloud side to process all requests and data services.
 
 ### Cloud SQL
 
-This sql service **`has been deployed`** (dev environment).
+This sql service **`has been deployed`** on devevelopment environment.
 
 Service details:
 
