@@ -74,9 +74,9 @@ class DetectionController {
 
     private detectImage = async (imageBase64: string) => {
         // TODO(developer): Uncomment these variables before running the sample.
-        const endpointId = '7528074640405561344';
-        const project = 'rebage';
-        const location = 'us-central1';
+        const endpointId = process.env.ENDPOINT_ID_VERTEX_AI;
+        const project = process.env.PROJECT_ID_VERTEX_AI;
+        const location = process.env.LOCATION_VERTEX_AI;
         const aiplatform = require('@google-cloud/aiplatform');
         const threshold = 0.5;
         const labels = ['', 'botolkaca', 'botolplastik', 'kaleng', 'kardus', 'karet', 'kertas', 'plastik', 'sedotan'];
