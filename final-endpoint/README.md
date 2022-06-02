@@ -108,7 +108,8 @@ Response:
 -   [Get User Info](#user)
 
     GET /api/user
-    Authorization (Bearer Token):
+
+Authorization with Bearer Token:
 
 ```JSON
 {
@@ -310,7 +311,7 @@ Response:
 
 -   ?page=`1` | `2` | `...` | `integer`
 
-    GET /api/articles?page=1 (only article in page 1 response)
+    GET /api/articles?page=1
 
 Response:
 
