@@ -15,7 +15,7 @@ class LikedArticle extends TimestampEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(() => Article, (article) => article.likedUsers, { eager: true })
+    @ManyToOne(() => Article, (article) => article.likedusers, { eager: true })
     @JoinColumn({ name: 'article_id' })
     article: Article;
 
