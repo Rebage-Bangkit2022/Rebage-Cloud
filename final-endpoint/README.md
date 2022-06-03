@@ -139,7 +139,7 @@ Request:
     "source": string,
     "body": string,
     "category": string [reduce | reuse],
-    "garbageCategory": string [botolkaca | botolplastik | kaleng | kardus | karet | kertas | plastik | sedotan],
+    "garbagecategory": string [botolkaca | botolplastik | kaleng | kardus | karet | kertas | plastik | sedotan],
     "photo": string[]
 }
 ```
@@ -155,7 +155,7 @@ Response:
         "source": string,
         "body": string,
         "category": string [reduce | reuse],
-        "garbageCategory": string [botolkaca | botolplastik | kaleng | kardus | karet | kertas | plastik | sedotan],
+        "garbagecategory": string [botolkaca | botolplastik | kaleng | kardus | karet | kertas | plastik | sedotan],
         "photo": string[],
         "createdAt": timestamp,
         "updatedAt": timestamp,
@@ -185,7 +185,7 @@ Response:
             "source": string,
             "body": string,
             "category": string [reduce | reuse],
-            "garbageCategory": string [botolkaca | botolplastik | kaleng | kardus | karet | kertas | plastik | sedotan],
+            "garbagecategory": string [botolkaca | botolplastik | kaleng | kardus | karet | kertas | plastik | sedotan],
             "photo": string[]
         }
     ]
@@ -211,7 +211,7 @@ Response:
             "source": string,
             "body": string,
             "category": string [reduce | reuse],
-            "garbageCategory": string [botolkaca | botolplastik | kaleng | kardus | karet | kertas | plastik | sedotan],
+            "garbagecategory": string [botolkaca | botolplastik | kaleng | kardus | karet | kertas | plastik | sedotan],
             "photo": string[]
         }
     ]
@@ -247,7 +247,7 @@ Response:
             "source": string,
             "body": string,
             "category": "reduce",
-            "garbageCategory": string [botolkaca | botolplastik | kaleng | kardus | karet | kertas | plastik | sedotan],
+            "garbagecategory": string [botolkaca | botolplastik | kaleng | kardus | karet | kertas | plastik | sedotan],
             "photo": string[]
         }
     ]
@@ -256,10 +256,10 @@ Response:
 
 #### Fitering by Category Garbage
 
--   ?garbageCategory=`botolkaca` | `botolplastik` | `kaleng` | `kardus` |
+-   ?garbagecategory=`botolkaca` | `botolplastik` | `kaleng` | `kardus` |
     `karet` | `kertas` | `plastik` | `sedotan`
 
-    GET /api/articles?garbageCategory=botolkaca
+    GET /api/articles?garbagecategory=botolkaca
 
 Response:
 
@@ -276,7 +276,7 @@ Response:
             "source": string,
             "body": string,
             "category": string,
-            "garbageCategory": "botolkaca",
+            "garbagecategory": "botolkaca",
             "photo": string[]
         }
     ]
@@ -304,7 +304,7 @@ Response:
             "source": string,
             "body": string,
             "category": string [reduce | reuse],
-            "garbageCategory": string [botolkaca | botolplastik | kaleng | kardus | karet | kertas | plastik | sedotan],
+            "garbagecategory": string [botolkaca | botolplastik | kaleng | kardus | karet | kertas | plastik | sedotan],
             "photo": string[]
         }
     ]
@@ -332,7 +332,7 @@ Response:
             "source": string,
             "body": string,
             "category": string [reduce | reuse],
-            "garbageCategory": string [botolkaca | botolplastik | kaleng | kardus | karet | kertas | plastik | sedotan],
+            "garbagecategory": string [botolkaca | botolplastik | kaleng | kardus | karet | kertas | plastik | sedotan],
             "photo": string[]
         }
     ]
