@@ -42,3 +42,9 @@ export interface AuthGoogleResponse {
     photo: string | null;
     token: string;
 }
+
+export interface EditUserRequest {
+    name: string;
+    password: string;
+    photo: string | null;
+}
