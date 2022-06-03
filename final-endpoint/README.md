@@ -253,7 +253,7 @@ Response:
 
 #### Fitering by Category Garbage
 
--   ?categoryGarbage=`botolkaca` | `botolplastik` | `kaleng` | `kardus` | `karet` | `kertas` | `plastik` | `sedotan`
+-   ?garbageCategory=`botolkaca` | `botolplastik` | `kaleng` | `kardus` | `karet` | `kertas` | `plastik` | `sedotan`
 
     GET /api/articles?garbageCategory=botolkaca
 
