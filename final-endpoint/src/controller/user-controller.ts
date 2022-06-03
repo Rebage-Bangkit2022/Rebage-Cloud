@@ -3,6 +3,7 @@ import UserService from '../service/user-service';
 import { Request, Response } from 'express';
 import {
     AuthGoogleRequest,
+    EditUserRequest,
     SignInRequest,
     SignInResponse,
     SignUpRequest,
@@ -24,6 +25,7 @@ class UserController {
         r.post('/api/user/signin', this.signIn);
         r.get('/api/user', this.auth, this.getUser);
         r.post('/api/user/auth-google', this.authGoogle);
+        r.put('/api/user/edit', this.auth, this.editUser);
     }
 
     signUp = async (
@@ -106,6 +108,22 @@ class UserController {
         }
 
         return next();
+    };
+
+    editUser = async (
+        req: Request<{}, {}, EditUserRequest>,
+        res: Response<Web<any>>
+    ) => {
+        try {
+            if (!req.userId) throw new Unathorized('Not allowed');
+            const user = await this.userService.editUser(req.userId, req.body);
+            res.json({
+                success: true,
+                data: user,
+            });
+        } catch (error) {
+            GeneralError.handle(error, res);
+        }
     };
 }
 
