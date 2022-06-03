@@ -9,7 +9,7 @@ export interface CreateArticleRequest {
 
     category: string;
 
-    garbageCategory: string[];
+    garbagecategory: string;
 
     photo: string[];
 }
@@ -27,7 +27,7 @@ export interface CreateArticleResponse {
 
     category: string;
 
-    garbageCategory: string[];
+    garbagecategory: string;
 
     photo: string[];
 }
@@ -38,7 +38,7 @@ export type GetArticlesResponse = Array<CreateArticleResponse>;
 
 export interface FetchArticlesRequest {
     category?: string;
-    garbageCategory?: string;
+    garbagecategory?: string;
     page?: string;
     size?: string;
 }

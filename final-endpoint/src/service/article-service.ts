@@ -18,7 +18,7 @@ const createArticleValidator = Joi.object<CreateArticleRequest>({
     source: Joi.string().required().min(6).max(64),
     body: Joi.string().required(),
     category: Joi.string().valid('reduce', 'reuse'),
-    garbageCategory: Joi.array().valid(
+    garbagecategory: Joi.string().valid(
         'botolplastik',
         'botolkaca',
         'kaleng',
@@ -33,7 +33,7 @@ const createArticleValidator = Joi.object<CreateArticleRequest>({
 
 const getArticlesValidator = Joi.object<FetchArticlesRequest>({
     category: Joi.string().valid('reduce', 'reuse'),
-    garbageCategory: Joi.array().valid(
+    garbagecategory: Joi.string().valid(
         'botolplastik',
         'botolkaca',
         'kaleng',
@@ -103,7 +103,7 @@ class ArticleService {
         if (error) throw error;
 
         const category = req.category;
-        const garbageCategory = req.garbageCategory;
+        const garbagecategory = req.garbagecategory;
         const page = !isNaN(parseInt(req.page!!)) ? parseInt(req.page!!) : 1;
         const size = !isNaN(parseInt(req.size!!)) ? parseInt(req.size!!) : 10;
 
@@ -117,20 +117,20 @@ class ArticleService {
                 'article.category = :category',
                 { category: category }
             );
-        } else if (garbageCategory) {
+        } else if (garbagecategory) {
             selectQueryBuilder = selectQueryBuilder.where(
-                'article.garbageCategory = :garbageCategory',
+                'article.garbagecategory = :garbagecategory',
                 {
-                    garbageCategory: garbageCategory,
+                    garbagecategory: garbagecategory,
                 }
             );
         }
 
-        if (category && garbageCategory) {
+        if (category && garbagecategory) {
             selectQueryBuilder = selectQueryBuilder.andWhere(
-                'article.garbageCategory = :garbageCategory',
+                'article.garbagecategory = :garbagecategory',
                 {
-                    garbageCategory: garbageCategory,
+                    garbagecategory: garbagecategory,
                 }
             );
         }
