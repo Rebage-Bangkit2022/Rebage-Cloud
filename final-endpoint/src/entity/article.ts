@@ -47,13 +47,13 @@ class Article extends TimestampEntity {
     category: string;
 
     @Column({ type: 'enum', enum: GarbageCategory })
-    garbageCategory: string[];
+    garbagecategory: string;
 
     @Column({ type: 'simple-array', default: [] })
     photo: string[];
 
     @OneToMany(() => User, (user) => user.id)
-    likedUsers: User[];
+    likedusers: User[];
 }
 
 export default Article;
