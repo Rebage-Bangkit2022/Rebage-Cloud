@@ -255,7 +255,7 @@ Response:
 
 -   ?categoryGarbage=`botolkaca` | `botolplastik` | `kaleng` | `kardus` | `karet` | `kertas` | `plastik` | `sedotan`
 
-    GET /api/articles?categoryGarbage=botolkaca
+    GET /api/articles?garbageCategory=botolkaca
 
 Response:
 
