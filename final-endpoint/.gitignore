@@ -5,6 +5,7 @@ node_modules
 # File
 .env*
 sample-*.json
+sample-*.pgsql
 
 # Token
 rebage-*.json
