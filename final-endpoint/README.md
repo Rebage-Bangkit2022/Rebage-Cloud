@@ -1,10 +1,12 @@
 # Usage for Rebage API
 
-The Rebage API Usage wiki records documentation on using the APIs built into the Rebage app.
-Sample data is provided for the request as an example of usage along with detailed information
-from each endpoint, as well as the response from each endpoint.
+The Rebage API Usage wiki records documentation on using the APIs built into the
+Rebage app. Sample data is provided for the request as an example of usage along
+with detailed information from each endpoint, as well as the response from each
+endpoint.
 
-Wiki of API Usage: [API Usage - Wiki](https://github.com/Rebage-Bangkit2022/Rebage-Cloud/wiki/API-Usage)
+Wiki of API Usage:
+[API Usage - Wiki](https://github.com/Rebage-Bangkit2022/Rebage-Cloud/wiki/API-Usage)
 
 ## Base URL
 
@@ -119,7 +121,8 @@ Authorization with Bearer Token:
 
 ## Articles
 
-The application contains static articles which will be provided by the application user.
+The application contains static articles which will be provided by the
+application user.
 
 ### Adding Articles
 
@@ -253,7 +256,8 @@ Response:
 
 #### Fitering by Category Garbage
 
--   ?garbageCategory=`botolkaca` | `botolplastik` | `kaleng` | `kardus` | `karet` | `kertas` | `plastik` | `sedotan`
+-   ?garbageCategory=`botolkaca` | `botolplastik` | `kaleng` | `kardus` |
+    `karet` | `kertas` | `plastik` | `sedotan`
 
     GET /api/articles?garbageCategory=botolkaca
 
@@ -410,8 +414,8 @@ Response:
 
 ## Detection
 
-To perform visual detection in the form of an image that will be predicted
-at the Vertex AI endpoint, then return the results.
+To perform visual detection in the form of an image that will be predicted at
+the Vertex AI endpoint, then return the results.
 
 ### Request Image for Object Detection
 

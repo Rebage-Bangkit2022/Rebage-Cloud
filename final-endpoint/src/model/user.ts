@@ -32,9 +32,8 @@ export interface TokenPayload {
 }
 
 export interface AuthGoogleRequest {
-    idToken: string
+    idToken: string;
 }
-
 
 export interface AuthGoogleResponse {
     id: number;

@@ -16,7 +16,9 @@ import GarbageController from './controller/garbage-controller';
 
 const app = express();
 const MODE = process.env.MODE === 'production' ? process.env.MODE : 'debug';
-const PORT = isNaN(parseInt(process.env.PORT!!)) ? 8080 : parseInt(process.env.PORT!!);
+const PORT = isNaN(parseInt(process.env.PORT!!))
+    ? 8080
+    : parseInt(process.env.PORT!!);
 
 const appDataSource = new DataSource({
     type: 'postgres',
@@ -41,8 +43,13 @@ const main = async () => {
     const userController = new UserController(userService);
 
     const articleRepository = dataSource.manager.getRepository(Article);
-    const likedArticleRepository = dataSource.manager.getRepository(LikedArticle);
-    const articleService = new ArticleService(articleRepository, likedArticleRepository, userRepository);
+    const likedArticleRepository =
+        dataSource.manager.getRepository(LikedArticle);
+    const articleService = new ArticleService(
+        articleRepository,
+        likedArticleRepository,
+        userRepository
+    );
     const articleController = new ArticleController(articleService);
 
     const garbageRepository = dataSource.manager.getRepository(Garbage);

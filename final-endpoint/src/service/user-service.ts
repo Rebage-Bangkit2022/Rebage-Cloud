@@ -10,7 +10,12 @@ import {
 import { Repository } from 'typeorm';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import GeneralError, { BadRequest, Conflict, NotFound, Unathorized } from '../model/error';
+import GeneralError, {
+    BadRequest,
+    Conflict,
+    NotFound,
+    Unathorized,
+} from '../model/error';
 import Joi from 'joi';
 import { OAuth2Client } from 'google-auth-library';
 
@@ -40,7 +45,9 @@ class UserService {
         const error = signUpValidator.validate(req).error;
         if (error) throw error;
 
-        const userExists = await this.userRepository.findOne({ where: { email: req.email } });
+        const userExists = await this.userRepository.findOne({
+            where: { email: req.email },
+        });
         if (userExists) throw new Conflict('Email already exists');
 
         const salt = bcrypt.genSaltSync(10);
@@ -73,7 +80,9 @@ class UserService {
         const error = signInValidator.validate(req).error;
         if (error) throw error;
 
-        const user = await this.userRepository.findOne({ where: { email: req.email } });
+        const user = await this.userRepository.findOne({
+            where: { email: req.email },
+        });
         if (!user) throw new NotFound('User not found');
 
         const paswordMatch = await bcrypt.compare(req.password, user.password);
@@ -102,7 +111,9 @@ class UserService {
     }
 
     async getUser(userId: number): Promise<User> {
-        const user = await this.userRepository.findOne({ where: { id: userId } });
+        const user = await this.userRepository.findOne({
+            where: { id: userId },
+        });
         if (!user) throw new NotFound('User not found');
         return user;
     }
@@ -120,7 +131,9 @@ class UserService {
         });
         const payload = ticket.getPayload();
         if (!payload) throw new NotFound('Authentication failed');
-        let user = await this.userRepository.findOne({ where: { email: payload.email } });
+        let user = await this.userRepository.findOne({
+            where: { email: payload.email },
+        });
 
         if (!user) {
             // Sign up

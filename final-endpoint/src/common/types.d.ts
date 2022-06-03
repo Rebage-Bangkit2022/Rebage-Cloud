@@ -1,12 +1,12 @@
 declare namespace Express {
-   export interface Request {
-      userId?: number
-   }
+    export interface Request {
+        userId?: number;
+    }
 }
 
 declare namespace Multer {
-   export interface File {
-      originalname: string
-      buffer: Buffer
-   }
+    export interface File {
+        originalname: string;
+        buffer: Buffer;
+    }
 }

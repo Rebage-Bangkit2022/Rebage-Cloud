@@ -25,7 +25,10 @@ class ArticleController {
         r.get('/api/article/:articleId', this.getArticle);
     }
 
-    create = async (req: Request<{}, {}, CreateArticleRequest>, res: Response<Web<CreateArticleResponse>>) => {
+    create = async (
+        req: Request<{}, {}, CreateArticleRequest>,
+        res: Response<Web<CreateArticleResponse>>
+    ) => {
         try {
             const article = await this.articleService.create(req.body);
             res.status(201).json({
@@ -37,7 +40,10 @@ class ArticleController {
         }
     };
 
-    fetch = async (req: Request<{}, {}, {}, FetchArticlesRequest>, res: Response<Web<GetArticlesResponse>>) => {
+    fetch = async (
+        req: Request<{}, {}, {}, FetchArticlesRequest>,
+        res: Response<Web<GetArticlesResponse>>
+    ) => {
         const query = req.query;
 
         try {

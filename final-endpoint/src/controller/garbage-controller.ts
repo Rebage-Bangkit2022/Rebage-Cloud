@@ -15,7 +15,10 @@ class GarbageController {
         r.get('/api/garbages', this.fetch);
     }
 
-    create = async (req: Request<{}, { name: string; price: number; image: string }>, res: Response) => {
+    create = async (
+        req: Request<{}, { name: string; price: number; image: string }>,
+        res: Response
+    ) => {
         try {
             const garbage = await this.garbageService.create(req.body);
             res.json({
@@ -29,13 +32,13 @@ class GarbageController {
 
     fetch = async (_req: Request, res: Response) => {
         try {
-            const garbages = await this.garbageService.fetch()
-             res.json({
+            const garbages = await this.garbageService.fetch();
+            res.json({
                 success: true,
                 data: garbages,
             });
         } catch (error) {
-             GeneralError.handle(error, res);
+            GeneralError.handle(error, res);
         }
     };
 }

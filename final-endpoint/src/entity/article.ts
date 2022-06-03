@@ -1,4 +1,11 @@
-import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+    Column,
+    Entity,
+    JoinTable,
+    ManyToMany,
+    OneToMany,
+    PrimaryGeneratedColumn,
+} from 'typeorm';
 import TimestampEntity from './entity-timestamp';
 import User from './user';
 
@@ -16,7 +23,7 @@ export enum GarbageCategory {
     KARET = 'karet',
     KERTAS = 'kertas',
     PLASTIK = 'plastik',
-    SEDOTAN = 'sedotan'
+    SEDOTAN = 'sedotan',
 }
 
 @Entity('article')

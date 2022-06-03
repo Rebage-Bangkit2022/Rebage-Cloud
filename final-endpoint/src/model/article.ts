@@ -38,11 +38,11 @@ export type GetArticlesResponse = Array<CreateArticleResponse>;
 
 export interface FetchArticlesRequest {
     category?: string;
-    garbageCategory?:string;
+    garbageCategory?: string;
     page?: string;
     size?: string;
 }
 
 export interface GetArticleRequest {
-    articleId: string
+    articleId: string;
 }

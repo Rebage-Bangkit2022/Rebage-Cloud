@@ -1,4 +1,11 @@
-import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+    Column,
+    Entity,
+    JoinTable,
+    ManyToMany,
+    OneToMany,
+    PrimaryGeneratedColumn,
+} from 'typeorm';
 import Article from './article';
 import TimestampEntity from './entity-timestamp';
 
@@ -13,7 +20,7 @@ class User extends TimestampEntity {
     @Column({ unique: true })
     email: string;
 
-    @Column({nullable: true})
+    @Column({ nullable: true })
     password: string;
 
     @Column({ type: 'varchar', nullable: true, default: null })
