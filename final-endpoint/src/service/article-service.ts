@@ -18,13 +18,31 @@ const createArticleValidator = Joi.object<CreateArticleRequest>({
     source: Joi.string().required().min(6).max(64),
     body: Joi.string().required(),
     category: Joi.string().valid('reduce', 'reuse'),
-    garbageCategory: Joi.array().valid('botolplastik', 'botolkaca', 'kaleng', 'kardus', 'karet', 'kertas', 'plastik', 'sedotan'),
+    garbageCategory: Joi.array().valid(
+        'botolplastik',
+        'botolkaca',
+        'kaleng',
+        'kardus',
+        'karet',
+        'kertas',
+        'plastik',
+        'sedotan'
+    ),
     photo: Joi.array().required(),
 });
 
 const getArticlesValidator = Joi.object<FetchArticlesRequest>({
     category: Joi.string().valid('reduce', 'reuse'),
-    garbageCategory: Joi.array().valid('botolplastik', 'botolkaca', 'kaleng', 'kardus', 'karet', 'kertas', 'plastik', 'sedotan'),
+    garbageCategory: Joi.array().valid(
+        'botolplastik',
+        'botolkaca',
+        'kaleng',
+        'kardus',
+        'karet',
+        'kertas',
+        'plastik',
+        'sedotan'
+    ),
     page: Joi.number(),
     size: Joi.number(),
 });
@@ -76,6 +94,7 @@ class ArticleService {
         const garbageCategory = req.garbageCategory;
         const page = !isNaN(parseInt(req.page!!)) ? parseInt(req.page!!) : 1;
         const size = !isNaN(parseInt(req.size!!)) ? parseInt(req.size!!) : 10;
+
         let selectQueryBuilder = this.articleRepository.createQueryBuilder('article');
 
         console.log(`PAGE ${page} SIZE ${size}`);
@@ -83,7 +102,15 @@ class ArticleService {
         if (category) {
             selectQueryBuilder = selectQueryBuilder.where('article.category = :category', { category: category });
         } else if (garbageCategory) {
-            selectQueryBuilder = selectQueryBuilder.where('article.garbageCategory = :garbageCategory', {garbageCategory: garbageCategory});
+            selectQueryBuilder = selectQueryBuilder.where('article.garbageCategory = :garbageCategory', {
+                garbageCategory: garbageCategory,
+            });
+        }
+
+        if (category && garbageCategory) {
+            selectQueryBuilder = selectQueryBuilder.andWhere('article.garbageCategory = :garbageCategory', {
+                garbageCategory: garbageCategory,
+            });
         }
 
         selectQueryBuilder = selectQueryBuilder
