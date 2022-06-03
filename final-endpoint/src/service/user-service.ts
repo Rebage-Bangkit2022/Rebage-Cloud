@@ -162,6 +162,23 @@ class UserService {
             token: token,
         };
     }
+
+    async editUser(userId: number, req: any): Promise<User> {
+        const user = await this.getUser(userId);
+        if (!user) throw new NotFound('User not found');
+
+        const { name, password, photo } = req;
+        if (name) user.name = name;
+        if (password) {
+            const salt = bcrypt.genSaltSync(10);
+            const hashedPassword = bcrypt.hashSync(password, salt);
+            user.password = hashedPassword;
+        }
+        if (photo) user.photo = photo;
+
+        await this.userRepository.save(user);
+        return user;
+    }
 }
 
 const generateToken = (userId: number) => {
