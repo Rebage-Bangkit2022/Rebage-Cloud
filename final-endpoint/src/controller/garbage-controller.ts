@@ -13,8 +13,8 @@ class GarbageController {
 
         r.post('/api/garbage', this.create);
         r.get('/api/garbages', this.fetch);
-        r.get('/api/garbage/id/:id', this.fetchOneId);
-        r.get('/api/garbage/name/:name', this.fetchOneName);
+        r.get('/api/garbage/id/:garbageId', this.fetchOneId);
+        r.get('/api/garbage/name/:garbageName', this.fetchOneName);
     }
 
     create = async (
