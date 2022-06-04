@@ -201,20 +201,18 @@ Response:
 ```JSON
 {
     "success": true,
-    "data": [
-        {
-            "createdAt": timestamp,
-            "updatedAt": timestamp,
-            "id": articleId,
-            "title": string,
-            "author": string,
-            "source": string,
-            "body": string,
-            "category": string [reduce | reuse],
-            "garbagecategory": string [botolkaca | botolplastik | kaleng | kardus | karet | kertas | plastik | sedotan],
-            "photo": string[]
-        }
-    ]
+    "data": {
+        "createdAt": timestamp,
+        "updatedAt": timestamp,
+        "id": articleId,
+        "title": string,
+        "author": string,
+        "source": string,
+        "body": string,
+        "category": string [reduce | reuse],
+        "garbagecategory": string [botolkaca | botolplastik | kaleng | kardus | karet | kertas | plastik | sedotan],
+        "photo": string[]
+    }
 }
 ```
 
@@ -249,7 +247,8 @@ Response:
             "category": "reduce",
             "garbagecategory": string [botolkaca | botolplastik | kaleng | kardus | karet | kertas | plastik | sedotan],
             "photo": string[]
-        }
+        },
+        ...
     ]
 }
 ```
@@ -278,7 +277,8 @@ Response:
             "category": string,
             "garbagecategory": "botolkaca",
             "photo": string[]
-        }
+        },
+        ...
     ]
 }
 ```
@@ -287,7 +287,7 @@ Response:
 
 -   ?size=`1` | `2` | `...` | `integer`
 
-    GET /api/articles?size=1
+    GET /api/articles?size=2
 
 Response:
 
@@ -306,7 +306,8 @@ Response:
             "category": string [reduce | reuse],
             "garbagecategory": string [botolkaca | botolplastik | kaleng | kardus | karet | kertas | plastik | sedotan],
             "photo": string[]
-        }
+        },
+        ...
     ]
 }
 ```
@@ -334,7 +335,8 @@ Response:
             "category": string [reduce | reuse],
             "garbagecategory": string [botolkaca | botolplastik | kaleng | kardus | karet | kertas | plastik | sedotan],
             "photo": string[]
-        }
+        },
+        ...
     ]
 }
 ```
@@ -423,16 +425,14 @@ Response:
 ```JSON
 {
     "success": true,
-    "data": [
-        {
-            "createdAt": timestamp,
-            "updatedAt": timestamp,
-            "id": garbageId,
-            "name": string,
-            "price": integer,
-            "image": string
-        }
-    ]
+    "data": {
+        "createdAt": timestamp,
+        "updatedAt": timestamp,
+        "id": garbageId,
+        "name": string,
+        "price": integer,
+        "image": string
+    }
 }
 ```
 
@@ -447,16 +447,14 @@ Response:
 ```JSON
 {
     "success": true,
-    "data": [
-        {
-            "createdAt": timestamp,
-            "updatedAt": timestamp,
-            "id": string,
-            "name": garbageName,
-            "price": integer,
-            "image": string
-        }
-    ]
+    "data": {
+        "createdAt": timestamp,
+        "updatedAt": timestamp,
+        "id": string,
+        "name": garbageName,
+        "price": integer,
+        "image": string
+    }
 }
 ```
 
