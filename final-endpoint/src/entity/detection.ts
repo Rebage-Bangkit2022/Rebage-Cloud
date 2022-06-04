@@ -1,33 +1,33 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import TimestampEntity from "./entity-timestamp";
-import User from "./user";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import TimestampEntity from './entity-timestamp';
+import User from './user';
 
-@Entity({ name: "detection" })
+@Entity({ name: 'detection' })
 class Detection extends TimestampEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+    @PrimaryGeneratedColumn()
+    id: number;
 
-  @Column()
-  image: string;
+    @Column()
+    image: string;
 
-  @Column()
-  label: string;
+    @Column()
+    label: string;
 
-  @Column({ name: "bounding_boxes", type: "json" })
-  boundingBoxes: number[][];
+    @Column({ name: 'bounding_boxes', type: 'json' })
+    boundingBoxes: number[][];
 
-  @Column({type: 'json'})
-  scores: number[];
+    @Column({ type: 'json' })
+    scores: number[];
 
-  @Column()
-  total: number;
+    @Column()
+    total: number;
 
-  @ManyToOne(() => User)
-  @JoinColumn({ name: "user_id" })
-  user: User;
+    @ManyToOne(() => User)
+    @JoinColumn({ name: 'user_id' })
+    user: User;
 
-  @Column({name: 'user_id'})
-  userId: number
+    @Column({ name: 'user_id' })
+    userId: number;
 }
 
 export default Detection;

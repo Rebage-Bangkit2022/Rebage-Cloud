@@ -64,9 +64,7 @@ class ArticleService {
         this.userRepository = userRepository;
     }
 
-    create = async (
-        req: CreateArticleRequest
-    ): Promise<CreateArticleResponse> => {
+    create = async (req: CreateArticleRequest): Promise<CreateArticleResponse> => {
         const error = createArticleValidator.validate(req).error;
         if (error) throw error;
 
@@ -75,10 +73,7 @@ class ArticleService {
         return await this.articleRepository.save(article);
     };
 
-    like = async (
-        articleId: number,
-        userId: number
-    ): Promise<GetArticleResponse> => {
+    like = async (articleId: number, userId: number): Promise<GetArticleResponse> => {
         const article = await this.articleRepository.findOne({
             where: { id: articleId },
         });
@@ -107,32 +102,22 @@ class ArticleService {
         const page = !isNaN(parseInt(req.page!!)) ? parseInt(req.page!!) : 1;
         const size = !isNaN(parseInt(req.size!!)) ? parseInt(req.size!!) : 10;
 
-        let selectQueryBuilder =
-            this.articleRepository.createQueryBuilder('article');
+        let selectQueryBuilder = this.articleRepository.createQueryBuilder('article');
 
         console.log(`PAGE ${page} SIZE ${size}`);
 
         if (category) {
-            selectQueryBuilder = selectQueryBuilder.where(
-                'article.category = :category',
-                { category: category }
-            );
+            selectQueryBuilder = selectQueryBuilder.where('article.category = :category', { category: category });
         } else if (garbagecategory) {
-            selectQueryBuilder = selectQueryBuilder.where(
-                'article.garbagecategory = :garbagecategory',
-                {
-                    garbagecategory: garbagecategory,
-                }
-            );
+            selectQueryBuilder = selectQueryBuilder.where('article.garbagecategory = :garbagecategory', {
+                garbagecategory: garbagecategory,
+            });
         }
 
         if (category && garbagecategory) {
-            selectQueryBuilder = selectQueryBuilder.andWhere(
-                'article.garbagecategory = :garbagecategory',
-                {
-                    garbagecategory: garbagecategory,
-                }
-            );
+            selectQueryBuilder = selectQueryBuilder.andWhere('article.garbagecategory = :garbagecategory', {
+                garbagecategory: garbagecategory,
+            });
         }
 
         selectQueryBuilder = selectQueryBuilder

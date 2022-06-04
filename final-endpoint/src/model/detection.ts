@@ -1,14 +1,14 @@
 export interface GetDetectionResponse {
-  id: number;
-  image: string;
-  label: string;
-  boundingBoxes: number[][];
-  scores: number[];
-  total: number;
-  createdAt: Date;
+    id: number;
+    image: string;
+    label: string;
+    boundingBoxes: number[][];
+    scores: number[];
+    total: number;
+    createdAt: Date;
 }
 
 export interface UpdateDetectionRequest {
-  id: number,
-  total: number
+    id: number;
+    total: number;
 }

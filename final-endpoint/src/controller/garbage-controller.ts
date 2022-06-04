@@ -17,10 +17,7 @@ class GarbageController {
         r.get('/api/garbage/name/:garbageName', this.fetchOneName);
     }
 
-    create = async (
-        req: Request<{}, { name: string; price: number; image: string }>,
-        res: Response
-    ) => {
+    create = async (req: Request<{}, { name: string; price: number; image: string }>, res: Response) => {
         try {
             const garbage = await this.garbageService.create(req.body);
             res.json({
@@ -46,9 +43,7 @@ class GarbageController {
 
     fetchOneId = async (req: Request<{ garbageId: number }>, res: Response) => {
         try {
-            const garbage = await this.garbageService.fetchOneId(
-                req.params.garbageId
-            );
+            const garbage = await this.garbageService.fetchOneId(req.params.garbageId);
             res.json({
                 success: true,
                 data: garbage,
@@ -58,14 +53,9 @@ class GarbageController {
         }
     };
 
-    fetchOneName = async (
-        req: Request<{ garbageName: string }>,
-        res: Response
-    ) => {
+    fetchOneName = async (req: Request<{ garbageName: string }>, res: Response) => {
         try {
-            const garbage = await this.garbageService.fetchOneName(
-                req.params.garbageName
-            );
+            const garbage = await this.garbageService.fetchOneName(req.params.garbageName);
             res.json({
                 success: true,
                 data: garbage,
