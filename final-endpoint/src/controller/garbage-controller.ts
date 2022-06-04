@@ -44,9 +44,11 @@ class GarbageController {
         }
     };
 
-    fetchOneId = async (req: Request<{ id: number }>, res: Response) => {
+    fetchOneId = async (req: Request<{ garbageId: number }>, res: Response) => {
         try {
-            const garbage = await this.garbageService.fetchOneId(req.params.id);
+            const garbage = await this.garbageService.fetchOneId(
+                req.params.garbageId
+            );
             res.json({
                 success: true,
                 data: garbage,
@@ -56,10 +58,13 @@ class GarbageController {
         }
     };
 
-    fetchOneName = async (req: Request<{ name: string }>, res: Response) => {
+    fetchOneName = async (
+        req: Request<{ garbageName: string }>,
+        res: Response
+    ) => {
         try {
             const garbage = await this.garbageService.fetchOneName(
-                req.params.name
+                req.params.garbageName
             );
             res.json({
                 success: true,
