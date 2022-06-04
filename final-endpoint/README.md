@@ -19,7 +19,7 @@ information.
 
 ### Regular Authentication
 
--   [Signup](#signup)
+-   [Signup](#post-signup)
 
     POST /api/user/signup
 
@@ -48,7 +48,7 @@ Response:
 }
 ```
 
--   [Signin](#signin)
+-   [Signin](#post-signin)
 
     POST /api/user/signin
 
@@ -78,7 +78,7 @@ Response:
 
 ### Google Authentication
 
--   [Google Auth](#google-auth)
+-   [Google Auth](#post-google-auth)
 
     POST /api/user/auth-google
 
@@ -107,7 +107,7 @@ Response:
 
 ### Get User Information
 
--   [Get User Info](#user)
+-   [Get User](#get-user)
 
     GET /api/user
 
@@ -126,7 +126,7 @@ application user.
 
 ### Adding Articles
 
--   [Post Article](#article)
+-   [Post Article](#post-article)
 
     POST /api/article
 
@@ -166,7 +166,7 @@ Response:
 
 ### Retrieving all Articles
 
--   [Get Articles](#articles)
+-   [Get Articles](#get-articles)
 
     GET /api/articles
 
@@ -194,7 +194,7 @@ Response:
 
 ### Retrieving Article by Id
 
--   [Get Article by Id](#article-byId)
+-   [Get Article by Id](#get-article-by-id)
 
     GET /api/article/:articleId
 
@@ -220,7 +220,7 @@ Response:
 
 ### Retrieving filtered Article data
 
--   [Get Filtered Article](#filter-articles)
+-   [Get Filtered Article](#get-filtered-articles)
 
     GET /api/articles?`params`=`value`
 
@@ -354,7 +354,7 @@ Contains data on 8 items in the form of a list including:
 
 ### Adding Garbage
 
--   [Post Garbage](#garbage)
+-   [Post Garbage](#post-garbage)
 
     POST /api/garbage
 
@@ -389,7 +389,7 @@ Response:
 
 ### Retrieving all Garbages
 
--   [Get Garbages](#garbages)
+-   [Get Garbages](#get-garbages)
 
     GET /api/garbages
 
@@ -412,6 +412,54 @@ Response:
 }
 ```
 
+### Retrieve Garbage Details by Id
+
+-   [Get Garbages by Id](#get-garbage-by-id)
+
+    GET /api/garbage/id/:garbageId
+
+Response:
+
+```JSON
+{
+    "success": true,
+    "data": [
+        {
+            "createdAt": timestamp,
+            "updatedAt": timestamp,
+            "id": garbageId,
+            "name": string,
+            "price": integer,
+            "image": string
+        }
+    ]
+}
+```
+
+### Retrieve Garbage Details by Name
+
+-   [Get Garbages by Name](#get-garbage-by-name)
+
+    GET /api/garbage/name/:garbageName
+
+Response:
+
+```JSON
+{
+    "success": true,
+    "data": [
+        {
+            "createdAt": timestamp,
+            "updatedAt": timestamp,
+            "id": string,
+            "name": garbageName,
+            "price": integer,
+            "image": string
+        }
+    ]
+}
+```
+
 ## Detection
 
 To perform visual detection in the form of an image that will be predicted at
@@ -419,7 +467,7 @@ the Vertex AI endpoint, then return the results.
 
 ### Request Image for Object Detection
 
--   [Detection](#detection)
+-   [Detection](#post-detection)
 
     POST /api/detection
 
@@ -455,6 +503,60 @@ Response:
         }
     }
 }
+```
+
+### Retrieve the Object Detection
+
+-   [Get Detection](#get-detection)
+
+    GET /api/detections
+
+Response:
+
+```JSON
+{}
+```
+
+### Retrieve the Object Detection by Id
+
+-   [Get Detection](#get-detection-by-id)
+
+    GET /api/detection/:id
+
+Response:
+
+```JSON
+{}
+```
+
+### Update the Object Detection
+
+-   [Update Detection](#update-detection)
+
+    PUT /api/detection/:id
+
+Request:
+
+```JSON
+{}
+```
+
+Response:
+
+```JSON
+{}
+```
+
+### Delete the Object Detection
+
+-   [Delete Detection](#delete-detection)
+
+    DELETE /api/detection/:id
+
+Response:
+
+```JSON
+{}
 ```
 
 ## Contributor
