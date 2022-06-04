@@ -404,7 +404,7 @@ Response:
         {
             "createdAt": timestamp,
             "updatedAt": timestamp,
-            "id": string,
+            "id": integer,
             "name": string,
             "price": integer,
             "image": string
@@ -450,7 +450,7 @@ Response:
     "data": {
         "createdAt": timestamp,
         "updatedAt": timestamp,
-        "id": string,
+        "id": integer,
         "name": garbageName,
         "price": integer,
         "image": string
