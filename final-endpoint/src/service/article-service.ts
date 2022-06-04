@@ -17,14 +17,14 @@ const createArticleValidator = Joi.object<CreateArticleRequest>({
     author: Joi.string().required().min(3),
     source: Joi.string().required().min(6).max(64),
     body: Joi.string().required(),
-    category: Joi.string().valid('reduce', 'reuse'),
+    category: Joi.string().valid('Reduce', 'Reuse'),
     garbagecategory: Joi.string().valid(
         'Botol Plastik',
         'Botol Kaca',
         'Kaleng',
         'Kardus',
         'Karet',
-        'kertas',
+        'Kertas',
         'Plastik',
         'Sedotan'
     ),
