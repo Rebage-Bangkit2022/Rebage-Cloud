@@ -16,14 +16,14 @@ export enum ArticleCategory {
 }
 
 export enum GarbageCategory {
-    BOTOLKACA = 'botolkaca',
-    BOTOLPLASTIK = 'botolplastik',
-    KALENG = 'kaleng',
-    KARDUS = 'kardus',
-    KARET = 'karet',
-    KERTAS = 'kertas',
-    PLASTIK = 'plastik',
-    SEDOTAN = 'sedotan',
+    BOTOLKACA = 'Botol Kaca',
+    BOTOLPLASTIK = 'Botol Plastik',
+    KALENG = 'Kaleng',
+    KARDUS = 'Kardus',
+    KARET = 'Karet',
+    KERTAS = 'Kertas',
+    PLASTIK = 'Plastik',
+    SEDOTAN = 'Sedotan',
 }
 
 @Entity('article')

@@ -19,14 +19,14 @@ const createArticleValidator = Joi.object<CreateArticleRequest>({
     body: Joi.string().required(),
     category: Joi.string().valid('reduce', 'reuse'),
     garbagecategory: Joi.string().valid(
-        'botolplastik',
-        'botolkaca',
-        'kaleng',
-        'kardus',
-        'karet',
+        'Botol Plastik',
+        'Botol Kaca',
+        'Kaleng',
+        'Kardus',
+        'Karet',
         'kertas',
-        'plastik',
-        'sedotan'
+        'Plastik',
+        'Sedotan'
     ),
     photo: Joi.array().required(),
 });
@@ -34,14 +34,14 @@ const createArticleValidator = Joi.object<CreateArticleRequest>({
 const getArticlesValidator = Joi.object<FetchArticlesRequest>({
     category: Joi.string().valid('reduce', 'reuse'),
     garbagecategory: Joi.string().valid(
-        'botolplastik',
-        'botolkaca',
-        'kaleng',
-        'kardus',
-        'karet',
-        'kertas',
-        'plastik',
-        'sedotan'
+        'Botol Plastik',
+        'Botol Kaca',
+        'Kaleng',
+        'Kardus',
+        'Karet',
+        'Kertas',
+        'Plastik',
+        'Sedotan'
     ),
     page: Joi.number(),
     size: Joi.number(),
