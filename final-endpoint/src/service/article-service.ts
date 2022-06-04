@@ -32,7 +32,7 @@ const createArticleValidator = Joi.object<CreateArticleRequest>({
 });
 
 const getArticlesValidator = Joi.object<FetchArticlesRequest>({
-    category: Joi.string().valid('reduce', 'reuse'),
+    category: Joi.string().valid('Reduce', 'Reuse'),
     garbagecategory: Joi.string().valid(
         'Botol Plastik',
         'Botol Kaca',
