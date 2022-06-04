@@ -1,18 +1,10 @@
-import {
-    Column,
-    Entity,
-    JoinTable,
-    ManyToMany,
-    OneToMany,
-    PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import TimestampEntity from './entity-timestamp';
 import User from './user';
 
 export enum ArticleCategory {
-    REDUCE = 'reduce',
-    REUSE = 'reuse',
-    RECYCLE = 'recycle',
+    REDUCE = 'Reduce',
+    REUSE = 'Reuse',
 }
 
 export enum GarbageCategory {
