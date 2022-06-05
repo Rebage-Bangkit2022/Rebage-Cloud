@@ -1,3 +1,4 @@
+import { NotFound } from '../model/error';
 import { Repository } from 'typeorm';
 import Garbage from '../entity/garbage';
 
@@ -23,6 +24,9 @@ class GarbageService {
         const garbage = await this.garbageRepository.findOne({
             where: { id: garbageId },
         });
+
+        if (!garbage) throw new NotFound('Garbage not found');
+
         return garbage;
     };
 
@@ -30,6 +34,9 @@ class GarbageService {
         const garbage = await this.garbageRepository.findOne({
             where: { name: garbageName },
         });
+
+        if (!garbage) throw new NotFound('Garbage not found');
+
         return garbage;
     };
 }
