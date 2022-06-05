@@ -12,3 +12,7 @@ export interface UpdateDetectionRequest {
     id: number;
     total: number;
 }
+
+export interface GetStatisticResponse {
+    
+}

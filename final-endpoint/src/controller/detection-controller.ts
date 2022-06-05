@@ -4,7 +4,7 @@ import Multer from 'multer';
 import GeneralError, { BadRequest, Forbidden, Unathorized } from '../model/error';
 import Web from '../model/web';
 import { Storage } from '@google-cloud/storage';
-import { GetDetectionResponse, UpdateDetectionRequest } from '../model/detection';
+import { GetDetectionResponse, GetStatisticResponse, UpdateDetectionRequest } from '../model/detection';
 import DetectionService from '../service/detection-service';
 import { auth } from './middleware';
 // Instantiate a storage client with credentials
@@ -29,6 +29,7 @@ class DetectionController {
 
         r.post('/api/detection', auth, this.detect);
         r.get('/api/detections', auth, this.getDetections);
+        r.get('/api/detections/stats', auth, this.getStatistic);
         r.get('/api/detection/:id', auth, this.getDetection);
         r.put('/api/detection/:id', auth, this.update);
         r.delete('/api/detection/:id', auth, this.delete);
@@ -277,6 +278,22 @@ class DetectionController {
         }
     };
 
+    getStatistic = async (req: Request<{ id: string }>, res: Response<Web<GetStatisticResponse>>) => {
+        try {
+            const userId = req.userId;
+            if (!userId) throw new Forbidden('Not allowed');
+            
+            const stats = await this.detectionService.getStatistic(userId);
+            res.json({
+                success: true,
+                data: stats,
+            });
+        } catch (error) {
+            console.error(error);
+            GeneralError.handle(error, res);
+        }
+    };
+
     update = async (
         req: Request<{ id: string }, {}, UpdateDetectionRequest>,
         res: Response<Web<GetDetectionResponse>>
@@ -286,7 +303,7 @@ class DetectionController {
             const userId = req.userId;
             if (!userId) throw new Forbidden('Not allowed');
 
-            const detection = await this.detectionService.update(req.body, userId);
+            const detection = await this.detectionService.update({ id: detectionId, total: req.body.total }, userId);
             res.json({
                 success: true,
                 data: detection,

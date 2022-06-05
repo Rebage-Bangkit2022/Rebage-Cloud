@@ -2,10 +2,10 @@ import Detection from '../entity/detection';
 import { Repository } from 'typeorm';
 import User from '../entity/user';
 import GeneralError, { NotFound } from '../model/error';
-import { GetDetectionResponse, UpdateDetectionRequest } from 'src/model/detection';
+import { GetDetectionResponse, GetStatisticResponse, UpdateDetectionRequest } from 'src/model/detection';
 import Joi from 'joi';
 
-const validateDetections = Joi.number().required().greater(0);
+const validateId = Joi.number().required().greater(0);
 const validateDetection = Joi.object<{ detectionId: number; userId: number }>({
     detectionId: Joi.number().required().greater(0),
     userId: Joi.number().required().greater(0),
@@ -61,7 +61,7 @@ class DetectionService {
     };
 
     getDetections = async (userId: number): Promise<GetDetectionResponse[]> => {
-        const error = validateDetections.validate(userId).error;
+        const error = validateId.validate(userId).error;
         if (error) throw error;
         const detections = await this.detectionRepository
             .createQueryBuilder('detection')
@@ -83,7 +83,7 @@ class DetectionService {
     getDetection = async (detectionId: number, userId: number): Promise<GetDetectionResponse> => {
         const error = validateDetection.validate({ detectionId: detectionId, userId: userId }).error;
         if (error) throw error;
-        console.log(`lolos ${typeof detectionId}`);
+
         const detection = await this.detectionRepository.findOne({ where: { id: detectionId, userId: userId } });
         if (!detection) throw new NotFound('Detection not found');
         return {
@@ -95,6 +95,20 @@ class DetectionService {
             total: detection.total,
             createdAt: detection.createdAt,
         };
+    };
+
+    getStatistic = async (userId: number): Promise<GetStatisticResponse> => {
+        const error = validateId.validate(userId).error;
+        if (error) throw error;
+
+        const stats = await this.detectionRepository
+            .createQueryBuilder('detection')
+            .select('SUM(detection.total)', 'total')
+            .addSelect('detection.label', 'label')
+            .groupBy('detection.label')
+            .where('detection.user_id = :userId', { userId: userId })
+            .getRawMany();
+        return stats;
     };
 
     update = async (req: UpdateDetectionRequest, userId: number): Promise<GetDetectionResponse> => {
