@@ -13,7 +13,7 @@ class LikedArticle extends TimestampEntity {
     @JoinColumn({ name: 'article_id' })
     article: Article;
 
-    @ManyToOne(() => User, (user) => user.likedArticles)
+    @ManyToOne(() => User, (user) => user.likedarticles)
     @JoinColumn({ name: 'user_id' })
     user: User;
 }

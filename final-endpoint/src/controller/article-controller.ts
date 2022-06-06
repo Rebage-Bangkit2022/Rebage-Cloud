@@ -5,6 +5,7 @@ import ArticleService from '../service/article-service';
 import {
     CreateArticleRequest,
     CreateArticleResponse,
+    CreateLikedArticleRequest,
     FetchArticlesRequest,
     GetArticleRequest,
     GetArticlesResponse,
@@ -23,6 +24,9 @@ class ArticleController {
         r.post('/api/article', this.create);
         r.get('/api/articles', this.fetch);
         r.get('/api/article/:articleId', this.getArticle);
+
+        r.post('/api/article/like', this.like);
+        r.delete('/api/article/unlike', this.unlike);
     }
 
     create = async (req: Request<{}, {}, CreateArticleRequest>, res: Response<Web<CreateArticleResponse>>) => {
@@ -57,6 +61,36 @@ class ArticleController {
         const articleId = parseInt(req.params.articleId);
         try {
             const article = await this.articleService.getArticle(articleId);
+            res.status(200).json({
+                success: true,
+                data: article,
+            });
+        } catch (error) {
+            GeneralError.handle(error, res);
+        }
+    };
+
+    like = async (req: Request<CreateLikedArticleRequest>, res: Response) => {
+        const articleId = parseInt(req.body.articleId);
+        const userId = parseInt(req.body.userId);
+
+        try {
+            const article = await this.articleService.like(articleId, userId);
+            res.status(200).json({
+                success: true,
+                data: article,
+            });
+        } catch (error) {
+            GeneralError.handle(error, res);
+        }
+    };
+
+    unlike = async (req: Request<CreateLikedArticleRequest>, res: Response) => {
+        const articleId = parseInt(req.body.articleId);
+        const userId = parseInt(req.body.userId);
+
+        try {
+            const article = await this.articleService.unlike(articleId, userId);
             res.status(200).json({
                 success: true,
                 data: article,

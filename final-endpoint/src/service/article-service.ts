@@ -9,6 +9,7 @@ import {
     GetArticleResponse,
     FetchArticlesRequest,
     GetArticlesResponse,
+    CreateLikedArticleResponse,
 } from '../model/article';
 import { NotFound } from '../model/error';
 
@@ -73,7 +74,7 @@ class ArticleService {
         return await this.articleRepository.save(article);
     };
 
-    like = async (articleId: number, userId: number): Promise<GetArticleResponse> => {
+    like = async (articleId: number, userId: number): Promise<CreateLikedArticleResponse> => {
         const article = await this.articleRepository.findOne({
             where: { id: articleId },
         });
@@ -90,7 +91,42 @@ class ArticleService {
         });
         await this.likedArticleRepository.save(likedArticle);
 
-        return article;
+        return {
+            id: likedArticle.id,
+            articleId,
+            userId,
+            title: article.title,
+            name: user.name,
+            message: 'Article "' + article.title + '" liked by "' + user.name + '"',
+        };
+    };
+
+    unlike = async (articleId: number, userId: number): Promise<CreateLikedArticleResponse> => {
+        const article = await this.articleRepository.findOne({
+            where: { id: articleId },
+        });
+        if (!article) throw new NotFound('Article not found');
+
+        const user = await this.userRepository.findOne({
+            where: { id: userId },
+        });
+        if (!user) throw new NotFound('User not found');
+
+        const likedArticle = await this.likedArticleRepository.findOne({
+            // where: { article, user },
+        });
+        if (!likedArticle) throw new NotFound('Liked article not found');
+
+        await this.likedArticleRepository.delete(likedArticle.id);
+
+        return {
+            id: likedArticle.id,
+            articleId,
+            userId,
+            title: likedArticle.article.title,
+            name: likedArticle.user.name,
+            message: 'Article "' + likedArticle.article.title + '" unliked by "' + likedArticle.user.name + '"',
+        };
     };
 
     fetch = async (req: FetchArticlesRequest): Promise<GetArticlesResponse> => {

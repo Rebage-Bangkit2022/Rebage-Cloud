@@ -21,7 +21,7 @@ class User extends TimestampEntity {
     photo!: string | null;
 
     @OneToMany(() => Article, (article) => article.id)
-    likedArticles: Article[];
+    likedarticles: Article[];
 
     @OneToMany(() => Detection, (detection) => detection.user)
     detections: Detection[];
