@@ -16,7 +16,7 @@ import { NotFound } from '../model/error';
 const createArticleValidator = Joi.object<CreateArticleRequest>({
     title: Joi.string().required().min(6).max(128),
     author: Joi.string().required().min(3),
-    source: Joi.string().required().min(6).max(64),
+    source: Joi.string().required().min(6).max(128),
     body: Joi.string().required(),
     category: Joi.string().valid('Reduce', 'Reuse'),
     garbagecategory: Joi.string().valid(
