@@ -4,7 +4,9 @@ _The cloud technology used in Rebage_
 
 **Powered by:**
 
-<img src="https://www.gstatic.com/devrel-devsite/prod/v6cd15f45ec209c8961e07ea7e57ed9a0e9da4333bc915e67d1fcd2b2a9ec62d1/cloud/images/cloud-logo.svg" width="125"/>
+<p style="text-align: center; background-color: #eee; display: inline-block; padding: 14px 20px; border-radius: 15px;">
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Google_Cloud_logo.svg" width="250"/>
+</p>
 
 Google Cloud Platform, offered by Google, is a suite of cloud computing services
 that runs on the same infrastructure that Google uses internally for its
@@ -18,6 +20,7 @@ The cloud technology that used in this project:
 -   **Google Cloud Platform** (suite of cloud computing services)
 -   **Cloud SQL** (for app database - dev environment)
 -   **App Engine** (for deploying the app)
+-   **Cloud Storage** (for storing the assets)
 -   **Vertex AI** (for machine learning)
 
 ## Important Notes
@@ -52,6 +55,8 @@ needs on the cloud side to process all requests and data services.
 
 ### Cloud SQL
 
+<img src="https://symbols.getvecta.com/stencil_4/45_google-cloud-sql.35ca1b4c38.svg" width="50" height="50"/>
+
 This sql service **`has been deployed`** on devevelopment environment.
 
 Service details:
@@ -68,12 +73,14 @@ Docs: [cloud-sql-postgres-docs](https://cloud.google.com/sql/docs/postgres/)
 
 ### App Engine
 
+<img src="https://symbols.getvecta.com/stencil_4/8_google-app-engine.c22bd3c7a9.svg" width="50" height="50"/>
+
 This app service **`has been deployed`**.
 
 Service details:
 
 ```YAML
-runtime: nodejs
+runtime: nodejs16
 env: flex
 manual_scaling:
     instances: 1
@@ -86,7 +93,23 @@ resources:
 Docs:
 [app-engine-docs](https://cloud.google.com/appengine/docs/standard/nodejs/runtime)
 
+### Cloud Storage
+
+<img src="https://symbols.getvecta.com/stencil_4/47_google-cloud-storage.fee263d33a.svg" width="50" height="50"/>
+
+This storage service **`has been deployed`**.
+
+```YAML
+Location Type   : Region
+Location        : us-central1
+Storage Class   : Standard
+```
+
+Docs: [cloud-storage-docs](https://cloud.google.com/storage/docs)
+
 ### Vertex AI
+
+<img src="https://symbols.getvecta.com/stencil_4/6_google-ai-platform.fe4b377c20.svg" width="50" height="50"/>
 
 This service model **`has been deployed`**.
 
