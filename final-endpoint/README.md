@@ -486,6 +486,14 @@ the Vertex AI endpoint, then return the results.
 
     POST /api/detection
 
+Authorization with Bearer Token:
+
+```JSON
+{
+    "token": string
+}
+```
+
 Request:
 
 ```
@@ -651,6 +659,14 @@ Response:
 -   [Delete Detection](#delete-detection)
 
     DELETE /api/detection/:id
+
+Authorization with Bearer Token:
+
+```JSON
+{
+    "token": string
+}
+```
 
 Response:
 
