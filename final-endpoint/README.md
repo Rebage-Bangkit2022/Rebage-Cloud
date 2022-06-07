@@ -119,6 +119,23 @@ Authorization with Bearer Token:
 }
 ```
 
+Response:
+
+```JSON
+{
+    "success": true,
+    "data": {
+        "createdAt": string,
+        "updatedAt": string,
+        "id": integer,
+        "name": string,
+        "email": string,
+        "password": string,
+        "photo": string
+    }
+}
+```
+
 ## Articles
 
 The application contains static articles which will be provided by the
@@ -481,25 +498,27 @@ Response:
 ```JSON
 {
     "success": true,
-    "data": {
-        "image": string,
-        "result": {
-            "bounding_boxes": [
+    "data": [
+        {
+            "id": integer,
+            "image": string,
+            "label": string,
+            "scores": [
+                integer
+            ],
+            "boundingBoxes": [
                 [
-                    number,
-                    number,
-                    number,
-                    number
+                    integer,
+                    integer,
+                    integer,
+                    integer
                 ]
             ],
-            "label_detections": [
-                string
-            ],
-            "scores": [
-                number
-            ]
-        }
-    }
+            "total": integer,
+            "createdAt": timestamp
+        },
+        ...
+    ]
 }
 ```
 
@@ -509,10 +528,41 @@ Response:
 
     GET /api/detections
 
+Authorization with Bearer Token:
+
+```JSON
+{
+    "token": string
+}
+```
+
 Response:
 
 ```JSON
-{}
+{
+    "success": true,
+    "data": [
+        {
+            "id": integer,
+            "image": string,
+            "label": string,
+            "scores": [
+                integer
+            ],
+            "boundingBoxes": [
+                [
+                    integer,
+                    integer,
+                    integer,
+                    integer
+                ]
+            ],
+            "total": integer,
+            "createdAt": timestamp
+        },
+        ...
+    ]
+}
 ```
 
 ### Retrieve the Object Detection by Id
@@ -521,10 +571,38 @@ Response:
 
     GET /api/detection/:id
 
+Authorization with Bearer Token:
+
+```JSON
+{
+    "token": string
+}
+```
+
 Response:
 
 ```JSON
-{}
+{
+    "success": true,
+    "data": {
+        "id": integer,
+        "image": string,
+        "label": string,
+        "scores": [
+            integer
+        ],
+        "boundingBoxes": [
+            [
+                integer,
+                integer,
+                integer,
+                integer
+            ]
+        ],
+        "total": integer,
+        "createdAt": timestamp
+    }
+}
 ```
 
 ### Update the Object Detection
@@ -536,13 +614,36 @@ Response:
 Request:
 
 ```JSON
-{}
+{
+    "id": integer,
+    "total": integer
+}
 ```
 
 Response:
 
 ```JSON
-{}
+{
+    "success": true,
+    "data": {
+        "id": integer,
+        "image": string,
+        "label": string,
+        "scores": [
+            integer
+        ],
+        "boundingBoxes": [
+            [
+                integer,
+                integer,
+                integer,
+                integer
+            ]
+        ],
+        "total": integer,
+        "createdAt": timestamp
+    }
+}
 ```
 
 ### Delete the Object Detection
@@ -554,7 +655,27 @@ Response:
 Response:
 
 ```JSON
-{}
+{
+    "success": true,
+    "data": {
+        "id": integer,
+        "image": string,
+        "label": string,
+        "scores": [
+            integer
+        ],
+        "boundingBoxes": [
+            [
+                integer,
+                integer,
+                integer,
+                integer
+            ]
+        ],
+        "total": integer,
+        "createdAt": timestamp
+    }
+}
 ```
 
 ## Contributor
