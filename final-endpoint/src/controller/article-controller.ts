@@ -22,7 +22,7 @@ class ArticleController {
         const r = router ?? express.Router();
         this.router = r;
 
-        r.post('/api/article', this.create);
+        r.post('/api/article', auth, this.create);
         r.get('/api/articles', this.fetch);
         r.get('/api/article/:articleId', this.getArticle);
 
