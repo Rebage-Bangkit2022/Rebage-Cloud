@@ -2,7 +2,12 @@ import Detection from '../entity/detection';
 import { Repository } from 'typeorm';
 import User from '../entity/user';
 import GeneralError, { NotFound } from '../model/error';
-import { GetDetectionResponse, GetStatisticResponse, UpdateDetectionRequest } from 'src/model/detection';
+import {
+    GetDetectionResponse,
+    GetStatisticResponse,
+    SaveDetectionRequest,
+    UpdateDetectionRequest,
+} from 'src/model/detection';
 import Joi from 'joi';
 
 const validateId = Joi.number().required().greater(0);
@@ -15,6 +20,12 @@ const validateUpdateDetection = Joi.object<UpdateDetectionRequest>({
     total: Joi.number().required().greater(0),
 });
 
+const validateSaveDetection = Joi.object<SaveDetectionRequest>({
+    image: Joi.string().required(),
+    label: Joi.string().required(),
+    total: Joi.number().required().min(0),
+});
+
 class DetectionService {
     detectionRepository: Repository<Detection>;
     userRepository: Repository<User>;
@@ -24,7 +35,34 @@ class DetectionService {
         this.userRepository = userRepository;
     }
 
-    save = async (
+    save = async (req: SaveDetectionRequest, userId: number): Promise<GetDetectionResponse> => {
+        const error = validateSaveDetection.validate(req).error;
+        if (error) throw error;
+
+        const user = await this.userRepository.findOne({ where: { id: userId } });
+        if (!user) throw new NotFound('User not found');
+
+        let detection = this.detectionRepository.create({
+            image: req.image,
+            label: req.label,
+            total: req.total,
+            user: user,
+        });
+
+        detection = await this.detectionRepository.save(detection);
+
+        return {
+            id: detection.id,
+            boundingBoxes: detection.boundingBoxes,
+            image: detection.image,
+            label: detection.label,
+            scores: detection.scores,
+            total: detection.total,
+            createdAt: detection.createdAt,
+        };
+    };
+
+    detect = async (
         req: {
             image: string;
             label: string;
@@ -97,7 +135,7 @@ class DetectionService {
         };
     };
 
-    getStatistic = async (userId: number): Promise<GetStatisticResponse> => {
+    getStatistic = async (userId: number): Promise<GetStatisticResponse[]> => {
         const error = validateId.validate(userId).error;
         if (error) throw error;
 
@@ -107,7 +145,7 @@ class DetectionService {
             .addSelect('detection.label', 'label')
             .groupBy('detection.label')
             .where('detection.user_id = :userId', { userId: userId })
-            .getRawMany();
+            .getRawMany<GetStatisticResponse>();
         return stats;
     };
 

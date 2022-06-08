@@ -4,7 +4,12 @@ import Multer from 'multer';
 import GeneralError, { BadRequest, Forbidden, Unathorized } from '../model/error';
 import Web from '../model/web';
 import { Storage } from '@google-cloud/storage';
-import { GetDetectionResponse, GetStatisticResponse, UpdateDetectionRequest } from '../model/detection';
+import {
+    GetDetectionResponse,
+    GetStatisticResponse,
+    SaveDetectionRequest,
+    UpdateDetectionRequest,
+} from '../model/detection';
 import DetectionService from '../service/detection-service';
 import { auth } from './middleware';
 // Instantiate a storage client with credentials
@@ -27,13 +32,33 @@ class DetectionController {
         const r = router ?? express.Router();
         this.router = r;
 
-        r.post('/api/detection', auth, this.detect);
+        r.post('/api/detection', auth, this.save);
+        r.post('/api/detection/detect', auth, this.detect);
         r.get('/api/detections', auth, this.getDetections);
         r.get('/api/detections/stats', auth, this.getStatistic);
         r.get('/api/detection/:id', auth, this.getDetection);
         r.put('/api/detection/:id', auth, this.update);
         r.delete('/api/detection/:id', auth, this.delete);
     }
+
+    save = async (req: Request<{}, {}, SaveDetectionRequest>, res: Response<Web<GetDetectionResponse>>) => {
+        if (!req.userId) {
+            GeneralError.handle(new Unathorized('Not allowed'), res);
+            return;
+        }
+
+        try {
+            const detection = await this.detectionService.save(req.body, req.userId);
+            res.json({
+                success: true,
+                data: detection,
+            });
+        } catch (error) {
+            console.error(error);
+            GeneralError.handle(error, res);
+            return;
+        }
+    };
 
     detect = async (req: Request, res: Response<Web<GetDetectionResponse[]>>) => {
         if (!req.userId) {
@@ -114,7 +139,7 @@ class DetectionController {
 
                 res.json({
                     success: true,
-                    data: await this.detectionService.save(result, req.userId),
+                    data: await this.detectionService.detect(result, req.userId),
                 });
             });
 
@@ -278,11 +303,11 @@ class DetectionController {
         }
     };
 
-    getStatistic = async (req: Request<{ id: string }>, res: Response<Web<GetStatisticResponse>>) => {
+    getStatistic = async (req: Request<{ id: string }>, res: Response<Web<GetStatisticResponse[]>>) => {
         try {
             const userId = req.userId;
             if (!userId) throw new Forbidden('Not allowed');
-            
+
             const stats = await this.detectionService.getStatistic(userId);
             res.json({
                 success: true,
