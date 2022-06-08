@@ -11,6 +11,7 @@ import {
     GetArticlesResponse,
 } from '../model/article';
 import GeneralError from '../model/error';
+import { auth } from './middleware';
 
 class ArticleController {
     articleService: ArticleService;
@@ -25,8 +26,8 @@ class ArticleController {
         r.get('/api/articles', this.fetch);
         r.get('/api/article/:articleId', this.getArticle);
 
-        r.post('/api/article/like', this.like);
-        r.delete('/api/article/unlike', this.unlike);
+        r.post('/api/article/like', auth, this.like);
+        r.delete('/api/article/unlike', auth, this.unlike);
     }
 
     create = async (req: Request<{}, {}, CreateArticleRequest>, res: Response<Web<CreateArticleResponse>>) => {
@@ -70,7 +71,7 @@ class ArticleController {
         }
     };
 
-    like = async (req: Request<CreateLikedArticleRequest>, res: Response) => {
+    like = async (req: Request<{}, CreateLikedArticleRequest>, res: Response) => {
         const articleId = parseInt(req.body.articleId);
         const userId = parseInt(req.body.userId);
 
@@ -85,7 +86,7 @@ class ArticleController {
         }
     };
 
-    unlike = async (req: Request<CreateLikedArticleRequest>, res: Response) => {
+    unlike = async (req: Request<{}, CreateLikedArticleRequest>, res: Response) => {
         const articleId = parseInt(req.body.articleId);
         const userId = parseInt(req.body.userId);
 
