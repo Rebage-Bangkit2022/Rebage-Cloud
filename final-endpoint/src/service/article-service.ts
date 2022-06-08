@@ -113,19 +113,19 @@ class ArticleService {
         if (!user) throw new NotFound('User not found');
 
         const likedArticle = await this.likedArticleRepository.findOne({
-            // where: { article, user },
+            where: { id: articleId },
         });
         if (!likedArticle) throw new NotFound('Liked article not found');
 
-        await this.likedArticleRepository.delete(likedArticle.id);
+        await this.likedArticleRepository.delete(likedArticle.article.id);
 
         return {
             id: likedArticle.id,
             articleId,
             userId,
             title: likedArticle.article.title,
-            name: likedArticle.user.name,
-            message: 'Article "' + likedArticle.article.title + '" unliked by "' + likedArticle.user.name + '"',
+            name: user.name,
+            message: 'Article "' + likedArticle.article.title + '" unliked by "' + user.name + '"',
         };
     };
 
