@@ -1,6 +1,7 @@
 import express, { Router, Request, Response } from 'express';
 import GeneralError from '../model/error';
 import GarbageService from '../service/garbage-service';
+import { auth } from './middleware';
 
 class GarbageController {
     garbageService: GarbageService;
@@ -11,7 +12,7 @@ class GarbageController {
         const r = router ?? express.Router();
         this.router = r;
 
-        r.post('/api/garbage', this.create);
+        r.post('/api/garbage', auth, this.create);
         r.get('/api/garbages', this.fetch);
         r.get('/api/garbage/id/:garbageId', this.fetchOneId);
         r.get('/api/garbage/name/:garbageName', this.fetchOneName);
