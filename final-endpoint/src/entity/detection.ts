@@ -13,10 +13,10 @@ class Detection extends TimestampEntity {
     @Column()
     label: string;
 
-    @Column({ name: 'bounding_boxes', type: 'json' })
+    @Column({ name: 'bounding_boxes', type: 'json', default: [] })
     boundingBoxes: number[][];
 
-    @Column({ type: 'json' })
+    @Column({ type: 'json', default: [] })
     scores: number[];
 
     @Column()
