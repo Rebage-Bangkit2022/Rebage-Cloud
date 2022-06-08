@@ -47,3 +47,7 @@ export interface FetchArticlesRequest {
 export interface GetArticleRequest {
     articleId: string;
 }
+
+export interface GetLikedRequest {
+    likeId: string;
+}
