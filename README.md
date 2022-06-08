@@ -80,7 +80,7 @@ This app service **`has been deployed`**.
 Service details:
 
 ```YAML
-runtime: nodejs16
+runtime: nodejs
 env: flex
 manual_scaling:
     instances: 1
