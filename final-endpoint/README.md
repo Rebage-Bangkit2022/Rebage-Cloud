@@ -480,11 +480,64 @@ Response:
 To perform visual detection in the form of an image that will be predicted at
 the Vertex AI endpoint, then return the results.
 
-### Request Image for Object Detection
+### Save Image for Object Detection
 
--   [Detection](#post-detection)
+-   [Save Detection](#save-detection)
 
     POST /api/detection
+
+Authorization with Bearer Token:
+
+```JSON
+{
+    "token": string
+}
+```
+
+Request:
+
+```JSON
+{
+    "label": string,
+    "image": string,
+    "total": number
+}
+```
+
+Response:
+
+```JSON
+{
+    "success": true,
+    "data": [
+        {
+            "id": integer,
+            "image": string,
+            "label": string,
+            "scores": [
+                integer
+            ],
+            "boundingBoxes": [
+                [
+                    integer,
+                    integer,
+                    integer,
+                    integer
+                ]
+            ],
+            "total": integer,
+            "createdAt": timestamp
+        },
+        ...
+    ]
+}
+```
+
+### Request Image for Object Detection
+
+-   [Request Detection](#post-request-detection)
+
+    POST /api/detection/detect
 
 Authorization with Bearer Token:
 
