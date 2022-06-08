@@ -14,5 +14,12 @@ export interface UpdateDetectionRequest {
 }
 
 export interface GetStatisticResponse {
-    
+    label: string;
+    total: number;
+}
+
+export interface SaveDetectionRequest {
+    label: string;
+    image: string;
+    total: number;
 }
