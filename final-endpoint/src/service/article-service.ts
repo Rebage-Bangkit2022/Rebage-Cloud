@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import Joi, { any } from 'joi';
 import Article from '../entity/article';
 import LikedArticle from '../entity/liked-article';
 import User from '../entity/user';
@@ -164,6 +164,16 @@ class ArticleService {
         return await selectQueryBuilder.getMany();
     };
 
+    fetchLiked = async () => {
+        const likedarticles = await this.likedArticleRepository
+            .createQueryBuilder('liked_article')
+            .leftJoinAndSelect('liked_article.article', 'article')
+            .leftJoinAndSelect('liked_article.user', 'user')
+            .getMany();
+
+        return likedarticles;
+    };
+
     getArticle = async (articleId: number): Promise<GetArticleResponse> => {
         const error = getArticleValidator.validate(articleId).error;
         if (error) throw error;
@@ -174,6 +184,17 @@ class ArticleService {
         if (!article) throw new NotFound('Article not found');
 
         return article;
+    };
+
+    getLiked = async (likedId: number) => {
+        const likedarticles = await this.likedArticleRepository
+            .createQueryBuilder('liked_article')
+            .leftJoinAndSelect('liked_article.article', 'article')
+            .leftJoinAndSelect('liked_article.user', 'user')
+            .where('liked_article.id = :likedId', { likedId: likedId })
+            .getOne();
+
+        return likedarticles;
     };
 }
 
