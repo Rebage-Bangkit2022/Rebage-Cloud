@@ -164,14 +164,16 @@ class ArticleService {
         return await selectQueryBuilder.getMany();
     };
 
-    fetchLiked = async () => {
+    fetchLiked = async (userId: number) => {
+        
         const likedarticles = await this.likedArticleRepository
             .createQueryBuilder('liked_article')
             .leftJoinAndSelect('liked_article.article', 'article')
             .leftJoinAndSelect('liked_article.user', 'user')
+            .where('liked_article.user.id = :userId', { userId: userId })
             .getMany();
 
-        return likedarticles;
+            return likedarticles;
     };
 
     getArticle = async (articleId: number): Promise<GetArticleResponse> => {
