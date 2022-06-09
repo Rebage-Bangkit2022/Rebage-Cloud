@@ -27,7 +27,7 @@ class ArticleController {
         r.get('/api/articles', this.fetch);
         r.get('/api/article/:articleId', this.getArticle);
 
-        r.get('/api/articles/likes', this.fetchLiked);
+        r.get('/api/articles/likes', auth, this.fetchLiked);
         r.get('/api/article/like/:likeId', this.getLiked);
         r.post('/api/article/like', auth, this.like);
         r.delete('/api/article/unlike', auth, this.unlike);
@@ -61,12 +61,13 @@ class ArticleController {
         }
     };
 
-    fetchLiked = async (_req: Request, res: Response) => {
+    fetchLiked = async (req: Request<{}, GetLikedRequest>, res: Response) => {
+        const userId = parseInt(req.query.userId as string);
         try {
-            const likedArticles = await this.articleService.fetchLiked();
+            const likedarticles = await this.articleService.fetchLiked(userId);
             res.json({
                 success: true,
-                data: likedArticles,
+                data: likedarticles,
             });
         } catch (error) {
             GeneralError.handle(error, res);
