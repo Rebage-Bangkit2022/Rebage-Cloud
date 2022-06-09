@@ -62,7 +62,7 @@ class ArticleController {
     };
 
     fetchLiked = async (req: Request<{}, GetLikedRequest>, res: Response) => {
-        const userId = parseInt(req.query.userId as string);
+        const userId = parseInt(req.body.userId);
         try {
             const likedarticles = await this.articleService.fetchLiked(userId);
             res.json({
