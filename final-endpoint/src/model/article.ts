@@ -49,5 +49,5 @@ export interface GetArticleRequest {
 }
 
 export interface GetLikedRequest {
-    likeId: string;
+    userId: string;
 }
