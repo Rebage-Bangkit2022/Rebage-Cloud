@@ -167,7 +167,7 @@ class DetectionController {
 
         // Specifies the location of the api endpoint
         const clientOptions = {
-            apiEndpoint: 'us-central1-aiplatform.googleapis.com',
+            apiEndpoint: 'asia-southeast1-aiplatform.googleapis.com',
         };
 
         // Instantiates a client
