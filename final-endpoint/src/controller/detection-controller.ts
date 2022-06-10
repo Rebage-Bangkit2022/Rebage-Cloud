@@ -14,7 +14,7 @@ import DetectionService from '../service/detection-service';
 import { auth } from './middleware';
 // Instantiate a storage client with credentials
 const storage = new Storage({ keyFilename: 'rebage-fc8b497d0af5.json' });
-const bucket = storage.bucket('rebage-cloud-storage');
+const bucket = storage.bucket('rebage-storage');
 
 const MAX_SIZE = 1 * 1024 * 1024;
 let processFile = Multer({
@@ -72,7 +72,7 @@ class DetectionController {
         const detectedResult = this.detectImage(file.buffer.toString('base64'));
 
         try {
-            const blob = bucket.file(`user-images/${file.originalname}`);
+            const blob = bucket.file(`user/detection/${file.originalname}`);
             const blobStream = blob.createWriteStream({
                 resumable: false,
             });
@@ -83,9 +83,10 @@ class DetectionController {
             blobStream.on('finish', async (_data: any) => {
                 // Create URL for directly file access via HTTP.
                 const publicUrl = format(`https://storage.googleapis.com/${bucket.name}/${blob.name}`);
+                console.log(publicUrl);
                 try {
                     // Make the file public
-                    await bucket.file(`user-images/${file.originalname}`).makePublic();
+                    await bucket.file(`user/detection/${file.originalname}`).makePublic();
                 } catch (error) {
                     GeneralError.handle(error, res);
                     return;
