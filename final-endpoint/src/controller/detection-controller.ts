@@ -14,7 +14,7 @@ import DetectionService from '../service/detection-service';
 import { auth } from './middleware';
 // Instantiate a storage client with credentials
 const storage = new Storage({ keyFilename: 'rebage-fc8b497d0af5.json' });
-const bucket = storage.bucket('rebage-storage');
+const bucket = storage.bucket('rebage-storage-sg');
 
 const MAX_SIZE = 1 * 1024 * 1024;
 let processFile = Multer({
