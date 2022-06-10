@@ -134,10 +134,10 @@ This monitoring service **`has been deployed`**.
 Detail info:
 
 ```YAML
-Cloud SQL       : CPU Usage [MEAN]
-App Engine      : Response Count & CPU Utilization [MEAN]
-Cloud Storage   : Total Bytes [MEAN]
-Vertex AI       : Prediction Count [MEAN] & Latencies [50th Precentile]
+Cloud SQL       : Deadlocks Count, CPU Usage [MEAN]
+App Engine      : Response Count, Logs, CPU Utilization [MEAN]
+Cloud Storage   : Request Count, Total Bytes [MEAN]
+Vertex AI       : Prediction Count [MEAN], Latencies [50th Precentile]
 ```
 
 Docs: [cloud-monitoring-docs](https://cloud.google.com/monitoring/docs/)
