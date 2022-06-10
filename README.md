@@ -66,7 +66,7 @@ Service details:
 Database Type   : PostgreSQL
 Version         : 14
 vCPUs           : 1
-Memory          : 614.4 MB
+Memory          : 1.7 GB
 Storage         : 10 GB
 ```
 
@@ -102,7 +102,7 @@ This storage service **`has been deployed`**.
 
 ```YAML
 Location Type   : Region
-Location        : us-central1
+Location        : asia-southeast1
 Storage Class   : Standard
 ```
 
@@ -117,10 +117,10 @@ This service model **`has been deployed`**.
 Detail info:
 
 ```YAML
-Model name      : ssd_100k
-Region          : us-central1
+Model name      : ssd_mobnet_50k
+Region          : asia-southeast1
 Version         : 1
-Endpoint name   : rebage-models-endpoint
+Endpoint name   : rebage-ml-endpoint
 ```
 
 Docs: [ai-platform-docs](https://cloud.google.com/ai-platform/docs/)
