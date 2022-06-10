@@ -27,8 +27,7 @@ class ArticleController {
         r.get('/api/articles', this.fetch);
         r.get('/api/article/:articleId', this.getArticle);
 
-        r.get('/api/articles/likes', auth, this.fetchLiked);
-        r.get('/api/article/like/:likeId', this.getLiked);
+        r.get('/api/article/user/like', auth, this.fetchLiked);
         r.post('/api/article/like', auth, this.like);
         r.delete('/api/article/unlike', auth, this.unlike);
     }
@@ -81,19 +80,6 @@ class ArticleController {
             res.status(200).json({
                 success: true,
                 data: article,
-            });
-        } catch (error) {
-            GeneralError.handle(error, res);
-        }
-    };
-
-    getLiked = async (req: Request<GetLikedRequest>, res: Response) => {
-        const likeId = parseInt(req.params.likeId);
-        try {
-            const liked = await this.articleService.getLiked(likeId);
-            res.status(200).json({
-                success: true,
-                data: liked,
             });
         } catch (error) {
             GeneralError.handle(error, res);
