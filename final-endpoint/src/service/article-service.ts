@@ -165,7 +165,6 @@ class ArticleService {
     };
 
     fetchLiked = async (userId: number) => {
-        
         const likedarticles = await this.likedArticleRepository
             .createQueryBuilder('liked_article')
             .leftJoinAndSelect('liked_article.article', 'article')
@@ -173,7 +172,10 @@ class ArticleService {
             .where('liked_article.user.id = :userId', { userId: userId })
             .getMany();
 
-            return likedarticles;
+        // if liked article empty array return not found
+        if (likedarticles.length === 0) throw new NotFound('Liked article not found');
+
+        return likedarticles;
     };
 
     getArticle = async (articleId: number): Promise<GetArticleResponse> => {
@@ -186,17 +188,6 @@ class ArticleService {
         if (!article) throw new NotFound('Article not found');
 
         return article;
-    };
-
-    getLiked = async (likedId: number) => {
-        const likedarticles = await this.likedArticleRepository
-            .createQueryBuilder('liked_article')
-            .leftJoinAndSelect('liked_article.article', 'article')
-            .leftJoinAndSelect('liked_article.user', 'user')
-            .where('liked_article.id = :likedId', { likedId: likedId })
-            .getOne();
-
-        return likedarticles;
     };
 }
 
