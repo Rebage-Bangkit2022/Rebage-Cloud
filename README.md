@@ -22,6 +22,7 @@ The cloud technology that used in this project:
 -   **App Engine** (for deploying the app)
 -   **Cloud Storage** (for storing the assets)
 -   **Vertex AI** (for machine learning)
+-   **Cloud Monitoring** (for get info on all services)
 
 ## Important Notes
 
@@ -122,7 +123,24 @@ Version         : 1
 Endpoint name   : rebage-models-endpoint
 ```
 
-Docs: [ai-platform-docs](https://cloud.google.com/ai-platform/docs/).
+Docs: [ai-platform-docs](https://cloud.google.com/ai-platform/docs/)
+
+### Cloud Monitoring
+
+<img src="https://symbols.getvecta.com/stencil_4/36_google-cloud-monitoring.5b9e1af8b5.svg" width="50" height="50"/>
+
+This monitoring service **`has been deployed`**.
+
+Detail info:
+
+```YAML
+Cloud SQL       : CPU Usage [MEAN]
+App Engine      : Response Count & CPU Utilization [MEAN]
+Cloud Storage   : Total Bytes [MEAN]
+Vertex AI       : Prediction Count [MEAN] & Latencies [50th Precentile]
+```
+
+Docs: [cloud-monitoring-docs](https://cloud.google.com/monitoring/docs/)
 
 This application still `under development` changes are expected to be perfect
 when the application enters the final stage.
