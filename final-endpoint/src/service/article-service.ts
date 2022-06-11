@@ -1,4 +1,4 @@
-import Joi, { any } from 'joi';
+import Joi from 'joi';
 import Article from '../entity/article';
 import LikedArticle from '../entity/liked-article';
 import User from '../entity/user';
@@ -9,7 +9,6 @@ import {
     GetArticleResponse,
     FetchArticlesRequest,
     GetArticlesResponse,
-    CreateLikedArticleResponse,
 } from '../model/article';
 import { NotFound } from '../model/error';
 
@@ -74,7 +73,7 @@ class ArticleService {
         return await this.articleRepository.save(article);
     };
 
-    like = async (articleId: number, userId: number): Promise<CreateLikedArticleResponse> => {
+    like = async (articleId: number, userId: number): Promise<GetArticleResponse> => {
         const article = await this.articleRepository.findOne({
             where: { id: articleId },
         });
@@ -89,19 +88,15 @@ class ArticleService {
             article,
             user,
         });
-        await this.likedArticleRepository.save(likedArticle);
+        await this.likedArticleRepository.upsert(likedArticle, {skipUpdateIfNoValuesChanged: true, conflictPaths: ['user', 'article']});
 
         return {
-            id: likedArticle.id,
-            articleId,
-            userId,
-            title: article.title,
-            name: user.name,
-            message: 'Article "' + article.title + '" liked by "' + user.name + '"',
+            ...article,
+            liked: true
         };
     };
 
-    unlike = async (articleId: number, userId: number): Promise<CreateLikedArticleResponse> => {
+    unlike = async (articleId: number, userId: number): Promise<GetArticleResponse> => {
         const article = await this.articleRepository.findOne({
             where: { id: articleId },
         });
@@ -113,19 +108,21 @@ class ArticleService {
         if (!user) throw new NotFound('User not found');
 
         const likedArticle = await this.likedArticleRepository.findOne({
-            where: { id: articleId },
+            where: {
+                article: { id: article.id },
+                user: { id: user.id },
+            },
         });
-        if (!likedArticle) throw new NotFound('Liked article not found');
+        if (!likedArticle) return {
+            ...article,
+            liked: false
+        };
 
-        await this.likedArticleRepository.delete(likedArticle.article.id);
+        await this.likedArticleRepository.delete({id: likedArticle.id});
 
         return {
-            id: likedArticle.id,
-            articleId,
-            userId,
-            title: likedArticle.article.title,
-            name: user.name,
-            message: 'Article "' + likedArticle.article.title + '" unliked by "' + user.name + '"',
+            ...article,
+            liked: false
         };
     };
 
@@ -164,7 +161,7 @@ class ArticleService {
         return await selectQueryBuilder.getMany();
     };
 
-    fetchLiked = async (userId: number) => {
+    fetchLiked = async (userId: number): Promise<GetArticleResponse[]> => {
         const likedarticles = await this.likedArticleRepository
             .createQueryBuilder('liked_article')
             .leftJoinAndSelect('liked_article.article', 'article')
@@ -172,10 +169,7 @@ class ArticleService {
             .where('liked_article.user.id = :userId', { userId: userId })
             .getMany();
 
-        // if liked article empty array return not found
-        if (likedarticles.length === 0) throw new NotFound('Liked article not found');
-
-        return likedarticles;
+        return likedarticles.map((v) => ({...v.article, liked: true}));
     };
 
     getArticle = async (articleId: number): Promise<GetArticleResponse> => {
