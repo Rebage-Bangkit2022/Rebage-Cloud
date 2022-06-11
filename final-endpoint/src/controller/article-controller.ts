@@ -5,13 +5,11 @@ import ArticleService from '../service/article-service';
 import {
     CreateArticleRequest,
     CreateArticleResponse,
-    CreateLikedArticleRequest,
     FetchArticlesRequest,
     GetArticleRequest,
     GetArticlesResponse,
-    GetLikedRequest,
 } from '../model/article';
-import GeneralError from '../model/error';
+import GeneralError, { Unathorized } from '../model/error';
 import { auth } from './middleware';
 
 class ArticleController {
@@ -28,8 +26,8 @@ class ArticleController {
         r.get('/api/article/:articleId', this.getArticle);
 
         r.get('/api/article/user/like', auth, this.fetchLiked);
-        r.post('/api/article/like', auth, this.like);
-        r.delete('/api/article/unlike', auth, this.unlike);
+        r.post('/api/article/:articleId/like', auth, this.like);
+        r.delete('/api/article/:articleId/unlike', auth, this.unlike);
     }
 
     create = async (req: Request<{}, {}, CreateArticleRequest>, res: Response<Web<CreateArticleResponse>>) => {
@@ -60,10 +58,14 @@ class ArticleController {
         }
     };
 
-    fetchLiked = async (req: Request<{}, GetLikedRequest>, res: Response) => {
-        const userId = parseInt(req.body.userId);
+    fetchLiked = async (req: Request, res: Response) => {
+        if (!req.userId) {
+            GeneralError.handle(new Unathorized('Not allowed'), res);
+            return;
+        }
+
         try {
-            const likedarticles = await this.articleService.fetchLiked(userId);
+            const likedarticles = await this.articleService.fetchLiked(req.userId);
             res.json({
                 success: true,
                 data: likedarticles,
@@ -86,12 +88,15 @@ class ArticleController {
         }
     };
 
-    like = async (req: Request<{}, CreateLikedArticleRequest>, res: Response) => {
-        const articleId = parseInt(req.body.articleId);
-        const userId = parseInt(req.body.userId);
+    like = async (req: Request<{ articleId: string }>, res: Response) => {
+        const articleId = parseInt(req.params.articleId);
+        if (!req.userId) {
+            GeneralError.handle(new Unathorized('Not allowed'), res);
+            return;
+        }
 
         try {
-            const article = await this.articleService.like(articleId, userId);
+            const article = await this.articleService.like(articleId, req.userId);
             res.status(200).json({
                 success: true,
                 data: article,
@@ -101,12 +106,15 @@ class ArticleController {
         }
     };
 
-    unlike = async (req: Request<{}, CreateLikedArticleRequest>, res: Response) => {
-        const articleId = parseInt(req.body.articleId);
-        const userId = parseInt(req.body.userId);
+    unlike = async (req: Request<{ articleId: string }>, res: Response) => {
+        const articleId = parseInt(req.params.articleId);
+        if (!req.userId) {
+            GeneralError.handle(new Unathorized('Not allowed'), res);
+            return;
+        }
 
         try {
-            const article = await this.articleService.unlike(articleId, userId);
+            const article = await this.articleService.unlike(articleId, req.userId);
             res.status(200).json({
                 success: true,
                 data: article,
