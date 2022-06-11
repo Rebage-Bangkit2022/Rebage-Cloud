@@ -22,6 +22,22 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
     return next();
 };
 
+export const optionalAuth = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const authorization = req.headers['authorization'];
+        if (typeof authorization === 'string') {
+            const token = authorization.split(' ')[1];
+            if (!token) throw new Unathorized('Token format is invalid');
+            const userId = verify(token);
+            req.userId = userId;
+        }
+    } catch (error) {
+        return GeneralError.handle(error, res);
+    }
+
+    return next();
+};
+
 const verifyToken = (token: string): TokenPayload | null => {
     const secret = process.env.JWT_SECRET;
     if (!secret) return null;

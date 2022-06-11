@@ -6,11 +6,10 @@ import {
     CreateArticleRequest,
     CreateArticleResponse,
     FetchArticlesRequest,
-    GetArticleRequest,
     GetArticlesResponse,
 } from '../model/article';
 import GeneralError, { Unathorized } from '../model/error';
-import { auth } from './middleware';
+import { auth, optionalAuth } from './middleware';
 
 class ArticleController {
     articleService: ArticleService;
@@ -23,7 +22,7 @@ class ArticleController {
 
         r.post('/api/article', auth, this.create);
         r.get('/api/articles', this.fetch);
-        r.get('/api/article/:articleId', this.getArticle);
+        r.get('/api/article/:articleId', optionalAuth, this.getArticle);
 
         r.get('/api/article/user/like', auth, this.fetchLiked);
         r.post('/api/article/:articleId/like', auth, this.like);
@@ -75,10 +74,10 @@ class ArticleController {
         }
     };
 
-    getArticle = async (req: Request<GetArticleRequest>, res: Response) => {
+    getArticle = async (req: Request<{articleId: string}>, res: Response) => {
         const articleId = parseInt(req.params.articleId);
         try {
-            const article = await this.articleService.getArticle(articleId);
+            const article = await this.articleService.getArticle(articleId, req?.userId);
             res.status(200).json({
                 success: true,
                 data: article,

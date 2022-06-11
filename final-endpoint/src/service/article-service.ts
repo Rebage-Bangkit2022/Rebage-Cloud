@@ -47,7 +47,10 @@ const getArticlesValidator = Joi.object<FetchArticlesRequest>({
     size: Joi.number(),
 });
 
-const getArticleValidator = Joi.number().greater(0).positive();
+const getArticleValidator = Joi.object({
+    articleId: Joi.number().greater(0).positive().required(),
+    userId: Joi.number().greater(0).positive().optional(),
+});
 
 class ArticleService {
     articleRepository: Repository<Article>;
@@ -88,11 +91,14 @@ class ArticleService {
             article,
             user,
         });
-        await this.likedArticleRepository.upsert(likedArticle, {skipUpdateIfNoValuesChanged: true, conflictPaths: ['user', 'article']});
+        await this.likedArticleRepository.upsert(likedArticle, {
+            skipUpdateIfNoValuesChanged: true,
+            conflictPaths: ['user', 'article'],
+        });
 
         return {
             ...article,
-            liked: true
+            liked: true,
         };
     };
 
@@ -113,16 +119,17 @@ class ArticleService {
                 user: { id: user.id },
             },
         });
-        if (!likedArticle) return {
-            ...article,
-            liked: false
-        };
+        if (!likedArticle)
+            return {
+                ...article,
+                liked: false,
+            };
 
-        await this.likedArticleRepository.delete({id: likedArticle.id});
+        await this.likedArticleRepository.delete({ id: likedArticle.id });
 
         return {
             ...article,
-            liked: false
+            liked: false,
         };
     };
 
@@ -169,19 +176,34 @@ class ArticleService {
             .where('liked_article.user.id = :userId', { userId: userId })
             .getMany();
 
-        return likedarticles.map((v) => ({...v.article, liked: true}));
+        return likedarticles.map((v) => ({ ...v.article, liked: true }));
     };
 
-    getArticle = async (articleId: number): Promise<GetArticleResponse> => {
-        const error = getArticleValidator.validate(articleId).error;
+    getArticle = async (articleId: number, userId?: number): Promise<GetArticleResponse> => {
+        const error = getArticleValidator.validate({ articleId, userId }).error;
         if (error) throw error;
 
-        const article = await this.articleRepository.findOne({
-            where: { id: articleId },
-        });
-        if (!article) throw new NotFound('Article not found');
+        if (!userId) {
+            const article = await this.articleRepository.findOne({
+                where: { id: articleId },
+            });
+            if (!article) throw new NotFound('Article not found');
 
-        return article;
+            return {
+                ...article,
+                liked: false
+            };
+        }
+
+        const liked = await this.likedArticleRepository.findOne({
+            where: { article: { id: articleId }, user: { id: userId } },
+        });
+        if (!liked) throw new NotFound('Article not found');
+
+        return {
+            ...liked?.article,
+            liked: true,
+        };
     };
 }
 
