@@ -183,26 +183,26 @@ class ArticleService {
         const error = getArticleValidator.validate({ articleId, userId }).error;
         if (error) throw error;
 
-        if (!userId) {
-            const article = await this.articleRepository.findOne({
-                where: { id: articleId },
-            });
-            if (!article) throw new NotFound('Article not found');
+        const article = await this.articleRepository.findOne({
+            where: { id: articleId },
+        });
+        if (!article) throw new NotFound('Article not found');
 
+        if (!userId) {
             return {
                 ...article,
-                liked: false
+                liked: false,
             };
         }
 
         const liked = await this.likedArticleRepository.findOne({
             where: { article: { id: articleId }, user: { id: userId } },
         });
-        if (!liked) throw new NotFound('Article not found');
+    
 
         return {
-            ...liked?.article,
-            liked: true,
+            ...article,
+            liked: liked != null,
         };
     };
 }
