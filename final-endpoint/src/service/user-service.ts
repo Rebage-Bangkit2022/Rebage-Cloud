@@ -155,14 +155,13 @@ class UserService {
         const user = await this.getUser(userId);
         if (!user) throw new NotFound('User not found');
 
-        const { name, password, photo } = req;
+        const { name, password } = req;
         if (name) user.name = name;
         if (password) {
             const salt = bcrypt.genSaltSync(10);
             const hashedPassword = bcrypt.hashSync(password, salt);
             user.password = hashedPassword;
         }
-        if (photo) user.photo = photo;
 
         await this.userRepository.save(user);
         return user;
