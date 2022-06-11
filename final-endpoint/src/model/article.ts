@@ -17,7 +17,7 @@ export interface CreateArticleResponse {
     category: string;
     garbagecategory: string;
     photo: string[];
-    liked?: Boolean
+    liked?: Boolean;
 }
 
 export type GetArticleResponse = CreateArticleResponse;
@@ -29,8 +29,4 @@ export interface FetchArticlesRequest {
     garbagecategory?: string;
     page?: string;
     size?: string;
-}
-
-export interface GetArticleRequest {
-    articleId: string;
 }
