@@ -46,5 +46,4 @@ export interface AuthGoogleResponse {
 export interface EditUserRequest {
     name: string;
     password: string;
-    photo: string | null;
 }
