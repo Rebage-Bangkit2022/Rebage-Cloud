@@ -4,6 +4,7 @@ import { Request, Response } from 'express';
 import {
     AuthGoogleRequest,
     EditUserRequest,
+    EditUserResponse,
     SignInRequest,
     SignInResponse,
     SignUpRequest,
@@ -78,7 +79,7 @@ class UserController {
         }
     };
 
-    editUser = async (req: Request<{}, {}, EditUserRequest>, res: Response<Web<any>>) => {
+    editUser = async (req: Request<{}, {}, EditUserRequest>, res: Response<Web<EditUserResponse>>) => {
         try {
             if (!req.userId) throw new Unathorized('Not allowed');
             const user = await this.userService.editUser(req.userId, req.body);

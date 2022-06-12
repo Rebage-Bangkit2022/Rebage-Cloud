@@ -48,3 +48,11 @@ export interface EditUserRequest {
     password: string;
     photo: string | null;
 }
+
+export interface EditUserResponse {
+    id: number;
+    name: string;
+    email: string;
+    photo: string | null;
+    token: string;
+}

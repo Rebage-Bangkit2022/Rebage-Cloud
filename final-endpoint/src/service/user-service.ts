@@ -1,6 +1,7 @@
 import User from '../entity/user';
 import {
     AuthGoogleRequest,
+    EditUserResponse,
     SignInRequest,
     SignInResponse,
     SignUpRequest,
@@ -151,8 +152,8 @@ class UserService {
         };
     }
 
-    async editUser(userId: number, req: any): Promise<User> {
-        const user = await this.getUser(userId);
+    async editUser(userId: number, req: any): Promise<EditUserResponse> {
+        let user = await this.getUser(userId);
         if (!user) throw new NotFound('User not found');
 
         const { name, password, photo } = req;
@@ -164,8 +165,21 @@ class UserService {
         }
         if (photo) user.photo = photo;
 
-        await this.userRepository.save(user);
-        return user;
+        const token = generateToken(user.id);
+        if (!token) {
+            console.error('Failed to generate token');
+            throw new GeneralError('Server error');
+        }
+
+        user = await this.userRepository.save(user);
+        
+        return {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            photo: user.photo,
+            token: token,
+        };
     }
 }
 
