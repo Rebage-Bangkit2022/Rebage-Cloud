@@ -17,7 +17,11 @@ class User extends TimestampEntity {
     @Column({ nullable: true })
     password: string;
 
-    @Column({ type: 'varchar', nullable: true, default: null })
+    @Column({
+        type: 'varchar',
+        nullable: true,
+        default: 'https://storage.googleapis.com/rebage-storage-sg/user/profile-photo/rebage-default-avatar-r.png',
+    })
     photo!: string | null;
 
     @OneToMany(() => Article, (article) => article.id)

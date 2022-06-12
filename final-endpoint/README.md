@@ -358,6 +358,144 @@ Response:
 }
 ```
 
+## Liked Articles
+
+Users can like the articles and save to the table, each has primary key article and user.
+
+### Add Article to Like
+
+-   [Post Like](#post-like)
+
+    POST /api/article/:articleId/like
+
+Authorization with Bearer Token:
+
+```JSON
+{
+    "token": string
+}
+```
+
+Request:
+
+```JSON
+{
+    "articleId": string,
+    "userId": string
+}
+```
+
+Response:
+
+```JSON
+{
+    "success": true,
+    "data": {
+        "createdAt": timestamp,
+        "updatedAt": timestamp,
+        "id": integer,
+        "title": string,
+        "author": string,
+        "source": string,
+        "body": string,
+        "category": string [reduce | reuse],
+        "garbagecategory": string [botolkaca | botolplastik | kaleng | kardus | karet | kertas | plastik | sedotan],
+        "photo": string[]
+        "liked": true
+    }
+}
+```
+
+### Get Article from Like
+
+-   [Get Like](#get-like)
+
+    GET /api/article/user/like
+
+Authorization with Bearer Token:
+
+```JSON
+{
+    "token": string
+}
+```
+
+Request:
+
+```JSON
+{
+    "userId": integer
+}
+```
+
+Response:
+
+```JSON
+{
+    "success": true,
+    "data": [
+        {
+            "createdAt": timestamp,
+            "updatedAt": timestamp,
+            "id": integer,
+            "title": string,
+            "author": string,
+            "source": string,
+            "body": string,
+            "category": "reduce",
+            "garbagecategory": string [botolkaca | botolplastik | kaleng | kardus | karet | kertas | plastik | sedotan],
+            "photo": string[],
+            "liked": true
+        },
+        ...
+    ]
+}
+```
+
+### Remove Article from Like
+
+-   [Delete Like](#delete-like)
+
+    POST /api/article/:articleId/unlike
+
+Authorization with Bearer Token:
+
+```JSON
+{
+    "token": string
+}
+```
+
+Request:
+
+```JSON
+{
+    "articleId": string,
+    "userId": string
+}
+```
+
+Response:
+
+```JSON
+{
+    "success": true,
+    "data": {
+        "createdAt": timestamp,
+        "updatedAt": timestamp,
+        "id": integer,
+        "title": string,
+        "author": string,
+        "source": string,
+        "body": string,
+        "category": string [reduce | reuse],
+        "garbagecategory": string [botolkaca | botolplastik | kaleng | kardus | karet | kertas | plastik | sedotan],
+        "photo": string[]
+        "liked": false
+    }
+}
+```
+
 ## Garbage
 
 Contains data on 8 items in the form of a list including:

@@ -13,9 +13,9 @@ import {
 import { NotFound } from '../model/error';
 
 const createArticleValidator = Joi.object<CreateArticleRequest>({
-    title: Joi.string().required().min(6).max(128),
+    title: Joi.string().required().min(6).max(256),
     author: Joi.string().required().min(3),
-    source: Joi.string().required().min(6).max(128),
+    source: Joi.string().required().min(6).max(256),
     body: Joi.string().required(),
     category: Joi.string().valid('Reduce', 'Reuse'),
     garbagecategory: Joi.string().valid(
@@ -198,7 +198,6 @@ class ArticleService {
         const liked = await this.likedArticleRepository.findOne({
             where: { article: { id: articleId }, user: { id: userId } },
         });
-    
 
         return {
             ...article,
