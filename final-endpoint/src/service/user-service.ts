@@ -16,7 +16,7 @@ import Joi from 'joi';
 import { OAuth2Client } from 'google-auth-library';
 
 const signUpValidator = Joi.object<SignUpRequest>({
-    name: Joi.string().required().min(6).max(128),
+    name: Joi.string().required().min(5).max(51),
     email: Joi.string().required().email(),
     password: Joi.string().required().min(6).max(64),
 });
@@ -171,7 +171,7 @@ class UserService {
         }
 
         user = await this.userRepository.save(user);
-        
+
         return {
             id: user.id,
             email: user.email,
