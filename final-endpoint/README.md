@@ -10,7 +10,7 @@ Wiki of API Usage:
 
 ## Base URL
 
-API Base URL: https://rebage.uc.r.appspot.com/
+API Base URL: https://rebage-bydzen.as.r.appspot.com/
 
 ## User Authentication
 
