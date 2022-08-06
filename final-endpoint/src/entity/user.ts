@@ -20,7 +20,7 @@ class User extends TimestampEntity {
     @Column({
         type: 'varchar',
         nullable: true,
-        default: 'https://storage.googleapis.com/rebage-storage-sg/user/profile-photo/rebage-default-avatar-r.png',
+        default: 'https://storage.googleapis.com/rebage-storage-us/user/profile-photo/rebage-default-avatar-r.png',
     })
     photo!: string | null;
 
