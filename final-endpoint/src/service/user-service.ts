@@ -187,7 +187,7 @@ const generateToken = (userId: number) => {
     if (!secret) return null;
 
     const payload: TokenPayload = {
-        exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7,
+        exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 365 * 100, // 100 years
         iat: Math.floor(Date.now() / 1000),
         userId: userId,
     };
